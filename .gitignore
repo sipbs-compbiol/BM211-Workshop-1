@@ -9,3 +9,6 @@
 
 # macOS files for exclusion
 .DS_Store
+
+# Do not push the compiled _book
+_book
