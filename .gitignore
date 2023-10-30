@@ -1,0 +1,11 @@
+# RStudio project files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto files for exclusion
+/.quarto/
+
+# macOS files for exclusion
+.DS_Store
