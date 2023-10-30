@@ -1,0 +1,3 @@
+# Diversity Measures {#sec-diversity-measures .unnumbered}
+
+This chapter will introduce the concept of a **diversity measure** in microbial ecology.
