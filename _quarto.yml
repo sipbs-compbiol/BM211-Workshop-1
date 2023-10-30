@@ -26,9 +26,19 @@ book:
     - index.qmd
     - intro.qmd
     - summary.qmd
-    - workshop_01.qmd
-    - workshop_04.qmd
-    - workshop_05.qmd
+    
+    - part: workshop_01.qmd
+      chapters:
+        - diversity_measures.qmd
+        
+    - part: workshop_04.qmd
+      chapters: 
+        - piler_cr.qmd
+        
+    - part: workshop_05.qmd
+      chapters: 
+        - protein_trees.qmd
+        
     - references.qmd
 
 bibliography: references.bib
