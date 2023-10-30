@@ -28,6 +28,13 @@
     "text": "Our goal in this computational workshop is to introduce some concepts in microbial ecology."
   },
   {
+    "objectID": "diversity_measures.html",
+    "href": "diversity_measures.html",
+    "title": "Diversity Measures",
+    "section": "",
+    "text": "This chapter will introduce the concept of a diversity measure in microbial ecology."
+  },
+  {
     "objectID": "workshop_04.html",
     "href": "workshop_04.html",
     "title": "Workshop 04",
@@ -35,11 +42,25 @@
     "text": "Our goal in this workshop is to introduce you to handling and analysing CRISPR-Cas sequence data."
   },
   {
+    "objectID": "piler_cr.html",
+    "href": "piler_cr.html",
+    "title": "PILER-CR",
+    "section": "",
+    "text": "This chapter will introduce the software tool PILER-CR, which is designed to predict the location and content of CRISPR repeats in microbial genomes."
+  },
+  {
     "objectID": "workshop_05.html",
     "href": "workshop_05.html",
     "title": "Workshop 05",
     "section": "",
     "text": "Our goal in this workshop is to introduce you to producing and interpreting phylogenetic trees."
+  },
+  {
+    "objectID": "protein_trees.html",
+    "href": "protein_trees.html",
+    "title": "Protein Trees",
+    "section": "",
+    "text": "This chapter will guide you through the process of producing a phylogenetic tree from a protein sequence alignment."
   },
   {
     "objectID": "references.html",
