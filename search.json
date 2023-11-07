@@ -28,6 +28,13 @@
     "text": "Our goal in this computational workshop is to introduce some concepts in microbial ecology."
   },
   {
+    "objectID": "microbial_ecology.html#what-is-microbial-ecology",
+    "href": "microbial_ecology.html#what-is-microbial-ecology",
+    "title": "Microbial Ecology",
+    "section": "What is microbial ecology?",
+    "text": "What is microbial ecology?\nMicrobial ecology is the scientific study of natural microbial communities. It is a hugely important, but arguably underdeveloped area of biology. Many important questions remain to be completely answered in detail:\n\nthe composition of microbial communities\n\nwhat microbes are found in a community?\nwhat proportion of each microbe species (or other group) is present in a community?\n\ninteractions within the community\n\nis the community stable (or is it growing, shrinking, or changing composition)?\ndo community members share or compete for resources, and which resources?\ndo the community members effectively operate as a larger-scale system?\n\ninteractions of a community with other organisms\n\ndoes the gut microbial community influence the host animal’s nutrition, health, or disease status?\ndoes the rhizosphere microbial community influence a plant’s ability to extract nutrition or energy from the environment, and contribute to protection against pathogens?\n\ninteractions between communities\n\nwhen two communities come together, what does the resulting community look like?\nare there two or more separate (or interacting communities), or do they somehow combine?\n\nengineering new microbial communities\n\ncan we predict which microbes can combine into a productive community?\ncan we choose these microbes to engineer a community that achieves a particular goal (e.g. plant protection or gut health)\ncan we perturb existing communities to make them beneficial to health or achieve some other goal?\n\n\nThis array of questions can be summarised more simply as (Prosser 2020):\n\nWho is there?\nWhat is meant by “there”?\nWho is doing what in there?\nWhat is the effect of doing … to there?\n\n\n\n\n\nProsser, James I. 2020. “Putting Science Back into Microbial Ecology: A Question of Approach.” Philos. Trans. R. Soc. Lond. B Biol. Sci. 375 (1798): 20190240. https://doi.org/10.1098/rstb.2019.0240."
+  },
+  {
     "objectID": "diversity_measures.html",
     "href": "diversity_measures.html",
     "title": "Diversity Measures",
@@ -67,6 +74,6 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nProsser, James I. 2020. “Putting Science Back into Microbial\nEcology: A Question of Approach.” Philos. Trans. R. Soc.\nLond. B Biol. Sci. 375 (1798): 20190240. https://doi.org/10.1098/rstb.2019.0240."
   }
 ]
