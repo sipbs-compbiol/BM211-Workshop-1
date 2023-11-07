@@ -76,8 +76,8 @@ In addition to their speed and the scale of data they can produce, these molecul
 ::: {.callout-important}
 These molecular techniques answer the question of _"Who is there?"_, in two ways:
 
-1. They tell us what kinds of organism are present (often to _species_ or _genus_ level)
-2. They give us a relative count of how much of each kind of organism is present
+1. They tell us **what kinds of organism are present** (often to _species_ or _genus_ level)
+2. They give us a relative count of **how much of each kind of organism is present**
 
 Taken together, these answers tell us the _diversity_ of the community.
 :::
