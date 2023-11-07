@@ -1,0 +1,31 @@
+# Microbial Ecology {#sec-microbial-ecology .unnumbered}
+
+## What is microbial ecology?
+
+Microbial ecology is the scientific study of natural microbial communities. It is a hugely important, but arguably underdeveloped area of biology. Many important questions remain to be completely answered in detail:
+
+- the composition of microbial communities
+  - what microbes are found in a community?
+  - what proportion of each microbe species (or other group) is present in a community?
+- interactions within the community
+  - is the community _stable_ (or is it growing, shrinking, or changing composition)?
+  - do community members share or compete for resources, and which resources?
+  - do the community members effectively operate as a larger-scale system?
+- interactions of a community with other organisms
+  - does the gut microbial community influence the host animal's nutrition, health, or disease status?
+  - does the rhizosphere microbial community influence a plant's ability to extract nutrition or energy from the environment, and contribute to protection against pathogens?
+- interactions between communities
+  - when two communities come together, what does the resulting community look like?
+  - are there two or more separate (or interacting communities), or do they somehow combine?
+- engineering new microbial communities
+  - can we predict which microbes can combine into a productive community?
+  - can we choose these microbes to engineer a community that achieves a particular goal (e.g. plant protection or gut health)
+  - can we perturb existing communities to make them beneficial to health or achieve some other goal?
+
+This array of questions can be summarised more simply as [@Prosser2020-aw]:
+
+1. Who is there?
+2. What is meant by "there"?
+3. Who is doing what in there?
+4. What is the effect of doing … to there?
+

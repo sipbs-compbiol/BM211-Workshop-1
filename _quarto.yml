@@ -29,6 +29,7 @@ book:
     
     - part: workshop_01.qmd
       chapters:
+        - microbial_ecology.qmd
         - diversity_measures.qmd
         
     - part: workshop_04.qmd
