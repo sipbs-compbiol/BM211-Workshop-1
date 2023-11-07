@@ -30,7 +30,7 @@ This array of questions can be summarised more simply as [@Prosser2020-aw]:
 1. Who is there?
 2. What is meant by "there"?
 3. Who is doing what in there?
-4. What is the effect of doing … to there?
+4. What is the effect of doing … to "there"?
 
 ## Answering questions about microbial ecology using molecular techniques
 
