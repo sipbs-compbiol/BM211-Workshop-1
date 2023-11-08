@@ -8,7 +8,7 @@
 
 <meta name="author" content="Leighton Pritchard and Morgan Feeney">
 
-<title>bm211-workshops - Diversity Measures</title>
+<title>bm211-workshops - 4&nbsp; Diversity Measures</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01.html">Workshop 01</a></li><li class="breadcrumb-item"><a href="./diversity_measures.html">Diversity Measures</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01.html">Workshop 01</a></li><li class="breadcrumb-item"><a href="./diversity_measures.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diversity_measures.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Diversity Measures</span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
   </div>
 </li>
       </ul>
@@ -196,14 +196,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-diversity" id="toc-what-is-diversity" class="nav-link active" data-scroll-target="#what-is-diversity"><span class="header-section-number">4.1</span> What is diversity?</a>
+  <ul class="collapse">
+  <li><a href="#an-example-community" id="toc-an-example-community" class="nav-link" data-scroll-target="#an-example-community"><span class="header-section-number">4.1.1</span> An example community</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/diversity_measures.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-diversity-measures" class="quarto-section-identifier">Diversity Measures</span></h1>
+<h1 class="title"><span id="sec-diversity-measures" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></h1>
 </div>
 
 
@@ -219,8 +228,87 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>This section introduces the concept of a <strong>diversity measure</strong> in microbial ecology.</p>
+<section id="what-is-diversity" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="what-is-diversity"><span class="header-section-number">4.1</span> What is diversity?</h2>
+<p><strong>Diversity measurements for a microbial community are quantitative estimates of how <em>heterogeneous</em> or <em>homogeneous</em> that community is</strong>. <em>Qualitative</em> estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Diversity (or the lack of it) is a <strong>property of the community</strong>, not a property of individuals in the community.</p>
+</div>
+</div>
+</div>
+<p>If we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use <em>quantitative</em> approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.</p>
+<section id="an-example-community" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="an-example-community"><span class="header-section-number">4.1.1</span> An example community</h3>
+<p>To help illustrate this, we went to Mars<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to obtain a sample (<a href="#fig-one_packet">Figure&nbsp;<span>4.1</span></a>).</p>
+<div id="fig-one_packet" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/images/diversity_estimates/01_one_packet.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: A community sample, obtained from Mars</figcaption>
+</figure>
+</div>
+<p>This community contains a range of individuals of different type, distinguishable by the detailed structure of their outer membranes, and also by their internal contents. The diversity of the community can be seen in (<a href="#fig-one_packet_contents">Figure&nbsp;<span>4.2</span></a>).</p>
+<div id="fig-one_packet_contents" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/images/diversity_estimates/03_one_packet_contents.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.2: A detailed view of the Mars sample, showing community diversity</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div>
+<div class="callout-exercise">
+<p>By visual inspection of (<a href="#fig-one_packet_contents">Figure&nbsp;<span>4.2</span></a>), how diverse would you say the sample is?</p>
+<div class="callout callout-style-simple callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div>
+<div class="callout-answer" data-collapse="true">
+<p>There are clearly several different kinds of individual present, so the sample is not homogenous and is <em>diverse</em> in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.</p>
+<p><strong>We clearly need to be more precise about what exactly we mean, when talking about <em>diversity</em>.</strong></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>OK, we actually went to Sainsbury’s Local. The one on Buchanan Street. But the sweets are technically from <em>Mars</em>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -474,7 +562,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.</div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/diversity_measures.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    </div>
     <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
   </div>
 </footer>

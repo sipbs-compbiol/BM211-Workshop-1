@@ -49,11 +49,18 @@
     "text": "3.3 Describing community composition\nThe list of organisms identified as present in our sample and the (relative) count of how much of the community is composed of each organism, taken together, describe our measured microbial community composition.\n\n\n\n\nAbreu, Vinicius A C de, José Perdigão, and Sintia Almeida. 2020. “Metagenomic Approaches to Analyze Antimicrobial Resistance: An Overview.” Front. Genet. 11: 575592. https://doi.org/10.3389%2Ffgene.2020.575592.\n\n\nBoughner, Lisa A, and Pallavi Singh. 2016. “Microbial Ecology: Where Are We Now?” Postdoc J. 4 (11): 3–17. https://doi.org/10.14304%2FSURYA.JPR.V4N11.2.\n\n\nManzari, Caterina, Annarita Oranger, Bruno Fosso, Elisabetta Piancone, Graziano Pesole, and Anna Maria D’Erchia. 2020. “Accurate Quantification of Bacterial Abundance in Metagenomic DNAs Accounting for Variable DNA Integrity Levels.” Microb. Genom. 6 (10). https://doi.org/10.1099%2Fmgen.0.000417.\n\n\nProsser, James I. 2020. “Putting Science Back into Microbial Ecology: A Question of Approach.” Philos. Trans. R. Soc. Lond. B Biol. Sci. 375 (1798): 20190240. https://doi.org/10.1098/rstb.2019.0240.\n\n\nSetubal, João C. 2021. “Metagenome-Assembled Genomes: Concepts, Analogies, and Challenges.” Biophys. Rev. 13 (6): 905–9. https://doi.org/10.1007/s12551-021-00865-y.\n\n\nWood, Derrick E, and Steven L Salzberg. 2014. “Kraken: Ultrafast Metagenomic Sequence Classification Using Exact Alignments.” Genome Biol. 15 (3): R46. https://doi.org/10.1186/gb-2014-15-3-r46."
   },
   {
-    "objectID": "diversity_measures.html",
-    "href": "diversity_measures.html",
-    "title": "Diversity Measures",
+    "objectID": "diversity_measures.html#what-is-diversity",
+    "href": "diversity_measures.html#what-is-diversity",
+    "title": "4  Diversity Measures",
+    "section": "4.1 What is diversity?",
+    "text": "4.1 What is diversity?\nDiversity measurements for a microbial community are quantitative estimates of how heterogeneous or homogeneous that community is. Qualitative estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.\n\n\n\n\n\n\nDiversity (or the lack of it) is a property of the community, not a property of individuals in the community.\n\n\n\nIf we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use quantitative approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.\n\n4.1.1 An example community\nTo help illustrate this, we went to Mars1 to obtain a sample (Figure 4.1).\n\n\n\nFigure 4.1: A community sample, obtained from Mars\n\n\nThis community contains a range of individuals of different type, distinguishable by the detailed structure of their outer membranes, and also by their internal contents. The diversity of the community can be seen in (Figure 4.2).\n\n\n\nFigure 4.2: A detailed view of the Mars sample, showing community diversity\n\n\n\n\n\n\n\n\nExercise 1\n\n\n\n\n\n\n\nBy visual inspection of (Figure 4.2), how diverse would you say the sample is?\n\n\n\n\n\n\nAnswer\n\n\n\n\n\n\n\nThere are clearly several different kinds of individual present, so the sample is not homogenous and is diverse in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.\nWe clearly need to be more precise about what exactly we mean, when talking about diversity."
+  },
+  {
+    "objectID": "diversity_measures.html#footnotes",
+    "href": "diversity_measures.html#footnotes",
+    "title": "4  Diversity Measures",
     "section": "",
-    "text": "This section introduces the concept of a diversity measure in microbial ecology."
+    "text": "OK, we actually went to Sainsbury’s Local. The one on Buchanan Street. But the sweets are technically from Mars.↩︎"
   },
   {
     "objectID": "workshop_04.html",
