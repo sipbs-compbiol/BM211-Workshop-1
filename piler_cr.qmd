@@ -1,3 +1,0 @@
-# PILER-CR {#sec-piler-cr .unnumbered}
-
-This chapter will introduce the software tool `PILER-CR`, which is designed to predict the location and content of CRISPR repeats in microbial genomes.

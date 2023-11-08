@@ -1,3 +1,0 @@
-# Protein Trees {#sec-protein-trees .unnumbered}
-
-This chapter will guide you through the process of producing a phylogenetic tree from a protein sequence alignment.
