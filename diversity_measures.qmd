@@ -1,3 +1,38 @@
-# Diversity Measures {#sec-diversity-measures .unnumbered}
+# Diversity Measures {#sec-diversity-measures}
 
 This section introduces the concept of a **diversity measure** in microbial ecology.
+
+## What is diversity?
+
+**Diversity measurements for a microbial community are quantitative estimates of how _heterogeneous_ or _homogeneous_ that community is**. _Qualitative_ estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.
+
+::: {.callout-important}
+Diversity (or the lack of it) is a **property of the community**, not a property of individuals in the community.
+:::
+
+If we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use _quantitative_ approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.
+
+### An example community
+
+To help illustrate this, we went to Mars[^1] to obtain a sample (@fig-one_packet).
+
+![A community sample, obtained from Mars](assets/images/diversity_estimates/01_one_packet.png){#fig-one_packet width=50%}
+
+This community contains a range of individuals of different type, distinguishable by the detailed structure of their outer membranes, and also by their internal contents. The diversity of the community can be seen in (@fig-one_packet_contents).
+
+![A detailed view of the Mars sample, showing community diversity](assets/images/diversity_estimates/03_one_packet_contents.png){#fig-one_packet_contents width=50%}
+
+::: {.callout-exercise}
+## Exercise 1
+
+By visual inspection of (@fig-one_packet_contents), how diverse would you say the sample is?
+
+::: {.callout-answer collapse="true"}
+There are clearly several different kinds of individual present, so the sample is not homogenous and is _diverse_ in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.
+
+**We clearly need to be more precise about what exactly we mean, when talking about _diversity_.**
+:::
+:::
+
+
+[^1]: OK, we actually went to Sainsbury's Local. The one on Buchanan Street. But the sweets are technically from _Mars_.

@@ -46,7 +46,7 @@ bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme: [cosmo, theme.scss]
     code-link: true
 
     author-meta: "Leighton Pritchard and Morgan Feeney"
@@ -55,5 +55,7 @@ format:
   pdf:
     documentclass: scrreprt
 
+filters:
+  - course_format
 
 
