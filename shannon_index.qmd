@@ -1,0 +1,107 @@
+# Shannon Index {#sec-shannon-index}
+
+```{r}
+#| echo: false
+
+library(ggplot2)
+```
+
+::: {.callout-note}
+This section introduces the **Shannon Index** as a simple measure of community diversity.
+
+- We introduce the concept of **Shannon Index** and explain what it means.
+- **We walk through calculation of the Shannon Index in `R`**, using data from our example community in @sec-diversity-measures.
+  - We relate the actions in this `R` example to the equation that defines Shannon Index at each step.
+- We introduce the concept of **Effective number of species** and how this relates to Shannon Index.
+:::
+
+**To understand diversity, we need to consider both richness and evenness**, as described in @sec-diversity-measures. 
+
+We can obtain a simple count of species abundance to calculate richness. We also know that if each species is present in about the same abundance there is _high evenness_, and if the population is dominated by a single species there is _low evenness_. But by itself this idea of evenness does not give us a number that we can use to compare communities.
+
+But there are formulae that allow us to do this, and we can calculate such values for a community using `R`.
+
+## What is the Shannon index?
+
+**The Shannon Index ($H$) is arguably the simplest measure of community diversity.** It is described by @eq-shannon_entropy, and varies between a value close to zero (for very uneven communities), and $ln(1/N)$ for an community with $N$ evenly-distributed species. The way that the maximum value of Shannon Index varies with species richness (count of species) is shown in @fig-shannon_maxima.
+
+```{r}
+#| label: fig-shannon_maxima
+#| fig-cap: Plot of maximum Shannon Index against community richness
+#| warning: false
+#| echo: false
+#| width: 75%
+
+# Generate a dataframe of maximum Shannon Index values for a given community richness
+dfm <- data.frame(richness=1:100, index=log(1:100))
+
+p <- ggplot(dfm, aes(x=richness, y=index)) +
+  geom_line() +
+  xlab("Species Richness") +
+  ylab("Shannon Index")
+p
+```
+
+### What does the equation for Shannon Index mean?
+
+The Shannon Index describes the _evenness_ of species in a community. Representing one species from the community as $i$, we can calculate the **relative abundance** of that species in the community as its richness (count of species $i$) divided by the total abundance for all species. We call this relative abundance $p_i$.
+
+The Shannon Index takes this number and transforms it mathematically (as in @eq-shannon_entropy) so that the resulting value $H$ varies between zero (maximally uneven), and some maximum value (maximally even), as represented in @fig-shannon_maxima. Knowing the _richness_ (total number of species) for a community and the _Shannon Index ($H$)_, we can quantify how diverse our community is.
+
+$$
+H = -\sum_{i=1}^{N} p_i \ln(p_i)
+$$ {#eq-shannon_entropy}
+
+
+### Calculating Shannon Index
+
+Let's start in `R` by defining our dataset for the Mars community. In the code below we do this by creating two vectors: one of species names, and one of counts for those species in our sample. We combine these vectors into a single dataframe, for convenience.
+
+```{r}
+# Define a vector of species names
+species <- c("Malteaser sp.", "Snickers sp.", "Twix sp.", "Mars sp.",
+            "Milky way", "Bounty sp.", "Galaxy choc", "Galaxy caramel")
+
+# Define a vector of corresponding species counts
+count <- c(3, 6, 6, 7, 7, 5, 3, 3)
+
+# Bring these together in a dataframe
+community.df <- data.frame(species, count)
+```
+
+We can inspect the dataframe, to make sure we have the correct data:
+
+```{r}
+community.df
+```
+
+The first step in calculating Shannon Index is to calculate the **relative abundance** of each species. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e. the total number of individuals, in this case).
+
+```{r}
+# Calculate relative abundances
+community.df$rel_abd <- community.df$count / sum(community.df$count)
+
+# Show the data frame
+community.df
+```
+
+To turn this data into the Shannon Index, we need to carry out two more steps: calculate the _natural log_ of the relative abundance of each species, then multiply this by the corresponding relative abundance, as in the `R` code below:
+
+```{r}
+# Calculate the natural log of relative abundance
+community.df$ln_rel_abd <- log(community.df$rel_abd)
+
+# Multiply the relative abundance by its natural log
+community.df$mult <- community.df$rel_abd * log(community.df$rel_abd)
+
+# Show the result
+community.df
+```
+
+The Shannon Index is then the sum of this final column of values (multiplied by `-1` to make it a positive value).
+
+```{r}
+shannon_index = -sum(community.df$mult)
+shannon_index
+```
+

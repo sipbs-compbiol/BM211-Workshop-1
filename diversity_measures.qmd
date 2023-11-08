@@ -1,6 +1,13 @@
 # Diversity Measures {#sec-diversity-measures}
 
+::: {.callout-note}
 This section introduces the concept of a **diversity measure** in microbial ecology.
+
+- We introduce an **example community**, obtained from Mars, to explore concepts with.
+- We discuss fundamental concepts in ecological diversity:
+  - **richness**
+  - **evenness**
+:::
 
 ## What is diversity?
 
@@ -10,7 +17,7 @@ This section introduces the concept of a **diversity measure** in microbial ecol
 Diversity (or the lack of it) is a **property of the community, not a property of individuals** in the community.
 :::
 
-If we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use _quantitative_ approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.
+If we want to record the level of diversity in a community, or compare it to other communities, we cannot easily rely on qualitative estimates. We need to be more precise than this, and to use _quantitative_ approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.
 
 ### An example community
 
@@ -25,18 +32,18 @@ This community contains a range of individuals of different type, distinguishabl
 ::: {.callout-exercise}
 ## Exercise 1
 
-By visual inspection of (@fig-one_packet_contents), how diverse would you say the sample is?
+By visual inspection of @fig-one_packet_contents, how diverse would you say the sample is?
 
 ::: {.callout-answer}
 There are clearly several different kinds of individual present, so the sample is not homogenous and is _diverse_ in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.
 
-**We clearly need to be more precise about what exactly we mean, when talking about _diversity_.**
+**We clearly need to be more precise about what exactly we mean, when talking about _diversity_**, so that others can understand exactly what we mean.
 :::
 :::
 
 ## Community richness and evenness
 
-We usually define how _diverse_ a community is by using a **diversity index**. This is a number that reflects the distribution of different _types_ (such as microbial species) of individual that are found in a sample. There are two major concepts to note that contribute to diversity indices.
+We usually define how _diverse_ a community is by using a **diversity index**. This is a number that reflects the distribution of different _types_ (such as microbial species) of individual that are found in a sample. There are two major concepts that contribute to diversity indices.
 
 ::: {.callout-tip collapse="true"}
 ## Richness
@@ -65,64 +72,17 @@ We can organise the individuals in the Mars sample, as shown in @fig-one_packet_
 
 ### Species richness
 
-We can easily count the number of different species, as determined by morphology and membrane features, in (@fig-one_packet_histogram). There are eight (8).
+We can easily count the number of different species, as determined by morphology and membrane features, in @fig-one_packet_histogram. There are eight (8) species, and this is a quantitative measure of species richness.
 
-Taken in isolation, this number doesn't tell us very much. We would need other information - maybe from other samples - to know whether eight species is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at @fig-one_packet_histogram we can tell they are not).
+Taken in isolation though, this number doesn't tell us very much. We would need other information - maybe from other samples - to know whether eight is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at @fig-one_packet_histogram we can tell they are not). We need to consider _evenness_ for that.
 
-### Species diversity: Shannon index
+### Species evenness
 
-**To understand diversity, we need to consider both richness and evenness.** We know that if each species is present in about the same amount there is _high evenness_, and if the population is dominated by a single species there is _low evenness_, but by itself that does not give us a number that we can use to compare communities. But there are formulae that allow us to do this, and we can calculate the value using `R`.
+We can see visually from @fig-one_packet_histogram that there are not equal amounts of each species, so the community is not perfectly even in terms of species evenness. **But the question remains open: how do we combine richness and evenness together into an _index_ or number, to understand species diversity in our sample?**
 
-#### Calculating Shannon Index
+::: {.callout-important}
+**We will discuss a simple measure of species diversity, _Shannon Index_, in [the next chapter](shannon_index.qmd).**
+:::
 
-Let's start in `R` by defining our dataset for the Mars community. In the code below we do this by creating two vectors: one of species names, and one of counts for those species in our sample. We combine these vectors into a single dataframe, for convenience.
-
-```{r}
-# Define a vector of species names
-species <- c("Malteaser sp.", "Snickers sp.", "Twix sp.", "Mars sp.",
-            "Milky way", "Bounty sp.", "Galaxy choc", "Galaxy caramel")
-
-# Define a vector of corresponding species counts
-count <- c(3, 6, 6, 7, 7, 5, 3, 3)
-
-# Bring these together in a dataframe
-community.df <- data.frame(species, count)
-```
-
-We can inspect the dataframe, to make sure we have the correct data:
-
-```{r}
-community.df
-```
-
-The first step in calculating Shannon Index is to calculate the **relative abundance** of each species. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e. the total number of individuals, in this case).
-
-```{r}
-# Calculate relative abundances
-community.df$rel_abd <- community.df$count / sum(community.df$count)
-
-# Show the data frame
-community.df
-```
-
-To turn this data into the Shannon Index, we need to carry out two more steps: calculate the _natural log_ of the relative abundance of each species, then multiply this by the corresponding relative abundance, as in the `R` code below:
-
-```{r}
-# Calculate the natural log of relative abundance
-community.df$ln_rel_abd <- log(community.df$rel_abd)
-
-# Multiply the relative abundance by its natural log
-community.df$mult <- community.df$rel_abd * log(community.df$rel_abd)
-
-# Show the result
-community.df
-```
-
-The Shannon Index is then the sum of this final column of values (multiplied by `-1` to make it a positive value).
-
-```{r}
-shannon_index = -sum(community.df$mult)
-shannon_index
-```
 
 [^1]: OK, we actually went to Sainsbury's Local. The one on Buchanan Street. But the sweets _are_ technically from _Mars_.
