@@ -8,7 +8,7 @@ This is accompanying material to give additional background and explanation for 
 
 ## What is microbial ecology?
 
-Microbial ecology is the scientific study of natural microbial communities. It is a hugely important, but arguably underdeveloped area of biology. Important questions remain to be completely answered in detail for many biological systems:
+**Microbial ecology is the scientific study of natural microbial communities**. It is a hugely important, but arguably underdeveloped area of biology. Important questions remain to be completely answered in detail for many biological systems:
 
 ::: {.callout-tip collapse="true"}
 ## The composition of microbial communities
@@ -56,7 +56,7 @@ This array of questions can be summarised more simply as [@Prosser2020-aw]:
 
 ## Answering questions about microbial ecology using molecular techniques
 
-Molecular techniques enabled by modern sequencing approaches, such as amplicon marker sequencing (e.g. 16S, ITS1 methods) - also known as _metabarcoding_ - and sequencing the entire genomic DNA of a complex sample - also known as _metagenomics_ - have become the dominant approach to understanding microbial community composition [@Boughner2016-vx]. These tools give rapid insights into the complex composition of microbial communities that are unattainable using laborious, time-consuming culture-based techniques.
+Molecular techniques enabled by modern sequencing approaches, such as amplicon marker sequencing (e.g. 16S, ITS1 methods) - also known as **metabarcoding** - and sequencing the entire genomic DNA of a complex sample - also known as **metagenomics** - have become the dominant approach to understanding microbial community composition [@Boughner2016-vx]. These tools give rapid insights into the complex composition of microbial communities that are unattainable using laborious, time-consuming culture-based techniques.
 
 ::: {.callout-caution collapse="true"}
 ## Metagenomics _vs_ Metabarcoding
@@ -79,7 +79,7 @@ These molecular techniques answer the question of _"Who is there?"_, in two ways
 1. They tell us **what kinds of organism are present** (often to _species_ or _genus_ level)
 2. They give us a relative count of **how much of each kind of organism is present**
 
-Taken together, these answers tell us the _diversity_ of the community.
+Taken together, these answers tell us the **diversity of the community**.
 :::
 
 ::: {.callout-note}
@@ -89,32 +89,32 @@ We will introduce measures of community diversity in [a later section](diversity
 
 ### Which organisms are present?
 
-Both _metabarcoding_ and _metagenomics_ can tell us which microorganisms are present in a biological or environmental sample.
+Both **metabarcoding** and **metagenomics** can tell us which microorganisms are present in a biological or environmental sample.
 
 #### Metabarcoding
 
-In _metabarcoding_, we use the polymerase chain reaction (PCR) and primers _targeted_ specifically to amplify a gene fragment or other stretch of DNA that we believe to be present in all organisms of interest. For bacteria, this is usually a fragment of the 16S rRNA gene. For fungi and other eukaryotic mocroorganisms it may be a fragment of the ITS1 (Internally Transcribed Spacer 1) region.
+In **metabarcoding**, we use the polymerase chain reaction (PCR) and **primers targeted specifically to amplify a marker sequence**: a gene fragment or other stretch of DNA that we believe to be present in all organisms of interest. For bacteria, this is usually a fragment of the 16S rRNA gene. For fungi and other eukaryotic mocroorganisms it may be a fragment of the ITS1 (Internally Transcribed Spacer 1) region.
 
-These regions of the genome acquire sequence changes as their organisms evolve over time, such that variants of the sequence can be associated with a particular group of microorganisms, usually at the species or genus level. By amplifying and then sequencing the marker sequence from all suitable organisms in the sample, we can identify the marker sequence variants, and then compare these to databases of known sequences, to identify which organisms are present.
+These regions of the genome acquire sequence changes as their organisms evolve over time, such that variants of the marker sequence can be associated with a particular group of microorganisms, usually at the species or genus level. By amplifying and then sequencing the marker sequence from all suitable organisms in the sample, we can **identify the marker sequence variants, and then compare these to databases of known sequences**, to identify which organisms are present.
 
 #### Metagenomics
 
-A similar principle applies with _metagenomics_: we sequence the sample and then compare the resulting sequences to a database containing sequences of known organisms, and use this to identify which of them are present in our sample. Differences between the methods arise mainly because this approach is _untargeted_ - we do not know in advance what sequences we will recover - and generates very large amounts of data. Three of the main consequences of this are:
+A similar principle applies with **metagenomics**: we sequence the sample and then compare the resulting sequences to a database containing sequences of known organisms, and use this to identify which of them are present in our sample. Differences between the methods arise mainly because **this approach is untargeted - we do not know in advance what sequences we will recover** - and generates very large amounts of data. Three of the main consequences of this are:
 
-1. We can compare individual sequencing reads to the database of known sequences, but due to the large amount of sequence data (in comparison to metabarcoding) we have to do this using special techniques like _$k$-mer alignment_, rather than direct sequence comparison [@Wood2014-ns].
-2. We can assemble near-complete and complete genomes from the data: _Metagenome-Assembled Genomes_ (MAGs) [@Setubal2021-ka].
+1. We can compare individual sequencing reads to the database of known sequences, but due to the large amount of sequence data (in comparison to metabarcoding) we have to do this using special techniques like **$k$-mer alignment**, rather than direct sequence comparison [@Wood2014-ns].
+2. We can assemble near-complete and complete genomes from the data: **Metagenome-Assembled Genomes (MAGs).** [@Setubal2021-ka].
 3. We can obtain much more information than simple organism identity, such as the presence or absence of individual genes or gene functions, such as antimicrobial resistance genes [@De_Abreu2020-jt].
 
 ### How much of each organism is present?
 
 Whichever method we use to sequence a biological sample, we can obtain a list of the organisms that are present. This tells us something about the composition of the sample, but not everything. There is clearly a difference between one community that is 50% _Escherichia coli_ and 50% _Staphylococcus aureus_, and another community that is 99% _S. aureus_ and 1% _E. coli_. But how can we distinguish between the two?
 
-In both _metabarcoding_ and _metagenomics_ we can count the number of sequences that correspond to each of the organism types we have identified. For metabarcoding, this might be the count of each amplicon sequence corresponding to a microbial genus. For metagenomics, this might be the number of reads assigned to a microbial species by a tool like [Kraken](https://ccb.jhu.edu/software/kraken/).
+In both metabarcoding and metagenomics we can count the number of sequences that correspond to each of the organism types we have identified. For metabarcoding, this might be the count of each amplicon sequence corresponding to a microbial genus. For metagenomics, this might be the number of reads assigned to a microbial species by a tool like [Kraken](https://ccb.jhu.edu/software/kraken/).
 
 ::: {.callout-warning collapse="true"}
 ## Molecular techniques only _estimate_ organism abundance
 
-All counts of organisms, by both methods, are strictly _estimates_ of the representation of each organism in the sample. There are many factors that influence the way this estimate may very from the _actual_ amount or proportion of any organism in the sample, including:
+All counts of organisms, by both methods, are strictly **estimates of the representation of each organism in the sample**. There are many factors that influence the way this estimate may very from the actual amount or proportion of any organism in the sample, including:
 
 - DNA quality [@Manzari2020-br]
 - laboratory technique (sample spillover or other handling problems)
@@ -125,8 +125,8 @@ All counts of organisms, by both methods, are strictly _estimates_ of the repres
 
 With metagenomic analyses that result in assembled MAGs, an additional way of estimating the amount of each organism present is possible: we can count the number of reads that contribute to each MAG assembly. These reads are then assigned the same identity as that of the MAG itself.
 
-We refer to the count of each distinct group of microbes as its _abundance_.
+We refer to the count of each distinct group of microbes as its **abundance**.
 
 ## Describing community composition
 
-Armed with a list of organisms identified as present in our sample, and a (relative) count of how much of the community is composed of each organism, we can describe our measured microbial community composition.
+The list of organisms identified as present in our sample and the (relative) count of how much of the community is composed of each organism, taken together, describe our measured **microbial community composition**.
