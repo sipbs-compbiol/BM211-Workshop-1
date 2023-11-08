@@ -7,7 +7,7 @@ This section introduces the concept of a **diversity measure** in microbial ecol
 **Diversity measurements for a microbial community are quantitative estimates of how _heterogeneous_ or _homogeneous_ that community is**. _Qualitative_ estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.
 
 ::: {.callout-important}
-Diversity (or the lack of it) is a **property of the community**, not a property of individuals in the community.
+Diversity (or the lack of it) is a **property of the community, not a property of individuals** in the community.
 :::
 
 If we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use _quantitative_ approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.
@@ -27,7 +27,7 @@ This community contains a range of individuals of different type, distinguishabl
 
 By visual inspection of (@fig-one_packet_contents), how diverse would you say the sample is?
 
-::: {.callout-answer collapse="true"}
+::: {.callout-answer}
 There are clearly several different kinds of individual present, so the sample is not homogenous and is _diverse_ in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.
 
 **We clearly need to be more precise about what exactly we mean, when talking about _diversity_.**
