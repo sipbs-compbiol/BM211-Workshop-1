@@ -186,11 +186,23 @@ For example:
   - A community with three species in equal proportions, e.g. 33% $A$, 33% $B$, and 33% $C$ clearly has three equally-contributing species. We might expect the effective number of species to be three.
   - A community dominated by a single species, e.g. 1% $A$, 1% $B$, and 98% $C$ might _effectively_ have only one species: species $C$.
   
-By taking the _exponent_ of the Shannon Index, we calculate a value known as the **effective number of species**, or **Diversity ($D$)** of a community. The mathematical equation is given in @eq-effective_species.
+By taking the _exponential_ of the Shannon Index, we calculate a value known as the **effective number of species**, or **Diversity ($D$)** of a community. The mathematical equation is given in @eq-effective_species.
 
 $$
 D = \exp(H)
 $$ {#eq-effective_species}
+
+::: {.callout-caution}
+## Mathematical content
+
+This works becausem as we noted earlier, a community with $N$ evenly-represented species has a Shannon Index of $H = \ln(N)$. Hence,
+
+$$
+D = \exp(H) = \exp(\ln(N)) = N
+$$
+
+and in this special case, **effective number of species is the same as the actual number of species.**
+:::
 
 ### The Effective Number of Species for our Mars sample
 
@@ -201,4 +213,4 @@ diversity = exp(2.021916)
 diversity
 ```
 
-This gives a value of $D = 7.55$, which is close to the **richness** value of eight, and indicates that **our sample is highly diverse**.
+This gives a value of $D = 7.55$ for the effective number of species. This is close to the actual number of species in our sample - the **richness** value - of eight, which indicates that **our sample is highly diverse**.
