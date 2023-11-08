@@ -34,5 +34,95 @@ There are clearly several different kinds of individual present, so the sample i
 :::
 :::
 
+## Community richness and evenness
 
-[^1]: OK, we actually went to Sainsbury's Local. The one on Buchanan Street. But the sweets are technically from _Mars_.
+We usually define how _diverse_ a community is by using a **diversity index**. This is a number that reflects the distribution of different _types_ (such as microbial species) of individual that are found in a sample. There are two major concepts to note that contribute to diversity indices.
+
+::: {.callout-tip collapse="true"}
+## Richness
+
+The **richness** of a sample is the **number of different types that are represented in the sample**.
+
+For example, _species richness_ is a count of the total number of species in the sample. **It does not take into acount species abundance, or relative abundance**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Evenness
+
+The **evenness** of a sample reflects **how similar is the abundance of each type of thing** in the sample. The more similar the proportion of each type, the more _even_ the community.
+
+For example, _species evenness_ reflects the relative abundances of distinct species in the sample. If a sample contains three species: $A$, $B$, and $C$, then:
+
+- a sample with 33% $A$, 33% $B$, and 33% $C$ has **high species evenness**
+- a sample with 5% $A$, 90% $B$, and 5% $C$ has **low species evenness**
+:::
+
+## Richness and evenness in the Mars sample
+
+We can organise the individuals in the Mars sample, as shown in @fig-one_packet_histogram. This gives us enough information to calculate species richness and evenness for this community.
+
+![Species abundance in the Mars sample community](assets/images/diversity_estimates/04_one_packet_histogram.png){#fig-one_packet_histogram width=50%}
+
+### Species richness
+
+We can easily count the number of different species, as determined by morphology and membrane features, in (@fig-one_packet_histogram). There are eight (8).
+
+Taken in isolation, this number doesn't tell us very much. We would need other information - maybe from other samples - to know whether eight species is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at @fig-one_packet_histogram we can tell they are not).
+
+### Species diversity: Shannon index
+
+**To understand diversity, we need to consider both richness and evenness.** We know that if each species is present in about the same amount there is _high evenness_, and if the population is dominated by a single species there is _low evenness_, but by itself that does not give us a number that we can use to compare communities. But there are formulae that allow us to do this, and we can calculate the value using `R`.
+
+#### Calculating Shannon Index
+
+Let's start in `R` by defining our dataset for the Mars community. In the code below we do this by creating two vectors: one of species names, and one of counts for those species in our sample. We combine these vectors into a single dataframe, for convenience.
+
+```{r}
+# Define a vector of species names
+species <- c("Malteaser sp.", "Snickers sp.", "Twix sp.", "Mars sp.",
+            "Milky way", "Bounty sp.", "Galaxy choc", "Galaxy caramel")
+
+# Define a vector of corresponding species counts
+count <- c(3, 6, 6, 7, 7, 5, 3, 3)
+
+# Bring these together in a dataframe
+community.df <- data.frame(species, count)
+```
+
+We can inspect the dataframe, to make sure we have the correct data:
+
+```{r}
+community.df
+```
+
+The first step in calculating Shannon Index is to calculate the **relative abundance** of each species. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e. the total number of individuals, in this case).
+
+```{r}
+# Calculate relative abundances
+community.df$rel_abd <- community.df$count / sum(community.df$count)
+
+# Show the data frame
+community.df
+```
+
+To turn this data into the Shannon Index, we need to carry out two more steps: calculate the _natural log_ of the relative abundance of each species, then multiply this by the corresponding relative abundance, as in the `R` code below:
+
+```{r}
+# Calculate the natural log of relative abundance
+community.df$ln_rel_abd <- log(community.df$rel_abd)
+
+# Multiply the relative abundance by its natural log
+community.df$mult <- community.df$rel_abd * log(community.df$rel_abd)
+
+# Show the result
+community.df
+```
+
+The Shannon Index is then the sum of this final column of values (multiplied by `-1` to make it a positive value).
+
+```{r}
+shannon_index = -sum(community.df$mult)
+shannon_index
+```
+
+[^1]: OK, we actually went to Sainsbury's Local. The one on Buchanan Street. But the sweets _are_ technically from _Mars_.
