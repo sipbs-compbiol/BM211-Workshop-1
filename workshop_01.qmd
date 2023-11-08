@@ -1,0 +1,3 @@
+# Workshop 01 {#sec-workshop-01}
+
+Our goal in this computational workshop is to introduce some concepts in microbial ecology. 

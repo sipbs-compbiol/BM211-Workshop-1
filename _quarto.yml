@@ -1,0 +1,63 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "bm211-workshops"
+  reader-mode: true
+  
+  cover-image: cover.png
+  favicon: cover.png
+  
+  page-footer:
+    left: |
+      These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+
+  repo-url: https://github.com/sipbs-compbiol/bm211-workshops/
+  repo-branch: main
+  repo-actions: [edit, issue]
+
+  author: "Dr Leighton Pritchard and Dr Morgan Feeney"
+  date: "2023"
+  
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    
+    - part: workshop_01.qmd
+      chapters:
+        - microbial_ecology.qmd
+        - diversity_measures.qmd
+        
+    - part: workshop_04.qmd
+      chapters: 
+        - piler_cr.qmd
+        
+    - part: workshop_05.qmd
+      chapters: 
+        - protein_trees.qmd
+        
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: 
+      - cosmo
+      - _extensions/course_format/theme.scss
+    code-link: true
+
+    author-meta: "Leighton Pritchard and Morgan Feeney"
+    callout-appearance: simple
+    
+  pdf:
+    documentclass: scrreprt
+
+filters:
+  - course_format
+
+

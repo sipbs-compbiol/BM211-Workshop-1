@@ -1,0 +1,6 @@
+# Preface to the {{< var ay >}} presentation {.unnumbered}
+
+Welcome to the {{< var ay >}} edition of the BM211 computing workshops.
+
+This is the first presentation of this material in this form, and we would be very grateful to hear feedback [by email]({{< var admin.email >}}) or through the [GitHub repository Issues page]({{< var github.issues >}}).
+
