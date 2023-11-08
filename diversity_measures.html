@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,7 +31,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./workshop_04.html" rel="next">
+<link href="./shannon_index.html" rel="next">
 <link href="./microbial_ecology.html" rel="prev">
 <link href="./cover.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -184,6 +150,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./shannon_index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -244,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#richness-and-evenness-in-the-mars-sample" id="toc-richness-and-evenness-in-the-mars-sample" class="nav-link" data-scroll-target="#richness-and-evenness-in-the-mars-sample"><span class="header-section-number">4.3</span> Richness and evenness in the Mars sample</a>
   <ul class="collapse">
   <li><a href="#species-richness" id="toc-species-richness" class="nav-link" data-scroll-target="#species-richness"><span class="header-section-number">4.3.1</span> Species richness</a></li>
-  <li><a href="#species-diversity-shannon-index" id="toc-species-diversity-shannon-index" class="nav-link" data-scroll-target="#species-diversity-shannon-index"><span class="header-section-number">4.3.2</span> Species diversity: Shannon index</a></li>
+  <li><a href="#species-evenness" id="toc-species-evenness" class="nav-link" data-scroll-target="#species-evenness"><span class="header-section-number">4.3.2</span> Species evenness</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/diversity_measures.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -269,7 +241,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
 <p>This section introduces the concept of a <strong>diversity measure</strong> in microbial ecology.</p>
+<ul>
+<li>We introduce an <strong>example community</strong>, obtained from Mars, to explore concepts with.</li>
+<li>We discuss fundamental concepts in ecological diversity:
+<ul>
+<li><strong>richness</strong></li>
+<li><strong>evenness</strong></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
 <section id="what-is-diversity" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="what-is-diversity"><span class="header-section-number">4.1</span> What is diversity?</h2>
 <p><strong>Diversity measurements for a microbial community are quantitative estimates of how <em>heterogeneous</em> or <em>homogeneous</em> that community is</strong>. <em>Qualitative</em> estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.</p>
@@ -283,7 +272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>If we want to record or compare the level of diversity in a community, we cannot easily rely on qualitative estimates. We need to be more precise than this, and use <em>quantitative</em> approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.</p>
+<p>If we want to record the level of diversity in a community, or compare it to other communities, we cannot easily rely on qualitative estimates. We need to be more precise than this, and to use <em>quantitative</em> approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.</p>
 <section id="an-example-community" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="an-example-community"><span class="header-section-number">4.1.1</span> An example community</h3>
 <p>To help illustrate this, we went to Mars<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to obtain a sample (<a href="#fig-one_packet">Figure&nbsp;<span>4.1</span></a>).</p>
@@ -314,7 +303,7 @@ Exercise 1
 <div class="callout-body-container callout-body">
 <div>
 <div class="callout-exercise">
-<p>By visual inspection of (<a href="#fig-one_packet_contents">Figure&nbsp;<span>4.2</span></a>), how diverse would you say the sample is?</p>
+<p>By visual inspection of <a href="#fig-one_packet_contents">Figure&nbsp;<span>4.2</span></a>, how diverse would you say the sample is?</p>
 <div class="callout callout-style-simple callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -330,7 +319,7 @@ Answer
 <div>
 <div class="callout-answer">
 <p>There are clearly several different kinds of individual present, so the sample is not homogenous and is <em>diverse</em> in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.</p>
-<p><strong>We clearly need to be more precise about what exactly we mean, when talking about <em>diversity</em>.</strong></p>
+<p><strong>We clearly need to be more precise about what exactly we mean, when talking about <em>diversity</em></strong>, so that others can understand exactly what we mean.</p>
 </div>
 </div>
 </div>
@@ -345,7 +334,7 @@ Answer
 </section>
 <section id="community-richness-and-evenness" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="community-richness-and-evenness"><span class="header-section-number">4.2</span> Community richness and evenness</h2>
-<p>We usually define how <em>diverse</em> a community is by using a <strong>diversity index</strong>. This is a number that reflects the distribution of different <em>types</em> (such as microbial species) of individual that are found in a sample. There are two major concepts to note that contribute to diversity indices.</p>
+<p>We usually define how <em>diverse</em> a community is by using a <strong>diversity index</strong>. This is a number that reflects the distribution of different <em>types</em> (such as microbial species) of individual that are found in a sample. There are two major concepts that contribute to diversity indices.</p>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -396,93 +385,24 @@ Evenness
 </div>
 <section id="species-richness" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="species-richness"><span class="header-section-number">4.3.1</span> Species richness</h3>
-<p>We can easily count the number of different species, as determined by morphology and membrane features, in (<a href="#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a>). There are eight (8).</p>
-<p>Taken in isolation, this number doesn’t tell us very much. We would need other information - maybe from other samples - to know whether eight species is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at <a href="#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a> we can tell they are not).</p>
+<p>We can easily count the number of different species, as determined by morphology and membrane features, in <a href="#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a>. There are eight (8) species, and this is a quantitative measure of species richness.</p>
+<p>Taken in isolation though, this number doesn’t tell us very much. We would need other information - maybe from other samples - to know whether eight is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at <a href="#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a> we can tell they are not). We need to consider <em>evenness</em> for that.</p>
 </section>
-<section id="species-diversity-shannon-index" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="species-diversity-shannon-index"><span class="header-section-number">4.3.2</span> Species diversity: Shannon index</h3>
-<p><strong>To understand diversity, we need to consider both richness and evenness.</strong> We know that if each species is present in about the same amount there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>, but by itself that does not give us a number that we can use to compare communities. But there are formulae that allow us to do this, and we can calculate the value using <code>R</code>.</p>
-<section id="calculating-shannon-index" class="level4" data-number="4.3.2.1">
-<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">4.3.2.1</span> Calculating Shannon Index</h4>
-<p>Let’s start in <code>R</code> by defining our dataset for the Mars community. In the code below we do this by creating two vectors: one of species names, and one of counts for those species in our sample. We combine these vectors into a single dataframe, for convenience.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of species names</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Malteaser sp."</span>, <span class="st">"Snickers sp."</span>, <span class="st">"Twix sp."</span>, <span class="st">"Mars sp."</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Milky way"</span>, <span class="st">"Bounty sp."</span>, <span class="st">"Galaxy choc"</span>, <span class="st">"Galaxy caramel"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of corresponding species counts</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>count <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bring these together in a dataframe</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>community.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(species, count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="species-evenness" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="species-evenness"><span class="header-section-number">4.3.2</span> Species evenness</h3>
+<p>We can see visually from <a href="#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a> that there are not equal amounts of each species, so the community is not perfectly even in terms of species evenness. <strong>But the question remains open: how do we combine richness and evenness together into an <em>index</em> or number, to understand species diversity in our sample?</strong></p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>We can inspect the dataframe, to make sure we have the correct data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count
-1  Malteaser sp.     3
-2   Snickers sp.     6
-3       Twix sp.     6
-4       Mars sp.     7
-5      Milky way     7
-6     Bounty sp.     5
-7    Galaxy choc     3
-8 Galaxy caramel     3</code></pre>
+<div class="callout-body-container">
+<p><strong>We will discuss a simple measure of species diversity, <em>Shannon Index</em>, in <a href="./shannon_index.html">the next chapter</a>.</strong></p>
 </div>
-</div>
-<p>The first step in calculating Shannon Index is to calculate the <strong>relative abundance</strong> of each species. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e.&nbsp;the total number of individuals, in this case).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>rel_abd <span class="ot">&lt;-</span> community.df<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(community.df<span class="sc">$</span>count)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the data frame</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count rel_abd
-1  Malteaser sp.     3   0.075
-2   Snickers sp.     6   0.150
-3       Twix sp.     6   0.150
-4       Mars sp.     7   0.175
-5      Milky way     7   0.175
-6     Bounty sp.     5   0.125
-7    Galaxy choc     3   0.075
-8 Galaxy caramel     3   0.075</code></pre>
-</div>
-</div>
-<p>To turn this data into the Shannon Index, we need to carry out two more steps: calculate the <em>natural log</em> of the relative abundance of each species, then multiply this by the corresponding relative abundance, as in the <code>R</code> code below:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>ln_rel_abd <span class="ot">&lt;-</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply the relative abundance by its natural log</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>mult <span class="ot">&lt;-</span> community.df<span class="sc">$</span>rel_abd <span class="sc">*</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the result</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count rel_abd ln_rel_abd       mult
-1  Malteaser sp.     3   0.075  -2.590267 -0.1942700
-2   Snickers sp.     6   0.150  -1.897120 -0.2845680
-3       Twix sp.     6   0.150  -1.897120 -0.2845680
-4       Mars sp.     7   0.175  -1.742969 -0.3050196
-5      Milky way     7   0.175  -1.742969 -0.3050196
-6     Bounty sp.     5   0.125  -2.079442 -0.2599302
-7    Galaxy choc     3   0.075  -2.590267 -0.1942700
-8 Galaxy caramel     3   0.075  -2.590267 -0.1942700</code></pre>
-</div>
-</div>
-<p>The Shannon Index is then the sum of this final column of values (multiplied by <code>-1</code> to make it a positive value).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>shannon_index <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(community.df<span class="sc">$</span>mult)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shannon_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.021916</code></pre>
 </div>
 </div>
 
 
-</section>
 </section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -733,8 +653,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./workshop_04.html" class="pagination-link">
-        <span class="nav-page-text">Workshop 04</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./shannon_index.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
