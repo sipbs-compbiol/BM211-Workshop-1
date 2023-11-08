@@ -97,6 +97,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -245,7 +247,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#what-is-the-shannon-index" id="toc-what-is-the-shannon-index" class="nav-link active" data-scroll-target="#what-is-the-shannon-index"><span class="header-section-number">5.1</span> What is the Shannon index?</a>
   <ul class="collapse">
   <li><a href="#what-does-the-equation-for-shannon-index-mean" id="toc-what-does-the-equation-for-shannon-index-mean" class="nav-link" data-scroll-target="#what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">5.1.1</span> What does the equation for Shannon Index mean?</a></li>
-  <li><a href="#calculating-shannon-index" id="toc-calculating-shannon-index" class="nav-link" data-scroll-target="#calculating-shannon-index"><span class="header-section-number">5.1.2</span> Calculating Shannon Index</a></li>
+  </ul></li>
+  <li><a href="#calculating-shannon-index-for-our-mars-community" id="toc-calculating-shannon-index-for-our-mars-community" class="nav-link" data-scroll-target="#calculating-shannon-index-for-our-mars-community"><span class="header-section-number">5.2</span> Calculating Shannon Index for our Mars Community</a>
+  <ul class="collapse">
+  <li><a href="#collecting-data-about-our-community" id="toc-collecting-data-about-our-community" class="nav-link" data-scroll-target="#collecting-data-about-our-community"><span class="header-section-number">5.2.1</span> Collecting data about our community</a></li>
+  <li><a href="#calculating-relative-abundance" id="toc-calculating-relative-abundance" class="nav-link" data-scroll-target="#calculating-relative-abundance"><span class="header-section-number">5.2.2</span> Calculating relative abundance</a></li>
+  <li><a href="#calculating-shannon-index" id="toc-calculating-shannon-index" class="nav-link" data-scroll-target="#calculating-shannon-index"><span class="header-section-number">5.2.3</span> Calculating Shannon Index</a></li>
+  <li><a href="#understanding-the-shannon-index" id="toc-understanding-the-shannon-index" class="nav-link" data-scroll-target="#understanding-the-shannon-index"><span class="header-section-number">5.2.4</span> Understanding the Shannon Index</a></li>
+  </ul></li>
+  <li><a href="#the-effective-number-of-species-for-a-community" id="toc-the-effective-number-of-species-for-a-community" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-a-community"><span class="header-section-number">5.3</span> The Effective Number of Species for a community</a>
+  <ul class="collapse">
+  <li><a href="#the-effective-number-of-species-for-our-mars-sample" id="toc-the-effective-number-of-species-for-our-mars-sample" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">5.3.1</span> The Effective Number of Species for our Mars sample</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/shannon_index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -281,40 +293,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>We introduce the concept of <strong>Shannon Index</strong> and explain what it means.</li>
 <li><strong>We walk through calculation of the Shannon Index in <code>R</code></strong>, using data from our example community in <a href="diversity_measures.html"><span>Chapter&nbsp;4</span></a>.
 <ul>
-<li>We relate the actions in this <code>R</code> example to the equation that defines Shannon Index at each step.</li>
+<li>We relate the actions in our <code>R</code> walkthrough to the equation for Shannon Index, at each step.</li>
 </ul></li>
-<li>We introduce the concept of <strong>Effective number of species</strong> and how this relates to Shannon Index.</li>
+<li>We introduce the concept of <strong>Effective number of species</strong> in a community and how this relates to Shannon Index.</li>
 </ul>
 </div>
 </div>
 </div>
 <p><strong>To understand diversity, we need to consider both richness and evenness</strong>, as described in <a href="diversity_measures.html"><span>Chapter&nbsp;4</span></a>.</p>
-<p>We can obtain a simple count of species abundance to calculate richness. We also know that if each species is present in about the same abundance there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>. But by itself this idea of evenness does not give us a number that we can use to compare communities.</p>
-<p>But there are formulae that allow us to do this, and we can calculate such values for a community using <code>R</code>.</p>
+<p>We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>. But <strong>by itself this <em>idea</em> of evenness does not give us a number that we can use to compare communities</strong>.</p>
+<p><strong>There are mathematical formulae that allow us to turn this concept of evenness into a number</strong>, and we can calculate such values for a community using <code>R</code>.</p>
 <section id="what-is-the-shannon-index" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="what-is-the-shannon-index"><span class="header-section-number">5.1</span> What is the Shannon index?</h2>
-<p><strong>The Shannon Index (<span class="math inline">\(H\)</span>) is arguably the simplest measure of community diversity.</strong> It is described by <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>, and varies between a value close to zero (for very uneven communities), and <span class="math inline">\(ln(1/N)\)</span> for an community with <span class="math inline">\(N\)</span> evenly-distributed species. The way that the maximum value of Shannon Index varies with species richness (count of species) is shown in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a>.</p>
+<p><strong>The Shannon Index (<span class="math inline">\(H\)</span>) is arguably the simplest quantitative measure of community evenness/diversity,</strong> and is described by <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>. Shannon Index varies between:</p>
+<ul>
+<li>a value close to zero (for very uneven communities)</li>
+<li>the value <span class="math inline">\(\ln(N)\)</span> for a community with <span class="math inline">\(N\)</span> evenly-distributed species.</li>
+</ul>
+<p>The way that the maximum value of Shannon Index varies with species richness (count of species) is shown in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a>.</p>
 <div class="cell" width="75%">
 <div class="cell-output-display">
 <div id="fig-shannon_maxima" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="shannon_index_files/figure-html/fig-shannon_maxima-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Plot of maximum Shannon Index against community richness</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5.1: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">5.1.1</span> What does the equation for Shannon Index mean?</h3>
-<p>The Shannon Index describes the <em>evenness</em> of species in a community. Representing one species from the community as <span class="math inline">\(i\)</span>, we can calculate the <strong>relative abundance</strong> of that species in the community as its richness (count of species <span class="math inline">\(i\)</span>) divided by the total abundance for all species. We call this relative abundance <span class="math inline">\(p_i\)</span>.</p>
-<p>The Shannon Index takes this number and transforms it mathematically (as in <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>) so that the resulting value <span class="math inline">\(H\)</span> varies between zero (maximally uneven), and some maximum value (maximally even), as represented in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
 <p><span id="eq-shannon_entropy"><span class="math display">\[
 H = -\sum_{i=1}^{N} p_i \ln(p_i)
 \tag{5.1}\]</span></span></p>
+<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">5.1.1</span> What does the equation for Shannon Index mean?</h3>
+<p>The Shannon Index describes the <em>evenness</em> of species in a community. Representing a single species from the community as the letter <span class="math inline">\(i\)</span>, we can calculate the <strong>relative abundance</strong> of that species in the community as its <strong>abundance (the count of individuals from species <span class="math inline">\(i\)</span>) divided by the total abundance for all species</strong>. We call this relative abundance <span class="math inline">\(p_i\)</span>.</p>
+<p><a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a> takes this value and transforms it into the Shannon Index, represented as <span class="math inline">\(H\)</span>. <strong>The resulting value varies between zero (maximally uneven, not diverse), and some maximum value (maximally even, very diverse), as represented in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a></strong>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
 </section>
-<section id="calculating-shannon-index" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">5.1.2</span> Calculating Shannon Index</h3>
-<p>Let’s start in <code>R</code> by defining our dataset for the Mars community. In the code below we do this by creating two vectors: one of species names, and one of counts for those species in our sample. We combine these vectors into a single dataframe, for convenience.</p>
+</section>
+<section id="calculating-shannon-index-for-our-mars-community" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="calculating-shannon-index-for-our-mars-community"><span class="header-section-number">5.2</span> Calculating Shannon Index for our Mars Community</h2>
+<section id="collecting-data-about-our-community" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="collecting-data-about-our-community"><span class="header-section-number">5.2.1</span> Collecting data about our community</h3>
+<p>Let’s start in <code>R</code> by defining our dataset for the Mars community.</p>
+<p><strong>In the code below we create two vectors: one of species names, and one of counts for those species</strong> in our sample (which we can get from <a href="diversity_measures.html#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a>). We combine these vectors into a single dataframe, for convenience.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of species names</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Malteaser sp."</span>, <span class="st">"Snickers sp."</span>, <span class="st">"Twix sp."</span>, <span class="st">"Mars sp."</span>,</span>
@@ -326,70 +347,145 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bring these together in a dataframe</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>community.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(species, count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We can inspect the dataframe, to make sure we have the correct data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count
-1  Malteaser sp.     3
-2   Snickers sp.     6
-3       Twix sp.     6
-4       Mars sp.     7
-5      Milky way     7
-6     Bounty sp.     5
-7    Galaxy choc     3
-8 Galaxy caramel     3</code></pre>
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-b27e840e{}.cl-b271ed2a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b27911b8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b27911cc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b27930e4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27930f8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b27930f9{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2793102{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2793103{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b279310c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b27e840e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b27930e4"><p class="cl-b27911b8"><span class="cl-b271ed2a">species</span></p></th><th class="cl-b27930f8"><p class="cl-b27911cc"><span class="cl-b271ed2a">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Malteaser sp.</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Snickers sp.</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Twix sp.</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Mars sp.</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Milky way</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Bounty sp.</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b27930f9"><p class="cl-b27911b8"><span class="cl-b271ed2a">Galaxy choc</span></p></td><td class="cl-b2793102"><p class="cl-b27911cc"><span class="cl-b271ed2a">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2793103"><p class="cl-b27911b8"><span class="cl-b271ed2a">Galaxy caramel</span></p></td><td class="cl-b279310c"><p class="cl-b27911cc"><span class="cl-b271ed2a">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
-<p>The first step in calculating Shannon Index is to calculate the <strong>relative abundance</strong> of each species. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e.&nbsp;the total number of individuals, in this case).</p>
+</section>
+<section id="calculating-relative-abundance" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="calculating-relative-abundance"><span class="header-section-number">5.2.2</span> Calculating relative abundance</h3>
+<p>The first step in calculating Shannon Index is to calculate the <strong>relative abundance</strong> <span class="math inline">\(p_i\)</span> of each species <span class="math inline">\(i\)</span>. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e.&nbsp;the total number of individuals, in this case).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>rel_abd <span class="ot">&lt;-</span> community.df<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(community.df<span class="sc">$</span>count)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the data frame</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count rel_abd
-1  Malteaser sp.     3   0.075
-2   Snickers sp.     6   0.150
-3       Twix sp.     6   0.150
-4       Mars sp.     7   0.175
-5      Milky way     7   0.175
-6     Bounty sp.     5   0.125
-7    Galaxy choc     3   0.075
-8 Galaxy caramel     3   0.075</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>rel_abd <span class="ot">&lt;-</span> community.df<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(community.df<span class="sc">$</span>count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>To turn this data into the Shannon Index, we need to carry out two more steps: calculate the <em>natural log</em> of the relative abundance of each species, then multiply this by the corresponding relative abundance, as in the <code>R</code> code below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>ln_rel_abd <span class="ot">&lt;-</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply the relative abundance by its natural log</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>mult <span class="ot">&lt;-</span> community.df<span class="sc">$</span>rel_abd <span class="sc">*</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the result</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>community.df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         species count rel_abd ln_rel_abd       mult
-1  Malteaser sp.     3   0.075  -2.590267 -0.1942700
-2   Snickers sp.     6   0.150  -1.897120 -0.2845680
-3       Twix sp.     6   0.150  -1.897120 -0.2845680
-4       Mars sp.     7   0.175  -1.742969 -0.3050196
-5      Milky way     7   0.175  -1.742969 -0.3050196
-6     Bounty sp.     5   0.125  -2.079442 -0.2599302
-7    Galaxy choc     3   0.075  -2.590267 -0.1942700
-8 Galaxy caramel     3   0.075  -2.590267 -0.1942700</code></pre>
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-b29e587e{}.cl-b29571d2{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b29959a0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b29959b4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b299746c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2997476{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2997480{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2997481{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b299748a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2997494{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b29e587e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b299746c"><p class="cl-b29959a0"><span class="cl-b29571d2">species</span></p></th><th class="cl-b2997476"><p class="cl-b29959b4"><span class="cl-b29571d2">count</span></p></th><th class="cl-b2997476"><p class="cl-b29959b4"><span class="cl-b29571d2">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Malteaser sp.</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">3</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Snickers sp.</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">6</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Twix sp.</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">6</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Mars sp.</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">7</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Milky way</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">7</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Bounty sp.</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">5</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2997480"><p class="cl-b29959a0"><span class="cl-b29571d2">Galaxy choc</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">3</span></p></td><td class="cl-b2997481"><p class="cl-b29959b4"><span class="cl-b29571d2">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b299748a"><p class="cl-b29959a0"><span class="cl-b29571d2">Galaxy caramel</span></p></td><td class="cl-b2997494"><p class="cl-b29959b4"><span class="cl-b29571d2">3</span></p></td><td class="cl-b2997494"><p class="cl-b29959b4"><span class="cl-b29571d2">0.075</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical Content!
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>How does what we’ve just done in <code>R</code> relate to <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>?</p>
+<p>For each of our species (denoted by <span class="math inline">\(i\)</span> in the equation), we have calculated the relative abundance <span class="math inline">\(p_i\)</span>, which is used in the part of <a href="#eq-shannon_pi">Equation&nbsp;<span>5.2</span></a> indicated in red, below.</p>
+<p><span id="eq-shannon_pi"><span class="math display">\[
+H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
+\tag{5.2}\]</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-shannon-index" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">5.2.3</span> Calculating Shannon Index</h3>
+<p>To turn this data into the Shannon Index, we need to carry out two more steps: calculate the <em>natural log</em> of the relative abundance of each species (<span class="math inline">\(\ln(p_i)\)</span>), then multiply this by the corresponding relative abundance (<span class="math inline">\(p_i\)</span>), as in the <code>R</code> code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>ln_rel_abd <span class="ot">&lt;-</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply the relative abundance by its natural log</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>mult <span class="ot">&lt;-</span> community.df<span class="sc">$</span>rel_abd <span class="sc">*</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="tabwid"><style>.cl-b2b8e752{}.cl-b2afc91a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-b2b3b322{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b2b3b32c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-b2b3ce3e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2b3ce48{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2b3ce52{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2b3ce53{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2b3ce5c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-b2b3ce5d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-b2b8e752"><thead><tr style="overflow-wrap:break-word;"><th class="cl-b2b3ce3e"><p class="cl-b2b3b322"><span class="cl-b2afc91a">species</span></p></th><th class="cl-b2b3ce48"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">count</span></p></th><th class="cl-b2b3ce48"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">rel_abd</span></p></th><th class="cl-b2b3ce48"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">ln_rel_abd</span></p></th><th class="cl-b2b3ce48"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Malteaser sp.</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">3</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.075</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-2.590267</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Snickers sp.</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">6</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.150</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-1.897120</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Twix sp.</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">6</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.150</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-1.897120</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Mars sp.</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">7</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.175</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-1.742969</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Milky way</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">7</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.175</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-1.742969</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Bounty sp.</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">5</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.125</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-2.079442</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce52"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Galaxy choc</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">3</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.075</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-2.590267</span></p></td><td class="cl-b2b3ce53"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-b2b3ce5c"><p class="cl-b2b3b322"><span class="cl-b2afc91a">Galaxy caramel</span></p></td><td class="cl-b2b3ce5d"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">3</span></p></td><td class="cl-b2b3ce5d"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">0.075</span></p></td><td class="cl-b2b3ce5d"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-2.590267</span></p></td><td class="cl-b2b3ce5d"><p class="cl-b2b3b32c"><span class="cl-b2afc91a">-0.1942700</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical Content!
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here’s how these two actions relate to <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>.</p>
+<p>Firstly, for each of our species, we calculated the natural log of the relative abundance: <span class="math inline">\(\ln(p_i)\)</span>, shown in red in <a href="#eq-shannon_lnpi">Equation&nbsp;<span>5.3</span></a>.</p>
+<p><span id="eq-shannon_lnpi"><span class="math display">\[
+H = -\sum_{i=1}^{N} p_i \color{red}{\ln(p_i)}
+\tag{5.3}\]</span></span></p>
+<p>Next, we calculated the product of <span class="math inline">\(p_i\)</span> and <span class="math inline">\(\ln(p_i)\)</span>, highlighted in orange in <a href="#eq-shannon_mult">Equation&nbsp;<span>5.4</span></a>.</p>
+<p><span id="eq-shannon_mult"><span class="math display">\[
+H = -\sum_{i=1}^{N} \color{orange}{{p_i} \ln(p_i)}
+\tag{5.4}\]</span></span></p>
+</div>
 </div>
 </div>
 <p>The Shannon Index is then the sum of this final column of values (multiplied by <code>-1</code> to make it a positive value).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>shannon_index <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(community.df<span class="sc">$</span>mult)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>shannon_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shannon_index <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(community.df<span class="sc">$</span>mult)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>shannon_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.021916</code></pre>
 </div>
 </div>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mathematical Content!
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Summing the product <span class="math inline">\(p_i \ln(p_i)\)</span> for each species <span class="math inline">\(i\)</span>, and multiplying it by <span class="math inline">\(-1\)</span> is indicated by the part of <a href="#eq-shannon_sum">Equation&nbsp;<span>5.5</span></a> highlighted in red.</p>
+<p><span id="eq-shannon_sum"><span class="math display">\[
+H = \color{red}{-\sum_{i=1}^{N}} \color{black}{p_i \ln(p_i)}
+\tag{5.5}\]</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-the-shannon-index" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="understanding-the-shannon-index"><span class="header-section-number">5.2.4</span> Understanding the Shannon Index</h3>
+<p>So, we have a number <span class="math inline">\(H = 2.02\)</span> as the Shannon Index for our sample. How do we interpret this?</p>
+<p>Remember from earlier that the maximum Shannon Index - corresponding to maximum diversity - for a sample with eight species is <span class="math inline">\(\ln(8) = 2.08\)</span>. <strong>The value we calculated here, <span class="math inline">\(H = 2.02\)</span>, is close to this value and so we can conclude that our sample is very diverse.</strong></p>
+<p>There is another way to think about this number, called the <strong>effective number of species.</strong></p>
+</section>
+</section>
+<section id="the-effective-number-of-species-for-a-community" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="the-effective-number-of-species-for-a-community"><span class="header-section-number">5.3</span> The Effective Number of Species for a community</h2>
+<p>We can use the Shannon Index to calculate a value known as the <strong>effective number of species</strong> for a community. This name reflects that, although a community might contain a certain number of species, if some of those species are only present in very low abundance, they are not contributing significantly to the community, and they are <em>effectively</em> not present.</p>
+<p>For example:</p>
+<ul>
+<li>A community with three species in equal proportions, e.g.&nbsp;33% <span class="math inline">\(A\)</span>, 33% <span class="math inline">\(B\)</span>, and 33% <span class="math inline">\(C\)</span> clearly has three equally-contributing species. We might expect the effective number of species to be three.</li>
+<li>A community dominated by a single species, e.g.&nbsp;1% <span class="math inline">\(A\)</span>, 1% <span class="math inline">\(B\)</span>, and 98% <span class="math inline">\(C\)</span> might <em>effectively</em> have only one species: species <span class="math inline">\(C\)</span>.</li>
+</ul>
+<p>By taking the <em>exponent</em> of the Shannon Index, we calculate a value known as the <strong>effective number of species</strong>, or <strong>Diversity (<span class="math inline">\(D\)</span>)</strong> of a community. The mathematical equation is given in <a href="#eq-effective_species">Equation&nbsp;<span>5.6</span></a>.</p>
+<p><span id="eq-effective_species"><span class="math display">\[
+D = \exp(H)
+\tag{5.6}\]</span></span></p>
+<section id="the-effective-number-of-species-for-our-mars-sample" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">5.3.1</span> The Effective Number of Species for our Mars sample</h3>
+<p>The Shannon Index for our Mars sample was <span class="math inline">\(2.021916\)</span>, and we can use <code>R</code> to calculate a corresponding Diversity.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">2.021916</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>diversity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.552782</code></pre>
+</div>
+</div>
+<p>This gives a value of <span class="math inline">\(D = 7.55\)</span>, which is close to the <strong>richness</strong> value of eight, and indicates that <strong>our sample is highly diverse</strong>.</p>
 
 
 </section>
