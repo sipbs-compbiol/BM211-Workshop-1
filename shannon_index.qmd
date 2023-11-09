@@ -237,9 +237,9 @@ Suppose we have a microbial community with the following composition, and counts
 - _Desulfovibrio_: 3.11e6
 
 ::: {.callout-important}
-Use the interactive `R` box below to calculate the Shannon Index and the Effective Number of Species in the community.**
+Use the interactive `R` box below to calculate the Shannon Index and the Effective Number of Species in the community.
 
-Do you think the community is diverse?**
+Do you think the community is diverse?
 :::
 
 ```{webr-r}
