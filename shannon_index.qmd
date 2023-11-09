@@ -175,11 +175,13 @@ So, we have a number $H = 2.02$ as the Shannon Index for our sample. How do we i
 
 Remember from earlier that the maximum Shannon Index - corresponding to maximum diversity - for a sample with eight species is $\ln(8) = 2.08$. **The value we calculated here, $H = 2.02$, is close to this value and so we can conclude that our sample is very diverse.**
 
+::: {.callout-important}
 There is another way to think about this number, called the **effective number of species.**
+:::
 
 ## The Effective Number of Species for a community
 
-We can use the Shannon Index to calculate a value known as the **effective number of species** for a community. This name reflects that, although a community might contain a certain number of species, if some of those species are only present in very low abundance, they are not contributing significantly to the community, and they are _effectively_ not present.
+We can use the Shannon Index to calculate a value known as the **effective number of species** for a community. This name reflects that, although a community might contain a certain number of species, **if some species are only present in very low abundance, they are not contributing significantly to the community, and they are _effectively_ not present**, and the effective number of species is less - maybe much less - than the _richness_ of the community.
 
 For example:
 
@@ -192,21 +194,21 @@ $$
 D = \exp(H)
 $$ {#eq-effective_species}
 
-::: {.callout-caution}
+::: {.callout-caution collapse="true"}
 ## Mathematical content
 
-This works becausem as we noted earlier, a community with $N$ evenly-represented species has a Shannon Index of $H = \ln(N)$. Hence,
+This works because, as we noted earlier, a community with $N$ evenly-represented species has a Shannon Index of $H = \ln(N)$. Hence, when this is true:
 
 $$
 D = \exp(H) = \exp(\ln(N)) = N
 $$
 
-and in this special case, **effective number of species is the same as the actual number of species.**
+and so, in this special case of absolute evenness, **effective number of species is the same as the actual number of species.**
 :::
 
 ### The Effective Number of Species for our Mars sample
 
-The Shannon Index for our Mars sample was $2.021916$, and we can use `R` to calculate a corresponding Diversity.
+The Shannon Index for our Mars sample was $2.021916$, and we can use `R` to calculate a corresponding Diversity value $D$.
 
 ```{r}
 diversity = exp(2.021916)
