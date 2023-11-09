@@ -11,8 +11,7 @@ Depends:
 Imports:
     tidyverse (>= 2.0.0),
     ggplot2,
-    flextable,
-    plotly
+    flextable
 Suggests:
     knitr,
     sessioninfo
