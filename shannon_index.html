@@ -99,6 +99,248 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
 <script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  .monaco-editor pre {
+    background-color: unset !important;
+  }
+
+  .qwebr-icon-status-spinner {
+    color: #7894c4;
+  }
+
+  .qwebr-icon-run-code {
+    color: #0d9c29
+  }
+
+  .qwebr-output-code-stdout {
+    color: #111;
+  }
+
+  .qwebr-output-code-stderr {
+    color: #db4133;
+  }
+
+  .qwebr-button-run {
+    background-color: #EEEEEE;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; /* Extra styling for consistency */
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    -webkit-text-decoration: none;
+    -moz-text-decoration: none;
+    -ms-text-decoration: none;
+    -o-text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    border-color: #dee2e6;
+    border: 1px solid rgba(0,0,0,0);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .qwebr-button-run:hover {
+    color: #000;
+    background-color: #e3e6ea;
+    border-color: #e1e5e9;
+  }
+
+  .qwebr-button-run:disabled,.qwebr-button-run.disabled,fieldset:disabled .qwebr-button-run {
+    pointer-events: none;
+    opacity: .65
+  }
+</style>
+
+<script type="module">
+
+  // Start a timer
+  const initializeWebRTimerStart = performance.now();
+
+  // Determine if we need to install R packages
+  var installRPackagesList = [''];
+  // Check to see if we have an empty array, if we do set to skip the installation.
+  var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+  var autoloadRPackages = true;
+
+  // Display a startup message?
+  var showStartupMessage = true;
+  var showHeaderMessage = false;
+  if (showStartupMessage) {
+
+    // Get references to header elements
+    const headerHTML = document.getElementById("title-block-header");
+    const headerRevealJS = document.getElementById("title-slide");
+
+    // Create the outermost div element for metadata
+    const quartoTitleMeta = document.createElement("div");
+    quartoTitleMeta.classList.add("quarto-title-meta");
+
+    // Create the first inner div element
+    const firstInnerDiv = document.createElement("div");
+
+    // Create the second inner div element for "WebR Status" heading and contents
+    const secondInnerDiv = document.createElement("div");
+    secondInnerDiv.classList.add("quarto-title-meta-heading");
+    secondInnerDiv.innerText = "WebR Status";
+
+    // Create another inner div for contents
+    const secondInnerDivContents = document.createElement("div");
+    secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+    // Describe the WebR state
+    var startupMessageWebR = document.createElement("p");
+    startupMessageWebR.innerText = "🟡 Loading...";
+    startupMessageWebR.setAttribute("id", "startup");
+    // Add `aria-live` to auto-announce the startup status to screen readers
+    startupMessageWebR.setAttribute("aria-live", "assertive");
+
+    // Append the startup message to the contents
+    secondInnerDivContents.appendChild(startupMessageWebR);
+
+    // Add a status indicator for COOP and COEP Headers if needed
+    if (showHeaderMessage) {
+      const crossOriginMessage = document.createElement("p");
+      crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+      crossOriginMessage.setAttribute("id", "coop-coep-header");
+      secondInnerDivContents.appendChild(crossOriginMessage);
+    }
+
+    // Combine the inner divs and contents
+    firstInnerDiv.appendChild(secondInnerDiv);
+    firstInnerDiv.appendChild(secondInnerDivContents);
+    quartoTitleMeta.appendChild(firstInnerDiv);
+
+    // Determine where to insert the quartoTitleMeta element
+    if (headerHTML) {
+      // Append to the existing "title-block-header" element
+      headerHTML.appendChild(quartoTitleMeta);
+    } else if (headerRevealJS) {
+      // If using RevealJS, add to the "title-slide" div
+      headerRevealJS.appendChild(firstInnerDiv);
+    } else {
+      // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+      const monacoScript = document.getElementById("webr-monaco-editor-init");
+      const header = document.createElement("header");
+      header.setAttribute("id", "title-block-header");
+      header.appendChild(quartoTitleMeta);
+      monacoScript.after(header);
+    }
+  }
+
+  // Retrieve the webr.mjs
+  import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.1/webr.mjs";
+
+  // Populate WebR options with defaults or new values based on 
+  // webr meta
+  globalThis.webR = new WebR({
+    "baseURL": "https://webr.r-wasm.org/v0.2.1/",
+    "serviceWorkerUrl": "",
+    "homedir": "/home/web_user", 
+    "channelType": ChannelType.Automatic
+  });
+
+  // Initialization WebR
+  await globalThis.webR.init();
+
+  // Setup a shelter
+  globalThis.webRCodeShelter = await new globalThis.webR.Shelter();
+
+  // Setup a pager to allow processing help documentation 
+  await globalThis.webR.evalRVoid('webr::pager_install()'); 
+
+  // Function to set the button text
+  function qwebrSetInteractiveButtonState(buttonText, enableCodeButton = true) {
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+      btn.innerHTML = buttonText;
+      btn.disabled = !enableCodeButton;
+    });
+  }
+
+  // Function to update the status message
+  function qwebrUpdateStatusHeader(message) {
+    startupMessageWebR.innerHTML = `
+      <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+      <span>${message}</span>`;
+  }
+
+  // Function to install a single package
+  async function qwebrInstallRPackage(packageName) {
+    await globalThis.webR.installPackages([packageName]);
+  }
+
+  // Function to load a single package
+  async function qwebrLoadRPackage(packageName) {
+    await globalThis.webR.evalRVoid(`library(${packageName});`);
+  }
+
+  // Generic function to process R packages
+  async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+    // Switch between contexts
+    const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+    // Modify button state
+    qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+    // Iterate over packages
+    for (let i = 0; i < packages.length; i++) {
+      const activePackage = packages[i];
+      const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+      
+      // Display the update
+      if (displayStatusMessageUpdate) {
+        qwebrUpdateStatusHeader(formattedMessage);
+      }
+
+      // Run package installation
+      if (processType === 'install') {
+        await qwebrInstallRPackage(activePackage);
+      } else {
+        await qwebrLoadRPackage(activePackage);
+      }
+    }
+
+    // Clean slate
+    if (processType === 'load') {
+      await globalThis.webR.flush();
+    }
+  }
+
+
+  // Check to see if any packages need to be installed
+  if (setupRPackages) {
+    // Obtain only a unique list of packages
+    const uniqueRPackageList = Array.from(new Set(installRPackagesList));
+
+    // Install R packages one at a time (either silently or with a status update)
+    await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', showStartupMessage);
+
+    if(autoloadRPackages) {
+      // Load R packages one at a time (either silently or with a status update)
+      await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', showStartupMessage);
+    }
+  }
+
+  // Stop timer
+  const initializeWebRTimerEnd = performance.now();
+
+  // Release document status as ready
+  if (showStartupMessage) {
+    startupMessageWebR.innerText = "🟢 Ready!"
+  }
+  
+  qwebrSetInteractiveButtonState(
+    `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+    true
+  );
+
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -264,6 +506,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="webr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -350,7 +602,7 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <div class="cell">
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-9f415f7c{}.cl-9f392230{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9f3de478{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f3de482{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f3df738{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f3df739{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f3df742{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f3df743{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f3df74c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f3df74d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-9f415f7c"><thead><tr style="overflow-wrap:break-word;"><th class="cl-9f3df738"><p class="cl-9f3de478"><span class="cl-9f392230">species</span></p></th><th class="cl-9f3df739"><p class="cl-9f3de482"><span class="cl-9f392230">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Malteaser sp.</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Snickers sp.</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Twix sp.</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Mars sp.</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Milky way</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Bounty sp.</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df742"><p class="cl-9f3de478"><span class="cl-9f392230">Galaxy choc</span></p></td><td class="cl-9f3df743"><p class="cl-9f3de482"><span class="cl-9f392230">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f3df74c"><p class="cl-9f3de478"><span class="cl-9f392230">Galaxy caramel</span></p></td><td class="cl-9f3df74d"><p class="cl-9f3de482"><span class="cl-9f392230">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-49f78556{}.cl-49eeafb2{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-49f3e7f2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-49f3e7fc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-49f3fada{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49f3fae4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49f3faee{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49f3faef{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49f3faf0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49f3faf8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-49f78556"><thead><tr style="overflow-wrap:break-word;"><th class="cl-49f3fada"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">species</span></p></th><th class="cl-49f3fae4"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Malteaser sp.</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Snickers sp.</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Twix sp.</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Mars sp.</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Milky way</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Bounty sp.</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faee"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Galaxy choc</span></p></td><td class="cl-49f3faef"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-49f3faf0"><p class="cl-49f3e7f2"><span class="cl-49eeafb2">Galaxy caramel</span></p></td><td class="cl-49f3faf8"><p class="cl-49f3e7fc"><span class="cl-49eeafb2">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </section>
@@ -364,7 +616,7 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <div class="cell">
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-9f55a414{}.cl-9f4ff6cc{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9f52737a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f52737b{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f5284aa{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f5284ab{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f5284b4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f5284b5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f5284b6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f5284be{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-9f55a414"><thead><tr style="overflow-wrap:break-word;"><th class="cl-9f5284aa"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">species</span></p></th><th class="cl-9f5284ab"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">count</span></p></th><th class="cl-9f5284ab"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Malteaser sp.</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">3</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Snickers sp.</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">6</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Twix sp.</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">6</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Mars sp.</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">7</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Milky way</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">7</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Bounty sp.</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">5</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b4"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Galaxy choc</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">3</span></p></td><td class="cl-9f5284b5"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f5284b6"><p class="cl-9f52737a"><span class="cl-9f4ff6cc">Galaxy caramel</span></p></td><td class="cl-9f5284be"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">3</span></p></td><td class="cl-9f5284be"><p class="cl-9f52737b"><span class="cl-9f4ff6cc">0.075</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-4a0d2974{}.cl-4a074482{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4a09e1ce{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a09e1d8{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a09f2d6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a09f2e0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a09f2e1{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a09f2e2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a09f2ea{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a09f2eb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4a0d2974"><thead><tr style="overflow-wrap:break-word;"><th class="cl-4a09f2d6"><p class="cl-4a09e1ce"><span class="cl-4a074482">species</span></p></th><th class="cl-4a09f2e0"><p class="cl-4a09e1d8"><span class="cl-4a074482">count</span></p></th><th class="cl-4a09f2e0"><p class="cl-4a09e1d8"><span class="cl-4a074482">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Malteaser sp.</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">3</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Snickers sp.</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">6</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Twix sp.</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">6</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Mars sp.</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">7</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Milky way</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">7</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Bounty sp.</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">5</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2e1"><p class="cl-4a09e1ce"><span class="cl-4a074482">Galaxy choc</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">3</span></p></td><td class="cl-4a09f2e2"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a09f2ea"><p class="cl-4a09e1ce"><span class="cl-4a074482">Galaxy caramel</span></p></td><td class="cl-4a09f2eb"><p class="cl-4a09e1d8"><span class="cl-4a074482">3</span></p></td><td class="cl-4a09f2eb"><p class="cl-4a09e1d8"><span class="cl-4a074482">0.075</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
@@ -401,7 +653,7 @@ H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
 <div class="cell">
 <div class="cell-output-display">
 
-<div class="tabwid"><style>.cl-9f669ad0{}.cl-9f60c0f6{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9f6346d2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f6346dc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9f6357da{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f6357e4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f6357e5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f6357ee{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f6357ef{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9f6357f0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-9f669ad0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-9f6357da"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">species</span></p></th><th class="cl-9f6357e4"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">count</span></p></th><th class="cl-9f6357e4"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">rel_abd</span></p></th><th class="cl-9f6357e4"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">ln_rel_abd</span></p></th><th class="cl-9f6357e4"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Malteaser sp.</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">3</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.075</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-2.590267</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Snickers sp.</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">6</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.150</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-1.897120</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Twix sp.</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">6</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.150</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-1.897120</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Mars sp.</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">7</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.175</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-1.742969</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Milky way</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">7</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.175</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-1.742969</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Bounty sp.</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">5</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.125</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-2.079442</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357e5"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Galaxy choc</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">3</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.075</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-2.590267</span></p></td><td class="cl-9f6357ee"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-9f6357ef"><p class="cl-9f6346d2"><span class="cl-9f60c0f6">Galaxy caramel</span></p></td><td class="cl-9f6357f0"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">3</span></p></td><td class="cl-9f6357f0"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">0.075</span></p></td><td class="cl-9f6357f0"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-2.590267</span></p></td><td class="cl-9f6357f0"><p class="cl-9f6346dc"><span class="cl-9f60c0f6">-0.1942700</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-4a1ecbac{}.cl-4a18d5d0{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4a1b6dcc{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a1b6dd6{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a1b7fec{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a1b7ff6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a1b7ff7{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a1b7ff8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a1b8000{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a1b8001{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4a1ecbac"><thead><tr style="overflow-wrap:break-word;"><th class="cl-4a1b7fec"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">species</span></p></th><th class="cl-4a1b7ff6"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">count</span></p></th><th class="cl-4a1b7ff6"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">rel_abd</span></p></th><th class="cl-4a1b7ff6"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">ln_rel_abd</span></p></th><th class="cl-4a1b7ff6"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Malteaser sp.</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">3</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.075</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-2.590267</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Snickers sp.</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">6</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.150</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-1.897120</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Twix sp.</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">6</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.150</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-1.897120</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Mars sp.</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">7</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.175</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-1.742969</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Milky way</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">7</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.175</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-1.742969</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Bounty sp.</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">5</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.125</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-2.079442</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b7ff7"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Galaxy choc</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">3</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.075</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-2.590267</span></p></td><td class="cl-4a1b7ff8"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a1b8000"><p class="cl-4a1b6dcc"><span class="cl-4a18d5d0">Galaxy caramel</span></p></td><td class="cl-4a1b8001"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">3</span></p></td><td class="cl-4a1b8001"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">0.075</span></p></td><td class="cl-4a1b8001"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-2.590267</span></p></td><td class="cl-4a1b8001"><p class="cl-4a1b6dd6"><span class="cl-4a18d5d0">-0.1942700</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
@@ -515,6 +767,380 @@ D = \exp(H) = \exp(\ln(N)) = N
 </div>
 </div>
 <p>This gives a value of <span class="math inline">\(D = 7.55\)</span> for the effective number of species. This is close to the actual number of species in our sample - the <strong>richness</strong> value - of eight, which indicates that <strong>our sample is highly diverse</strong>.</p>
+<div class="callout callout-style-simple callout-exercise no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div>
+<div class="callout-exercise">
+<p>Suppose we have a microbial community with the following composition, and counts:</p>
+<ul>
+<li><em>Abiotrophia</em>: 1.27e4</li>
+<li><em>Peptostreptococcus</em>: 1.84e3</li>
+<li><em>Corynebacterium</em>: 2.41e5</li>
+<li><em>Eubacterium</em>: 4.92e3</li>
+<li><em>Moraxella</em>: 7.31e4</li>
+<li><em>Neisseria</em>: 1.88e6</li>
+<li><em>Campylobacter</em>: 8.23e4</li>
+<li><em>Desulfovibrio</em>: 3.11e6</li>
+</ul>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Use the interactive <code>R</code> box below to calculate the Shannon Index and the Effective Number of Species in the community.**</p>
+<p>Do you think the community is diverse?**</p>
+</div>
+</div>
+</div>
+<button class="btn btn-default qwebr-button-run" disabled="" type="button" id="qwebr-button-run-1">🟡 Loading
+  webR...</button>
+<div id="qwebr-interactive-area-1" class="qwebr-interactive-area">
+  <div id="qwebr-editor-1" class="qwebr-editor"></div>
+  <div id="qwebr-output-code-area-1" class="qwebr-output-code-area" aria-live="assertive">
+    <pre style="visibility: hidden"></pre>
+  </div>
+</div>
+<div id="qwebr-output-graph-area-1" class="qwebr-output-graph-area">
+</div>
+<script type="module">
+  // Retrieve webR code cell information
+  const runButton = document.getElementById("qwebr-button-run-1");
+  const outputCodeDiv = document.getElementById("qwebr-output-code-area-1");
+  const editorDiv = document.getElementById("qwebr-editor-1");
+  const outputGraphDiv = document.getElementById("qwebr-output-graph-area-1");
+
+  // Add a light grey outline around the code editor
+  editorDiv.style.border = "1px solid #eee";
+
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: `# Create a dataframe describing the community
+
+# Calculate the Shannon Index and Effective Number of Species`,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // TODO: Could be problematic for slide decks
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5rem',               // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        executeCode(editor.getValue());
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          executeCode(currentLine);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          executeCode(selectedText);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+  });
+
+  // Function to execute the code (accepts code as an argument)
+  async function executeCode(codeToRun) {
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+      btn.disabled = true;
+    });
+
+    // Emphasize the active code cell
+    runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // Process 
+    async function parseTypePager(msg) { 
+
+        // Split out the event data
+        const { path, title, deleteFile } = msg.data; 
+
+        // Process the pager data by reading the information from disk
+        const paged_data = await webR.FS.readFile(path).then((data) => {
+          // Obtain the file content
+          let content = new TextDecoder().decode(data);
+
+          // Remove excessive backspace characters until none remain
+          while(content.match(/.[\b]/)){
+            content = content.replace(/.[\b]/g, '');
+          }
+
+          // Returned cleaned data
+          return content;
+        });
+
+        // Unlink file if needed
+        if (deleteFile) { 
+          await webR.FS.unlink(path); 
+        } 
+
+        // Return extracted data with spaces
+        return paged_data;
+    } 
+
+    // Initialize webR
+    await webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid("webr::canvas(width=504, height=360)");
+
+    // Capture output data from evaluating the code
+    const result = await webRCodeShelter.captureR(codeToRun, {
+      withAutoprint: true,
+      captureStreams: true,
+      captureConditions: false//,
+      // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // Start attempting to parse the result data
+    try {
+
+      // Stop creating images
+      await webR.evalRVoid("dev.off()");
+
+      // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+      const out = result.output
+        .filter(evt => evt.type === "stdout" || evt.type === "stderr")
+        .map((evt, index) => {
+          const className = `qwebr-output-code-${evt.type}`;
+          return `<code id="${className}-editor-1-result-${index + 1}" class="${className}">${evt.data}</code>`;
+        })
+        .join("\n");
+
+
+      // Clean the state
+      const msgs = await webR.flush();
+
+      // Output each image event stored
+      msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+          // Add image to the current canvas
+          if (msg.data.event === 'canvasImage') {
+            canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+          } else if (msg.data.event === 'canvasNewPage') {
+            // Generate a new canvas element
+            canvas = document.createElement("canvas");
+            canvas.setAttribute("width", 2 * 504);
+            canvas.setAttribute("height", 2 * 360);
+            canvas.style.width = "700px";
+            canvas.style.display = "block";
+            canvas.style.margin = "auto";
+          }
+        } 
+      });
+
+      // Use `map` to process the filtered "pager" events asynchronously
+      const pager = await Promise.all(
+        msgs.filter(msg => msg.type === 'pager').map(
+          async (msg) => {
+            return await parseTypePager(msg);
+          }
+        )
+      );
+
+      // Nullify the output area of content
+      outputCodeDiv.innerHTML = "";
+      outputGraphDiv.innerHTML = "";
+
+      // Design an output object for messages
+      const pre = document.createElement("pre");
+      if (/\S/.test(out)) {
+        // Display results as HTML elements to retain output styling
+        const div = document.createElement("div");
+        div.innerHTML = out;
+        pre.appendChild(div);
+      } else {
+        // If nothing is present, hide the element.
+        pre.style.visibility = "hidden";
+      }
+      outputCodeDiv.appendChild(pre);
+
+      // Place the graphics on the canvas
+      if (canvas) {
+        outputGraphDiv.appendChild(canvas);
+      }
+
+      // Display the pager data
+      if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+          let pre_pager = document.createElement("pre");
+          pre_pager.innerText = paged_data;
+          pre_pager.classList.add("qwebr-output-code-pager");
+          pre_pager.setAttribute("id", "qwebr-output-code-pager-editor-1-result-" + (index + 1));
+          outputCodeDiv.appendChild(pre_pager);
+        });
+      }
+    } finally {
+      // Clean up the remaining code
+      webRCodeShelter.purge();
+    }
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+      btn.disabled = false;
+    });
+
+    // Revert to the initial code cell state
+    runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+  }
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    executeCode(editor.getValue());
+  };
+</script>
+<div class="callout callout-style-simple callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div>
+<div class="callout-answer">
+<p>The Shannon Index for this community is <span class="math inline">\(H = 0.97\)</span>, and the Effective Number of Species is <span class="math inline">\(D = 2.63\)</span>.</p>
+<p>As we know there are eight species (technically-speaking, taxonomic <em>genera</em>) in the community, and the effective number of species is much lower than this, we would conclude that the community is dominated by a small number of genera.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example solution code
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe describing the community</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species=</span><span class="fu">c</span>(<span class="st">"Abiotrophia"</span>, <span class="st">"Peptostreptococcus"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Corynebacterium"</span>, <span class="st">"Eubacterium"</span>, <span class="st">"Moraxella"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Neisseria"</span>, <span class="st">"Campylobacter"</span>, <span class="st">"Desulfovibrio"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">count=</span><span class="fu">c</span>(<span class="fl">1.27e4</span>, <span class="fl">1.84e3</span>, <span class="fl">2.41e5</span>, <span class="fl">4.92e3</span>, <span class="fl">7.31e4</span>, <span class="fl">1.88e6</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">8.23e4</span>, <span class="fl">3.11e6</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>dfm<span class="sc">$</span>p.i <span class="ot">&lt;-</span> dfm<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(dfm<span class="sc">$</span>count)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>dfm<span class="sc">$</span>h.i <span class="ot">&lt;-</span> dfm<span class="sc">$</span>p.i <span class="sc">*</span> <span class="fu">log</span>(dfm<span class="sc">$</span>p.i)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the Shannon Index and Effective Number of Species</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>H <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(dfm<span class="sc">$</span>h.i)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>D <span class="ot">=</span> <span class="fu">exp</span>(H)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(H, D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
