@@ -11,6 +11,7 @@ filters:
 
 library(flextable)
 library(ggplot2)
+library(plotly)
 library(tidyverse)
 ```
 
@@ -43,7 +44,7 @@ The way that the maximum value of Shannon Index varies with species richness (co
 #| fig-cap: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).
 #| warning: false
 #| echo: false
-#| width: 75%
+#| out-width: 80%
 
 # Generate a dataframe of maximum Shannon Index values for a given community richness
 dfm <- data.frame(richness=1:100, index=log(1:100))
@@ -227,7 +228,7 @@ This gives a value of $D = 7.55$ for the effective number of species. This is cl
 ::: {.callout-exercise}
 ## Exercise 1
 
-Suppose we have a microbial community with the following composition, and counts:
+Suppose we have a oral microbiome community with the following genus-level composition, and abundances/counts:
 
 - _Abiotrophia_: 1.27e4
 - _Peptostreptococcus_: 1.84e3
@@ -241,7 +242,7 @@ Suppose we have a microbial community with the following composition, and counts
 ::: {.callout-important}
 Use the interactive `R` box below to calculate the Shannon Index and the Effective Number of Species in the community.
 
-Do you think the community is diverse?
+How diverse or even is the community? Justify your answer.
 :::
 
 ```{webr-r}
@@ -253,7 +254,7 @@ Do you think the community is diverse?
 ::: {.callout-answer}
 The Shannon Index for this community is $H = 0.97$, and the Effective Number of Species is $D = 2.64$.
 
-As we know there are eight species (technically-speaking, taxonomic _genera_) in the community, and the effective number of species is much lower than this, we would conclude that the community is dominated by a small number of genera.
+As we know there are eight species (technically-speaking, taxonomic _genera_) in the community, and the effective number of species is much lower than this, we would conclude that the community is uneven/not very diverse, and dominated by a small number of genera.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -277,6 +278,124 @@ D = exp(H)
 
 c(H, D)
 ```
+:::
+:::
+
+::: {.callout-exercise}
+## Exercise 2
+
+The stacked bar chart below represents the distribution of species in a community.
+
+::: {.callout-important}
+Use the slider in the interactive graph to visualise different communities containing the same six species, but having different counts in each community, then consider the questions below.
+:::
+
+::: {.callout-tip}
+Use the `Plot` and the `Data` tabs to understand what's going on with the data.
+:::
+
+```{ojs}
+//| echo: false
+data = FileAttachment("assets/data/01_communities.csv").csv({ typed: true })
+
+filtered = data.filter(function(community_data) {
+  return community_id == community_data.community;
+})
+```
+
+```{ojs}
+//| echo: false
+
+viewof community_id = Inputs.range(
+  [1, 6], 
+  {value: 1, step: 1, label: "Community ID:"}
+)
+```
+
+::: {.panel-tabset}
+
+## Plot
+
+```{ojs}
+//| echo: false
+
+result = {
+  let totcount = 0;
+  let pi = [];
+  let hi = [];
+
+  for (let i = 0; i < 6; ++i) {
+    totcount += filtered[i].count;
+  }
+  
+  for (let i = 0; i < 6; ++i) {
+    pi[i] = filtered[i].count / totcount;
+    hi[i] = pi[i] * Math.log(pi[i]);
+  }
+  
+  let h_ex2 = -hi.reduce((a, b) => a + b, 0);
+  let d_ex2 = Math.exp(h_ex2);
+  
+  return [h_ex2, d_ex2];
+}
+
+Plot.plot({
+  color: {legend: true,
+          scheme: "Viridis"},
+  marginLeft: 0.3 * width,
+  marginRight: 0.3 * width,
+  marks: [
+    Plot.barY(filtered, {x: "community", y: "count", fill: "species"})
+  ]
+})
+
+Plot.plot({
+  height: 100,
+  marks: [
+    Plot.frame(),
+    Plot.text(["This is community " + filtered[0].community + ".\n" +
+               "Its Shannon Index is " + result[0].toFixed(2) + ".\n" +
+               "The Effective Number of Species is " + result[1].toFixed(2) + ".\n"],
+               {frameAnchor: "middle",
+                fontSize: 16})
+  ]
+})
+```
+
+## Data
+
+```{ojs}
+//| echo: false
+
+Inputs.table(filtered)
+
+Plot.plot({
+  height: 100,
+  marks: [
+    Plot.frame(),
+    Plot.text(["This is community " + filtered[0].community + ".\n" +
+               "Its Shannon Index is " + result[0].toFixed(2) + ".\n" +
+               "The Effective Number of Species is " + result[1].toFixed(2) + ".\n"],
+               {frameAnchor: "middle",
+                fontSize: 16})
+  ]
+})
+```
+:::
+
+
+::: {.callout-important}
+1. Compare communities 1 and 2. What is more important for Shannon Index ($H$) and Effective Number of Species ($D$): count, or relative proportion?
+2. Do you think that relative proportion is estimated more accurately for large or small counts? How would that affect estimates of $H$ and $D$ in communities with a small number of members?
+3. Compare communities 3 and 5. Are $H$ and $D$ similar for these communities? Do their populations have the same distribution?
+4. Is having a similar Shannon Index and/or Effective Number of Species sufficient to say that two communities are similar?
+:::
+
+::: {.callout-answer}
+1. Both communities 1 and 2 are completely even, with $H=1.79$ and $D=6$. The population size of community 2 is 10,000 times that of community 1. Relative proportion is more important than counts of individuals.
+2. With a small population, the effect of miscounting on proportion of a species may be more significant. Miscounting 10 individuals for a species is unlikely to affect calculations much if there are 1,000 individuals of that species. But if there were only 20, the effect would be very large. Counting errors are often a constant size, so more significant for small populations.
+3. The values of $H$ (1.66 in both cases) and $D$ (5.27 for community 3 and 5.25 for community 5) are similar. However, community 5 has four species with equally large, and two with equally small abundance. Community 3 has six species with different abundances. They are not the same distribution.
+4. The answers above show that: (i) $H$ and $D$ do not inform us about the overall size of the population; (ii) populations with different distributions of species can give the same values of $H$ and $D$. These are significant differences and sharing the same Shannon Index or Effective Number of Species is not enough to say that two populations are the same.
 :::
 
 :::
