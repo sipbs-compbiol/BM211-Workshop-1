@@ -249,7 +249,7 @@ Do you think the community is diverse?
 ```
 
 ::: {.callout-answer}
-The Shannon Index for this community is $H = 0.97$, and the Effective Number of Species is $D = 2.63$.
+The Shannon Index for this community is $H = 0.97$, and the Effective Number of Species is $D = 2.64$.
 
 As we know there are eight species (technically-speaking, taxonomic _genera_) in the community, and the effective number of species is much lower than this, we would conclude that the community is dominated by a small number of genera.
 :::
