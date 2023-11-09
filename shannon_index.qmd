@@ -208,7 +208,7 @@ and so, in this special case of absolute evenness, **effective number of species
 
 ### The Effective Number of Species for our Mars sample
 
-The Shannon Index for our Mars sample was $2.021916$, and we can use `R` to calculate a corresponding Diversity value $D$.
+The Shannon Index for our Mars sample was $2.021916$, and we can use `R` to calculate a corresponding Diversity value $D$ by taking the exponential of this number:
 
 ```{r}
 diversity = exp(2.021916)
