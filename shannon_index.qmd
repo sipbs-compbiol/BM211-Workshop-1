@@ -222,6 +222,8 @@ diversity
 
 This gives a value of $D = 7.55$ for the effective number of species. This is close to the actual number of species in our sample - the **richness** value - of eight, which indicates that **our sample is highly diverse**.
 
+## Exercises
+
 ::: {.callout-exercise}
 ## Exercise 1
 
