@@ -227,7 +227,7 @@ This gives a value of $D = 7.55$ for the effective number of species. This is cl
 ::: {.callout-exercise}
 ## Exercise 1
 
-Suppose we have a oral microbiome community with the following genus-level composition, and abundances/counts:
+Suppose we have an oral microbiome community with the following genus-level composition, and abundances/counts:
 
 - _Abiotrophia_: 1.27e4
 - _Peptostreptococcus_: 1.84e3
