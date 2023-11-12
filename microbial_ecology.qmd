@@ -8,7 +8,23 @@ This is accompanying material to give additional background and explanation for 
 
 ## What is microbial ecology?
 
-**Microbial ecology is the scientific study of natural microbial communities**. It is a hugely important, but arguably underdeveloped area of biology. Important questions remain to be completely answered in detail for many biological systems:
+**Microbial ecology is the scientific study of natural microbial communities**, which are critical to many important processes including:
+
+- airborne microbial communities [@Santl-Temkiv2022-ou]
+- environmental bioremediation of pollutants [@Xu2023-fo]
+- carbon sequestration in the ocean [@Castillo2022-hv]
+- seasonal variation of carbon cycles in soil [@Poppeliers2022-wn]
+- decomposition of animals [@Mason2023-uy]
+
+as well as clinical contexts, such as:
+
+- pathogenesis and nutrient processing in the vertebrate gut [@Foster-Nyarko2022-xg]
+- cancer immunotherapy responses [@Simpson2022-yt]
+- oral disease [@Zhang2022-fl]
+- infant health [@Qi2022-lz]
+
+
+It is a hugely important, but arguably underdeveloped area of biology. Important questions remain to be completely answered in detail for many biological systems:
 
 ::: {.callout-tip collapse="true"}
 ## The composition of microbial communities

@@ -27,11 +27,12 @@ book:
     - intro.qmd
     - summary.qmd
     
-    - part: workshop_01.qmd
+    - part: workshop_01_support.qmd
       chapters:
         - microbial_ecology.qmd
         - diversity_measures.qmd
         - shannon_index.qmd
+    - part: workshop_01.qmd
         
     - part: workshop_04.qmd
       chapters: 
