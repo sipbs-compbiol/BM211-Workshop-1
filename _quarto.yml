@@ -24,8 +24,6 @@ book:
   
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
     
     - part: workshop_01_support.qmd
       chapters:
