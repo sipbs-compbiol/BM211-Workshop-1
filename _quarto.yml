@@ -11,7 +11,7 @@ book:
   
   page-footer:
     left: |
-      These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.
+      These BM211 workshop materials were written by Leighton Pritchard and Morgan Feeney.
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
 
