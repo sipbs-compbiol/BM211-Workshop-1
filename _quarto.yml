@@ -32,13 +32,13 @@ book:
         - shannon_index.qmd
     - part: workshop_01.qmd
         
-    - part: workshop_04.qmd
-      chapters: 
-        - piler_cr.qmd
-        
-    - part: workshop_05.qmd
-      chapters: 
-        - protein_trees.qmd
+#    - part: workshop_04.qmd
+#      chapters: 
+#        - piler_cr.qmd
+#        
+#    - part: workshop_05.qmd
+#      chapters: 
+#        - protein_trees.qmd
         
     - references.qmd
 
