@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Leighton Pritchard and Morgan Feeney">
 
-<title>bm211-workshops - 3&nbsp; Microbial Ecology</title>
+<title>bm211-workshops - 1&nbsp; Microbial Ecology</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,6 +25,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -52,7 +53,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./diversity_measures.html" rel="next">
 <link href="./workshop_01_support.html" rel="prev">
-<link href="./cover.png" rel="icon" type="image/png">
+<link href="./icon_32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,7 +69,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -77,6 +84,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -86,6 +94,33 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
@@ -94,12 +129,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./microbial_ecology.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./microbial_ecology.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -109,12 +144,12 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">bm211-workshops</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/sipbs-compbiol/bm211-workshops/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/sipbs-compbiol/bm211-workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -136,18 +171,6 @@ div.csl-indent {
  <span class="menu-text">Preface to the 2023-24 presentation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./workshop_01_support.html" class="sidebar-item-text sidebar-link">
@@ -160,57 +183,19 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./microbial_ecology.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diversity_measures.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shannon_index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Workshop 01</span></span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./workshop_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workshop 04</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./piler_cr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">PILER-CR</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./workshop_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workshop 05</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./protein_trees.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Protein Trees</span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,29 +209,29 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-microbial-ecology" id="toc-what-is-microbial-ecology" class="nav-link active" data-scroll-target="#what-is-microbial-ecology"><span class="header-section-number">3.1</span> What is microbial ecology?</a></li>
-  <li><a href="#answering-questions-about-microbial-ecology-using-molecular-techniques" id="toc-answering-questions-about-microbial-ecology-using-molecular-techniques" class="nav-link" data-scroll-target="#answering-questions-about-microbial-ecology-using-molecular-techniques"><span class="header-section-number">3.2</span> Answering questions about microbial ecology using molecular techniques</a>
+  <li><a href="#what-is-microbial-ecology" id="toc-what-is-microbial-ecology" class="nav-link active" data-scroll-target="#what-is-microbial-ecology"><span class="header-section-number">1.1</span> What is microbial ecology?</a></li>
+  <li><a href="#answering-questions-about-microbial-ecology-using-molecular-techniques" id="toc-answering-questions-about-microbial-ecology-using-molecular-techniques" class="nav-link" data-scroll-target="#answering-questions-about-microbial-ecology-using-molecular-techniques"><span class="header-section-number">1.2</span> Answering questions about microbial ecology using molecular techniques</a>
   <ul class="collapse">
-  <li><a href="#which-organisms-are-present" id="toc-which-organisms-are-present" class="nav-link" data-scroll-target="#which-organisms-are-present"><span class="header-section-number">3.2.1</span> Which organisms are present?</a></li>
-  <li><a href="#how-much-of-each-organism-is-present" id="toc-how-much-of-each-organism-is-present" class="nav-link" data-scroll-target="#how-much-of-each-organism-is-present"><span class="header-section-number">3.2.2</span> How much of each organism is present?</a></li>
+  <li><a href="#which-organisms-are-present" id="toc-which-organisms-are-present" class="nav-link" data-scroll-target="#which-organisms-are-present"><span class="header-section-number">1.2.1</span> Which organisms are present?</a></li>
+  <li><a href="#how-much-of-each-organism-is-present" id="toc-how-much-of-each-organism-is-present" class="nav-link" data-scroll-target="#how-much-of-each-organism-is-present"><span class="header-section-number">1.2.2</span> How much of each organism is present?</a></li>
   </ul></li>
-  <li><a href="#describing-community-composition" id="toc-describing-community-composition" class="nav-link" data-scroll-target="#describing-community-composition"><span class="header-section-number">3.3</span> Describing community composition</a></li>
+  <li><a href="#describing-community-composition" id="toc-describing-community-composition" class="nav-link" data-scroll-target="#describing-community-composition"><span class="header-section-number">1.3</span> Describing community composition</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/microbial_ecology.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/microbial_ecology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./microbial_ecology.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-microbial-ecology" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></h1>
+<h1 class="title"><span id="sec-microbial-ecology" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></h1>
 </div>
 
 
@@ -259,7 +244,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p>This section introduces key concepts of how we use molecular techniques to identify and quantify the composition of microbial communities, to study microbial ecology.</p>
 <div class="callout callout-style-simple callout-note">
@@ -272,8 +259,8 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<section id="what-is-microbial-ecology" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="what-is-microbial-ecology"><span class="header-section-number">3.1</span> What is microbial ecology?</h2>
+<section id="what-is-microbial-ecology" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-microbial-ecology"><span class="header-section-number">1.1</span> What is microbial ecology?</h2>
 <p><strong>Microbial ecology is the scientific study of natural microbial communities</strong>, which are critical to many important processes including:</p>
 <ul>
 <li>airborne microbial communities <span class="citation" data-cites="Santl-Temkiv2022-ou">(<a href="references.html#ref-Santl-Temkiv2022-ou" role="doc-biblioref">Šantl-Temkiv et al. 2022</a>)</span></li>
@@ -396,8 +383,8 @@ Engineering new microbial communities
 <li>What is the effect of doing … to “there”?</li>
 </ol>
 </section>
-<section id="answering-questions-about-microbial-ecology-using-molecular-techniques" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="answering-questions-about-microbial-ecology-using-molecular-techniques"><span class="header-section-number">3.2</span> Answering questions about microbial ecology using molecular techniques</h2>
+<section id="answering-questions-about-microbial-ecology-using-molecular-techniques" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="answering-questions-about-microbial-ecology-using-molecular-techniques"><span class="header-section-number">1.2</span> Answering questions about microbial ecology using molecular techniques</h2>
 <p>Molecular techniques enabled by modern sequencing approaches, such as amplicon marker sequencing (e.g.&nbsp;16S, ITS1 methods) - also known as <strong>metabarcoding</strong> - and sequencing the entire genomic DNA of a complex sample - also known as <strong>metagenomics</strong> - have become the dominant approach to understanding microbial community composition <span class="citation" data-cites="Boughner2016-vx">(<a href="references.html#ref-Boughner2016-vx" role="doc-biblioref">Boughner and Singh 2016</a>)</span>. These tools give rapid insights into the complex composition of microbial communities that are unattainable using laborious, time-consuming culture-based techniques.</p>
 <div class="callout callout-style-simple callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
@@ -450,16 +437,16 @@ Metagenomics <em>vs</em> Metabarcoding
 </div>
 </div>
 </div>
-<section id="which-organisms-are-present" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="which-organisms-are-present"><span class="header-section-number">3.2.1</span> Which organisms are present?</h3>
+<section id="which-organisms-are-present" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="which-organisms-are-present"><span class="header-section-number">1.2.1</span> Which organisms are present?</h3>
 <p>Both <strong>metabarcoding</strong> and <strong>metagenomics</strong> can tell us which microorganisms are present in a biological or environmental sample.</p>
-<section id="metabarcoding" class="level4" data-number="3.2.1.1">
-<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="metabarcoding"><span class="header-section-number">3.2.1.1</span> Metabarcoding</h4>
+<section id="metabarcoding" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="metabarcoding"><span class="header-section-number">1.2.1.1</span> Metabarcoding</h4>
 <p>In <strong>metabarcoding</strong>, we use the polymerase chain reaction (PCR) and <strong>primers targeted specifically to amplify a marker sequence</strong>: a gene fragment or other stretch of DNA that we believe to be present in all organisms of interest. For bacteria, this is usually a fragment of the 16S rRNA gene. For fungi and other eukaryotic mocroorganisms it may be a fragment of the ITS1 (Internally Transcribed Spacer 1) region.</p>
 <p>These regions of the genome acquire sequence changes as their organisms evolve over time, such that variants of the marker sequence can be associated with a particular group of microorganisms, usually at the species or genus level. By amplifying and then sequencing the marker sequence from all suitable organisms in the sample, we can <strong>identify the marker sequence variants, and then compare these to databases of known sequences</strong>, to identify which organisms are present.</p>
 </section>
-<section id="metagenomics" class="level4" data-number="3.2.1.2">
-<h4 data-number="3.2.1.2" class="anchored" data-anchor-id="metagenomics"><span class="header-section-number">3.2.1.2</span> Metagenomics</h4>
+<section id="metagenomics" class="level4" data-number="1.2.1.2">
+<h4 data-number="1.2.1.2" class="anchored" data-anchor-id="metagenomics"><span class="header-section-number">1.2.1.2</span> Metagenomics</h4>
 <p>A similar principle applies with <strong>metagenomics</strong>: we sequence the sample and then compare the resulting sequences to a database containing sequences of known organisms, and use this to identify which of them are present in our sample. Differences between the methods arise mainly because <strong>this approach is untargeted - we do not know in advance what sequences we will recover</strong> - and generates very large amounts of data. Three of the main consequences of this are:</p>
 <ol type="1">
 <li>We can compare individual sequencing reads to the database of known sequences, but due to the large amount of sequence data (in comparison to metabarcoding) we have to do this using special techniques like <strong><span class="math inline">\(k\)</span>-mer alignment</strong>, rather than direct sequence comparison <span class="citation" data-cites="Wood2014-ns">(<a href="references.html#ref-Wood2014-ns" role="doc-biblioref">Wood and Salzberg 2014</a>)</span>.</li>
@@ -468,8 +455,8 @@ Metagenomics <em>vs</em> Metabarcoding
 </ol>
 </section>
 </section>
-<section id="how-much-of-each-organism-is-present" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="how-much-of-each-organism-is-present"><span class="header-section-number">3.2.2</span> How much of each organism is present?</h3>
+<section id="how-much-of-each-organism-is-present" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="how-much-of-each-organism-is-present"><span class="header-section-number">1.2.2</span> How much of each organism is present?</h3>
 <p>Whichever method we use to sequence a biological sample, we can obtain a list of the organisms that are present. This tells us something about the composition of the sample, but not everything. There is clearly a difference between one community that is 50% <em>Escherichia coli</em> and 50% <em>Staphylococcus aureus</em>, and another community that is 99% <em>S. aureus</em> and 1% <em>E. coli</em>. But how can we distinguish between the two?</p>
 <p>In both metabarcoding and metagenomics we can count the number of sequences that correspond to each of the organism types we have identified. For metabarcoding, this might be the count of each amplicon sequence corresponding to a microbial genus. For metagenomics, this might be the number of reads assigned to a microbial species by a tool like <a href="https://ccb.jhu.edu/software/kraken/">Kraken</a>.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
@@ -499,12 +486,12 @@ Molecular techniques only <em>estimate</em> organism abundance
 <p>We refer to the count of each distinct group of microbes as its <strong>abundance</strong>.</p>
 </section>
 </section>
-<section id="describing-community-composition" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="describing-community-composition"><span class="header-section-number">3.3</span> Describing community composition</h2>
+<section id="describing-community-composition" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="describing-community-composition"><span class="header-section-number">1.3</span> Describing community composition</h2>
 <p>The list of organisms identified as present in our sample and the (relative) count of how much of the community is composed of each organism, taken together, describe our measured <strong>microbial community composition</strong>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-De_Abreu2020-jt" class="csl-entry" role="listitem">
 Abreu, Vinicius A C de, José Perdigão, and Sintia Almeida. 2020. <span>“Metagenomic Approaches to Analyze Antimicrobial Resistance: An Overview.”</span> <em>Front. Genet.</em> 11: 575592. <a href="https://doi.org/10.3389%2Ffgene.2020.575592">https://doi.org/10.3389%2Ffgene.2020.575592</a>.
 </div>
@@ -633,10 +620,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -646,8 +632,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -660,6 +655,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -703,6 +817,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -728,6 +843,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -789,26 +930,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./workshop_01_support.html" class="pagination-link">
+      <a href="./workshop_01_support.html" class="pagination-link" aria-label="Workshop 01 Support">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Workshop 01 Support</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./diversity_measures.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./diversity_measures.html" class="pagination-link" aria-label="Diversity Measures">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.</div>   
+    <div class="nav-footer-left">
+<p>These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/microbial_ecology.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
   </div>
 </footer>
+
 
 
 

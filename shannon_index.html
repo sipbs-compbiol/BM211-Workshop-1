@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Leighton Pritchard and Morgan Feeney">
 
-<title>bm211-workshops - 5&nbsp; Shannon Index</title>
+<title>bm211-workshops - 3&nbsp; Shannon Index</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,9 +65,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./workshop_01.html" rel="next">
+<link href="./references.html" rel="next">
 <link href="./diversity_measures.html" rel="prev">
-<link href="./cover.png" rel="icon" type="image/png">
+<link href="./icon_32.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -347,6 +354,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
 
 <body class="nav-sidebar floating">
@@ -355,12 +389,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./shannon_index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./shannon_index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Shannon Index</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -370,12 +404,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">bm211-workshops</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/sipbs-compbiol/bm211-workshops/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/sipbs-compbiol/bm211-workshops/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -397,18 +431,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Preface to the 2023-24 presentation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./workshop_01_support.html" class="sidebar-item-text sidebar-link">
@@ -421,57 +443,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./microbial_ecology.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Microbial Ecology</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diversity_measures.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./shannon_index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Workshop 01</span></span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./workshop_04.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workshop 04</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./piler_cr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">PILER-CR</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="./workshop_05.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Workshop 05</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./protein_trees.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Protein Trees</span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></a>
   </div>
 </li>
       </ul>
@@ -485,31 +469,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-the-shannon-index" id="toc-what-is-the-shannon-index" class="nav-link active" data-scroll-target="#what-is-the-shannon-index"><span class="header-section-number">5.1</span> What is the Shannon index?</a>
+  <li><a href="#what-is-the-shannon-index" id="toc-what-is-the-shannon-index" class="nav-link active" data-scroll-target="#what-is-the-shannon-index"><span class="header-section-number">3.1</span> What is the Shannon index?</a>
   <ul class="collapse">
-  <li><a href="#what-does-the-equation-for-shannon-index-mean" id="toc-what-does-the-equation-for-shannon-index-mean" class="nav-link" data-scroll-target="#what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">5.1.1</span> What does the equation for Shannon Index mean?</a></li>
+  <li><a href="#what-does-the-equation-for-shannon-index-mean" id="toc-what-does-the-equation-for-shannon-index-mean" class="nav-link" data-scroll-target="#what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">3.1.1</span> What does the equation for Shannon Index mean?</a></li>
   </ul></li>
-  <li><a href="#calculating-shannon-index-for-our-mars-community" id="toc-calculating-shannon-index-for-our-mars-community" class="nav-link" data-scroll-target="#calculating-shannon-index-for-our-mars-community"><span class="header-section-number">5.2</span> Calculating Shannon Index for our Mars Community</a>
+  <li><a href="#calculating-shannon-index-for-our-mars-community" id="toc-calculating-shannon-index-for-our-mars-community" class="nav-link" data-scroll-target="#calculating-shannon-index-for-our-mars-community"><span class="header-section-number">3.2</span> Calculating Shannon Index for our Mars Community</a>
   <ul class="collapse">
-  <li><a href="#collecting-data-about-our-community" id="toc-collecting-data-about-our-community" class="nav-link" data-scroll-target="#collecting-data-about-our-community"><span class="header-section-number">5.2.1</span> Collecting data about our community</a></li>
-  <li><a href="#calculating-relative-abundance" id="toc-calculating-relative-abundance" class="nav-link" data-scroll-target="#calculating-relative-abundance"><span class="header-section-number">5.2.2</span> Calculating relative abundance</a></li>
-  <li><a href="#calculating-shannon-index" id="toc-calculating-shannon-index" class="nav-link" data-scroll-target="#calculating-shannon-index"><span class="header-section-number">5.2.3</span> Calculating Shannon Index</a></li>
-  <li><a href="#understanding-the-shannon-index" id="toc-understanding-the-shannon-index" class="nav-link" data-scroll-target="#understanding-the-shannon-index"><span class="header-section-number">5.2.4</span> Understanding the Shannon Index</a></li>
+  <li><a href="#collecting-data-about-our-community" id="toc-collecting-data-about-our-community" class="nav-link" data-scroll-target="#collecting-data-about-our-community"><span class="header-section-number">3.2.1</span> Collecting data about our community</a></li>
+  <li><a href="#calculating-relative-abundance" id="toc-calculating-relative-abundance" class="nav-link" data-scroll-target="#calculating-relative-abundance"><span class="header-section-number">3.2.2</span> Calculating relative abundance</a></li>
+  <li><a href="#calculating-shannon-index" id="toc-calculating-shannon-index" class="nav-link" data-scroll-target="#calculating-shannon-index"><span class="header-section-number">3.2.3</span> Calculating Shannon Index</a></li>
+  <li><a href="#understanding-the-shannon-index" id="toc-understanding-the-shannon-index" class="nav-link" data-scroll-target="#understanding-the-shannon-index"><span class="header-section-number">3.2.4</span> Understanding the Shannon Index</a></li>
   </ul></li>
-  <li><a href="#the-effective-number-of-species-for-a-community" id="toc-the-effective-number-of-species-for-a-community" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-a-community"><span class="header-section-number">5.3</span> The Effective Number of Species for a community</a>
+  <li><a href="#the-effective-number-of-species-for-a-community" id="toc-the-effective-number-of-species-for-a-community" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-a-community"><span class="header-section-number">3.3</span> The Effective Number of Species for a community</a>
   <ul class="collapse">
-  <li><a href="#the-effective-number-of-species-for-our-mars-sample" id="toc-the-effective-number-of-species-for-our-mars-sample" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">5.3.1</span> The Effective Number of Species for our Mars sample</a></li>
+  <li><a href="#the-effective-number-of-species-for-our-mars-sample" id="toc-the-effective-number-of-species-for-our-mars-sample" class="nav-link" data-scroll-target="#the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">3.3.1</span> The Effective Number of Species for our Mars sample</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.4</span> Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.4</span> Exercises</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/shannon_index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/shannon_index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -524,9 +508,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   });
 </script>
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./workshop_01_support.html">Workshop 01 Support</a></li><li class="breadcrumb-item"><a href="./shannon_index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Shannon Index</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-shannon-index" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></h1>
+<h1 class="title"><span id="sec-shannon-index" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Shannon Index</span></span></h1>
 </div>
 
 
@@ -539,7 +523,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -550,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This section introduces the <strong>Shannon Index</strong> as a simple measure of community diversity.</p>
 <ul>
 <li>We introduce the concept of <strong>Shannon Index</strong> and explain what it means.</li>
-<li><strong>We walk through calculation of the Shannon Index in <code>R</code></strong>, using data from our example community in <a href="diversity_measures.html"><span>Chapter&nbsp;4</span></a>.
+<li><strong>We walk through calculation of the Shannon Index in <code>R</code></strong>, using data from our example community in <a href="diversity_measures.html" class="quarto-xref"><span>Chapter 2</span></a>.
 <ul>
 <li>We relate the actions in our <code>R</code> walkthrough to the equation for Shannon Index, at each step.</li>
 </ul></li>
@@ -559,42 +545,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>To understand diversity, we need to consider both richness and evenness</strong>, as described in <a href="diversity_measures.html"><span>Chapter&nbsp;4</span></a>.</p>
+<p><strong>To understand diversity, we need to consider both richness and evenness</strong>, as described in <a href="diversity_measures.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
 <p>We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>. But <strong>by itself this <em>idea</em> of evenness does not give us a number that we can use to compare communities</strong>.</p>
 <p><strong>There are mathematical formulae that allow us to turn this concept of evenness into a number</strong>, and we can calculate such values for a community using <code>R</code>.</p>
-<section id="what-is-the-shannon-index" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="what-is-the-shannon-index"><span class="header-section-number">5.1</span> What is the Shannon index?</h2>
-<p><strong>The Shannon Index (<span class="math inline">\(H\)</span>) is arguably the simplest quantitative measure of community evenness/diversity,</strong> and is described by <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>. Shannon Index varies between:</p>
+<section id="what-is-the-shannon-index" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="what-is-the-shannon-index"><span class="header-section-number">3.1</span> What is the Shannon index?</h2>
+<p><strong>The Shannon Index (<span class="math inline">\(H\)</span>) is arguably the simplest quantitative measure of community evenness/diversity,</strong> and is described by <a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>. Shannon Index varies between:</p>
 <ul>
 <li>a value close to zero (for very uneven communities)</li>
 <li>the value <span class="math inline">\(\ln(N)\)</span> for a community with <span class="math inline">\(N\)</span> evenly-distributed species.</li>
 </ul>
-<p>The way that the maximum value of Shannon Index varies with species richness (count of species) is shown in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a>.</p>
+<p>The way that the maximum value of Shannon Index varies with species richness (count of species) is shown in <a href="#fig-shannon_maxima" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-shannon_maxima" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="shannon_index_files/figure-html/fig-shannon_maxima-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).</figcaption>
+<div id="fig-shannon_maxima" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-shannon_maxima-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="shannon_index_files/figure-html/fig-shannon_maxima-1.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shannon_maxima-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p><span id="eq-shannon_entropy"><span class="math display">\[
 H = -\sum_{i=1}^{N} p_i \ln(p_i)
-\tag{5.1}\]</span></span></p>
-<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">5.1.1</span> What does the equation for Shannon Index mean?</h3>
+\tag{3.1}\]</span></span></p>
+<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">3.1.1</span> What does the equation for Shannon Index mean?</h3>
 <p>The Shannon Index describes the <em>evenness</em> of species in a community. Representing a single species from the community as the letter <span class="math inline">\(i\)</span>, we can calculate the <strong>relative abundance</strong> of that species in the community as its <strong>abundance (the count of individuals from species <span class="math inline">\(i\)</span>) divided by the total abundance for all species</strong>. We call this relative abundance <span class="math inline">\(p_i\)</span>.</p>
-<p><a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a> takes this value and transforms it into the Shannon Index, represented as <span class="math inline">\(H\)</span>. <strong>The resulting value varies between zero (maximally uneven, not diverse), and some maximum value (maximally even, very diverse), as represented in <a href="#fig-shannon_maxima">Figure&nbsp;<span>5.1</span></a></strong>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
+<p><a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> takes this value and transforms it into the Shannon Index, represented as <span class="math inline">\(H\)</span>. <strong>The resulting value varies between zero (maximally uneven, not diverse), and some maximum value (maximally even, very diverse), as represented in <a href="#fig-shannon_maxima" class="quarto-xref">Figure&nbsp;<span>3.1</span></a></strong>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
 </section>
 </section>
-<section id="calculating-shannon-index-for-our-mars-community" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="calculating-shannon-index-for-our-mars-community"><span class="header-section-number">5.2</span> Calculating Shannon Index for our Mars Community</h2>
-<section id="collecting-data-about-our-community" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="collecting-data-about-our-community"><span class="header-section-number">5.2.1</span> Collecting data about our community</h3>
+<section id="calculating-shannon-index-for-our-mars-community" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="calculating-shannon-index-for-our-mars-community"><span class="header-section-number">3.2</span> Calculating Shannon Index for our Mars Community</h2>
+<section id="collecting-data-about-our-community" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="collecting-data-about-our-community"><span class="header-section-number">3.2.1</span> Collecting data about our community</h3>
 <p>Let’s start in <code>R</code> by defining our dataset for the Mars community.</p>
-<p><strong>In the code below we create two vectors: one of species names, and one of counts for those species</strong> in our sample (which we can get from <a href="diversity_measures.html#fig-one_packet_histogram">Figure&nbsp;<span>4.3</span></a>). We combine these vectors into a single dataframe, for convenience.</p>
+<p><strong>In the code below we create two vectors: one of species names, and one of counts for those species</strong> in our sample (which we can get from <a href="diversity_measures.html#fig-one_packet_histogram" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>). We combine these vectors into a single dataframe, for convenience.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of species names</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Malteaser sp."</span>, <span class="st">"Snickers sp."</span>, <span class="st">"Twix sp."</span>, <span class="st">"Mars sp."</span>,</span>
@@ -608,13 +598,12 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 </div>
 <div class="cell">
 <div class="cell-output-display">
-
-<div class="tabwid"><style>.cl-34fa3b70{}.cl-34eed0e6{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-34f56b9a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-34f56bae{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-34f587f6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34f5880a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34f5880b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34f5880c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34f58814{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34f58815{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-34fa3b70"><thead><tr style="overflow-wrap:break-word;"><th class="cl-34f587f6"><p class="cl-34f56b9a"><span class="cl-34eed0e6">species</span></p></th><th class="cl-34f5880a"><p class="cl-34f56bae"><span class="cl-34eed0e6">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Malteaser sp.</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Snickers sp.</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Twix sp.</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Mars sp.</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Milky way</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Bounty sp.</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f5880b"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Galaxy choc</span></p></td><td class="cl-34f5880c"><p class="cl-34f56bae"><span class="cl-34eed0e6">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-34f58814"><p class="cl-34f56b9a"><span class="cl-34eed0e6">Galaxy caramel</span></p></td><td class="cl-34f58815"><p class="cl-34f56bae"><span class="cl-34eed0e6">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-863ec87e{}.cl-8638d2ac{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-863b5fb8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-863b5fc2{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-863b72e6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-863b72fa{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-863b72fb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-863b72fc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-863b7304{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-863b7305{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-863ec87e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-863b72e6"><p class="cl-863b5fb8"><span class="cl-8638d2ac">species</span></p></th><th class="cl-863b72fa"><p class="cl-863b5fc2"><span class="cl-8638d2ac">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Malteaser sp.</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Snickers sp.</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Twix sp.</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Mars sp.</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Milky way</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Bounty sp.</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b72fb"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Galaxy choc</span></p></td><td class="cl-863b72fc"><p class="cl-863b5fc2"><span class="cl-8638d2ac">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-863b7304"><p class="cl-863b5fb8"><span class="cl-8638d2ac">Galaxy caramel</span></p></td><td class="cl-863b7305"><p class="cl-863b5fc2"><span class="cl-8638d2ac">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </section>
-<section id="calculating-relative-abundance" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="calculating-relative-abundance"><span class="header-section-number">5.2.2</span> Calculating relative abundance</h3>
+<section id="calculating-relative-abundance" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="calculating-relative-abundance"><span class="header-section-number">3.2.2</span> Calculating relative abundance</h3>
 <p>The first step in calculating Shannon Index is to calculate the <strong>relative abundance</strong> <span class="math inline">\(p_i\)</span> of each species <span class="math inline">\(i\)</span>. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e.&nbsp;the total number of individuals, in this case).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
@@ -622,8 +611,7 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 </div>
 <div class="cell">
 <div class="cell-output-display">
-
-<div class="tabwid"><style>.cl-351724d8{}.cl-350f4880{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3512b70e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3512b718{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3512ceba{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3512cec4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3512cec5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3512cece{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3512cecf{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3512ced8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-351724d8"><thead><tr style="overflow-wrap:break-word;"><th class="cl-3512ceba"><p class="cl-3512b70e"><span class="cl-350f4880">species</span></p></th><th class="cl-3512cec4"><p class="cl-3512b718"><span class="cl-350f4880">count</span></p></th><th class="cl-3512cec4"><p class="cl-3512b718"><span class="cl-350f4880">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Malteaser sp.</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">3</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Snickers sp.</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">6</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Twix sp.</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">6</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Mars sp.</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">7</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Milky way</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">7</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Bounty sp.</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">5</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cec5"><p class="cl-3512b70e"><span class="cl-350f4880">Galaxy choc</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">3</span></p></td><td class="cl-3512cece"><p class="cl-3512b718"><span class="cl-350f4880">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3512cecf"><p class="cl-3512b70e"><span class="cl-350f4880">Galaxy caramel</span></p></td><td class="cl-3512ced8"><p class="cl-3512b718"><span class="cl-350f4880">3</span></p></td><td class="cl-3512ced8"><p class="cl-3512b718"><span class="cl-350f4880">0.075</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-86547764{}.cl-864e8c96{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8650bdb8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8650bdc2{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8650ce7a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8650ce84{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8650ce85{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8650ce8e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8650ce8f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8650ce98{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-86547764"><thead><tr style="overflow-wrap:break-word;"><th class="cl-8650ce7a"><p class="cl-8650bdb8"><span class="cl-864e8c96">species</span></p></th><th class="cl-8650ce84"><p class="cl-8650bdc2"><span class="cl-864e8c96">count</span></p></th><th class="cl-8650ce84"><p class="cl-8650bdc2"><span class="cl-864e8c96">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Malteaser sp.</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">3</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Snickers sp.</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">6</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Twix sp.</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">6</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Mars sp.</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">7</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Milky way</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">7</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Bounty sp.</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">5</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce85"><p class="cl-8650bdb8"><span class="cl-864e8c96">Galaxy choc</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">3</span></p></td><td class="cl-8650ce8e"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-8650ce8f"><p class="cl-8650bdb8"><span class="cl-864e8c96">Galaxy caramel</span></p></td><td class="cl-8650ce98"><p class="cl-8650bdc2"><span class="cl-864e8c96">3</span></p></td><td class="cl-8650ce98"><p class="cl-8650bdc2"><span class="cl-864e8c96">0.075</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
@@ -638,17 +626,17 @@ Mathematical Content!
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>How does what we’ve just done in <code>R</code> relate to <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>?</p>
-<p>For each of our species (denoted by <span class="math inline">\(i\)</span> in the equation), we have calculated the relative abundance <span class="math inline">\(p_i\)</span>, which is used in the part of <a href="#eq-shannon_pi">Equation&nbsp;<span>5.2</span></a> indicated in red, below.</p>
+<p>How does what we’ve just done in <code>R</code> relate to <a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>?</p>
+<p>For each of our species (denoted by <span class="math inline">\(i\)</span> in the equation), we have calculated the relative abundance <span class="math inline">\(p_i\)</span>, which is used in the part of <a href="#eq-shannon_pi" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> indicated in red, below.</p>
 <p><span id="eq-shannon_pi"><span class="math display">\[
 H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
-\tag{5.2}\]</span></span></p>
+\tag{3.2}\]</span></span></p>
 </div>
 </div>
 </div>
 </section>
-<section id="calculating-shannon-index" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">5.2.3</span> Calculating Shannon Index</h3>
+<section id="calculating-shannon-index" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">3.2.3</span> Calculating Shannon Index</h3>
 <p>To turn this data into the Shannon Index, we need to carry out two more steps: calculate the <em>natural log</em> of the relative abundance of each species (<span class="math inline">\(\ln(p_i)\)</span>), then multiply this by the corresponding relative abundance (<span class="math inline">\(p_i\)</span>), as in the <code>R</code> code below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
@@ -659,8 +647,7 @@ H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
 </div>
 <div class="cell">
 <div class="cell-output-display">
-
-<div class="tabwid"><style>.cl-352e933e{}.cl-352694a4{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-352a06c0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-352a06ca{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-352a1f2a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-352a1f34{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-352a1f35{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-352a1f3e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-352a1f3f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-352a1f48{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-352e933e"><thead><tr style="overflow-wrap:break-word;"><th class="cl-352a1f2a"><p class="cl-352a06c0"><span class="cl-352694a4">species</span></p></th><th class="cl-352a1f34"><p class="cl-352a06ca"><span class="cl-352694a4">count</span></p></th><th class="cl-352a1f34"><p class="cl-352a06ca"><span class="cl-352694a4">rel_abd</span></p></th><th class="cl-352a1f34"><p class="cl-352a06ca"><span class="cl-352694a4">ln_rel_abd</span></p></th><th class="cl-352a1f34"><p class="cl-352a06ca"><span class="cl-352694a4">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Malteaser sp.</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">3</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.075</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-2.590267</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Snickers sp.</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">6</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.150</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-1.897120</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Twix sp.</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">6</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.150</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-1.897120</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Mars sp.</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">7</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.175</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-1.742969</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Milky way</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">7</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.175</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-1.742969</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Bounty sp.</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">5</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.125</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-2.079442</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f35"><p class="cl-352a06c0"><span class="cl-352694a4">Galaxy choc</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">3</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">0.075</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-2.590267</span></p></td><td class="cl-352a1f3e"><p class="cl-352a06ca"><span class="cl-352694a4">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-352a1f3f"><p class="cl-352a06c0"><span class="cl-352694a4">Galaxy caramel</span></p></td><td class="cl-352a1f48"><p class="cl-352a06ca"><span class="cl-352694a4">3</span></p></td><td class="cl-352a1f48"><p class="cl-352a06ca"><span class="cl-352694a4">0.075</span></p></td><td class="cl-352a1f48"><p class="cl-352a06ca"><span class="cl-352694a4">-2.590267</span></p></td><td class="cl-352a1f48"><p class="cl-352a06ca"><span class="cl-352694a4">-0.1942700</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-86677774{}.cl-86614eb2{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-86644572{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8664457c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8664568e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-86645698{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-86645699{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8664569a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-866456a2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-866456ac{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-86677774"><thead><tr style="overflow-wrap:break-word;"><th class="cl-8664568e"><p class="cl-86644572"><span class="cl-86614eb2">species</span></p></th><th class="cl-86645698"><p class="cl-8664457c"><span class="cl-86614eb2">count</span></p></th><th class="cl-86645698"><p class="cl-8664457c"><span class="cl-86614eb2">rel_abd</span></p></th><th class="cl-86645698"><p class="cl-8664457c"><span class="cl-86614eb2">ln_rel_abd</span></p></th><th class="cl-86645698"><p class="cl-8664457c"><span class="cl-86614eb2">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Malteaser sp.</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">3</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.075</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-2.590267</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Snickers sp.</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">6</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.150</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-1.897120</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Twix sp.</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">6</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.150</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-1.897120</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Mars sp.</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">7</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.175</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-1.742969</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Milky way</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">7</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.175</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-1.742969</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Bounty sp.</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">5</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.125</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-2.079442</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-86645699"><p class="cl-86644572"><span class="cl-86614eb2">Galaxy choc</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">3</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">0.075</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-2.590267</span></p></td><td class="cl-8664569a"><p class="cl-8664457c"><span class="cl-86614eb2">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-866456a2"><p class="cl-86644572"><span class="cl-86614eb2">Galaxy caramel</span></p></td><td class="cl-866456ac"><p class="cl-8664457c"><span class="cl-86614eb2">3</span></p></td><td class="cl-866456ac"><p class="cl-8664457c"><span class="cl-86614eb2">0.075</span></p></td><td class="cl-866456ac"><p class="cl-8664457c"><span class="cl-86614eb2">-2.590267</span></p></td><td class="cl-866456ac"><p class="cl-8664457c"><span class="cl-86614eb2">-0.1942700</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
@@ -675,15 +662,15 @@ Mathematical Content!
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Here’s how these two actions relate to <a href="#eq-shannon_entropy">Equation&nbsp;<span>5.1</span></a>.</p>
-<p>Firstly, for each of our species, we calculated the natural log of the relative abundance: <span class="math inline">\(\ln(p_i)\)</span>, shown in red in <a href="#eq-shannon_lnpi">Equation&nbsp;<span>5.3</span></a>.</p>
+<p>Here’s how these two actions relate to <a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
+<p>Firstly, for each of our species, we calculated the natural log of the relative abundance: <span class="math inline">\(\ln(p_i)\)</span>, shown in red in <a href="#eq-shannon_lnpi" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>.</p>
 <p><span id="eq-shannon_lnpi"><span class="math display">\[
 H = -\sum_{i=1}^{N} p_i \color{red}{\ln(p_i)}
-\tag{5.3}\]</span></span></p>
-<p>Next, we calculated the product of <span class="math inline">\(p_i\)</span> and <span class="math inline">\(\ln(p_i)\)</span>, highlighted in orange in <a href="#eq-shannon_mult">Equation&nbsp;<span>5.4</span></a>.</p>
+\tag{3.3}\]</span></span></p>
+<p>Next, we calculated the product of <span class="math inline">\(p_i\)</span> and <span class="math inline">\(\ln(p_i)\)</span>, highlighted in orange in <a href="#eq-shannon_mult" class="quarto-xref">Equation&nbsp;<span>3.4</span></a>.</p>
 <p><span id="eq-shannon_mult"><span class="math display">\[
 H = -\sum_{i=1}^{N} \color{orange}{{p_i} \ln(p_i)}
-\tag{5.4}\]</span></span></p>
+\tag{3.4}\]</span></span></p>
 </div>
 </div>
 </div>
@@ -707,16 +694,16 @@ Mathematical Content!
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Summing the product <span class="math inline">\(p_i \ln(p_i)\)</span> for each species <span class="math inline">\(i\)</span>, and multiplying it by <span class="math inline">\(-1\)</span> is indicated by the part of <a href="#eq-shannon_sum">Equation&nbsp;<span>5.5</span></a> highlighted in red.</p>
+<p>Summing the product <span class="math inline">\(p_i \ln(p_i)\)</span> for each species <span class="math inline">\(i\)</span>, and multiplying it by <span class="math inline">\(-1\)</span> is indicated by the part of <a href="#eq-shannon_sum" class="quarto-xref">Equation&nbsp;<span>3.5</span></a> highlighted in red.</p>
 <p><span id="eq-shannon_sum"><span class="math display">\[
 H = \color{red}{-\sum_{i=1}^{N}} \color{black}{p_i \ln(p_i)}
-\tag{5.5}\]</span></span></p>
+\tag{3.5}\]</span></span></p>
 </div>
 </div>
 </div>
 </section>
-<section id="understanding-the-shannon-index" class="level3" data-number="5.2.4">
-<h3 data-number="5.2.4" class="anchored" data-anchor-id="understanding-the-shannon-index"><span class="header-section-number">5.2.4</span> Understanding the Shannon Index</h3>
+<section id="understanding-the-shannon-index" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="understanding-the-shannon-index"><span class="header-section-number">3.2.4</span> Understanding the Shannon Index</h3>
 <p>So, we have a number <span class="math inline">\(H = 2.02\)</span> as the Shannon Index for our sample. How do we interpret this?</p>
 <p>Remember from earlier that the maximum Shannon Index - corresponding to maximum diversity - for a sample with eight species is <span class="math inline">\(\ln(8) = 2.08\)</span>. <strong>The value we calculated here, <span class="math inline">\(H = 2.02\)</span>, is close to this value and so we can conclude that our sample is very diverse.</strong></p>
 <div class="callout callout-style-simple callout-important">
@@ -731,18 +718,18 @@ H = \color{red}{-\sum_{i=1}^{N}} \color{black}{p_i \ln(p_i)}
 </div>
 </section>
 </section>
-<section id="the-effective-number-of-species-for-a-community" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="the-effective-number-of-species-for-a-community"><span class="header-section-number">5.3</span> The Effective Number of Species for a community</h2>
+<section id="the-effective-number-of-species-for-a-community" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-effective-number-of-species-for-a-community"><span class="header-section-number">3.3</span> The Effective Number of Species for a community</h2>
 <p>We can use the Shannon Index to calculate a value known as the <strong>effective number of species</strong> for a community. This name reflects that, although a community might contain a certain number of species, <strong>if some species are only present in very low abundance, they are not contributing significantly to the community, and they are <em>effectively</em> not present</strong>, and the effective number of species is less - maybe much less - than the <em>richness</em> of the community.</p>
 <p>For example:</p>
 <ul>
 <li>A community with three species in equal proportions, e.g.&nbsp;33% <span class="math inline">\(A\)</span>, 33% <span class="math inline">\(B\)</span>, and 33% <span class="math inline">\(C\)</span> clearly has three equally-contributing species. We might expect the effective number of species to be three.</li>
 <li>A community dominated by a single species, e.g.&nbsp;1% <span class="math inline">\(A\)</span>, 1% <span class="math inline">\(B\)</span>, and 98% <span class="math inline">\(C\)</span> might <em>effectively</em> have only one species: species <span class="math inline">\(C\)</span>.</li>
 </ul>
-<p>By taking the <em>exponential</em> of the Shannon Index, we calculate a value known as the <strong>effective number of species</strong>, or <strong>Diversity (<span class="math inline">\(D\)</span>)</strong> of a community. The mathematical equation is given in <a href="#eq-effective_species">Equation&nbsp;<span>5.6</span></a>.</p>
+<p>By taking the <em>exponential</em> of the Shannon Index, we calculate a value known as the <strong>effective number of species</strong>, or <strong>Diversity (<span class="math inline">\(D\)</span>)</strong> of a community. The mathematical equation is given in <a href="#eq-effective_species" class="quarto-xref">Equation&nbsp;<span>3.6</span></a>.</p>
 <p><span id="eq-effective_species"><span class="math display">\[
 D = \exp(H)
-\tag{5.6}\]</span></span></p>
+\tag{3.6}\]</span></span></p>
 <div class="callout callout-style-simple callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -763,8 +750,8 @@ D = \exp(H) = \exp(\ln(N)) = N
 </div>
 </div>
 </div>
-<section id="the-effective-number-of-species-for-our-mars-sample" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">5.3.1</span> The Effective Number of Species for our Mars sample</h3>
+<section id="the-effective-number-of-species-for-our-mars-sample" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">3.3.1</span> The Effective Number of Species for our Mars sample</h3>
 <p>The Shannon Index for our Mars sample was <span class="math inline">\(2.021916\)</span>, and we can use <code>R</code> to calculate a corresponding Diversity value <span class="math inline">\(D\)</span> by taking the exponential of this number:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">2.021916</span>)</span>
@@ -776,8 +763,8 @@ D = \exp(H) = \exp(\ln(N)) = N
 <p>This gives a value of <span class="math inline">\(D = 7.55\)</span> for the effective number of species. This is close to the actual number of species in our sample - the <strong>richness</strong> value - of eight, which indicates that <strong>our sample is highly diverse</strong>.</p>
 </section>
 </section>
-<section id="exercises" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.4</span> Exercises</h2>
+<section id="exercises" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.4</span> Exercises</h2>
 <div class="callout callout-style-simple callout-exercise no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1369,9 +1356,8 @@ Answer
 </section>
 
 </main> <!-- /main -->
-
 <script type="ojs-module-contents">
-{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"data = FileAttachment(\"assets/data/01_communities.csv\").csv({ typed: true })\n\nfiltered = data.filter(function(community_data) {\n  return community_id == community_data.community;\n})\n"},{"methodName":"interpret","cellName":"ojs-cell-2","inline":false,"source":"\nviewof community_id = Inputs.range(\n  [1, 6], \n  {value: 1, step: 1, label: \"Community ID:\"}\n)\n"},{"methodName":"interpret","cellName":"ojs-cell-3","inline":false,"source":"\nresult = {\n  let totcount = 0;\n  let pi = [];\n  let hi = [];\n\n  for (let i = 0; i < 6; ++i) {\n    totcount += filtered[i].count;\n  }\n  \n  for (let i = 0; i < 6; ++i) {\n    pi[i] = filtered[i].count / totcount;\n    hi[i] = pi[i] * Math.log(pi[i]);\n  }\n  \n  let h_ex2 = -hi.reduce((a, b) => a + b, 0);\n  let d_ex2 = Math.exp(h_ex2);\n  \n  return [h_ex2, d_ex2];\n}\n\nPlot.plot({\n  color: {legend: true,\n          scheme: \"Viridis\"},\n  marginLeft: 0.3 * width,\n  marginRight: 0.3 * width,\n  marks: [\n    Plot.barY(filtered, {x: \"community\", y: \"count\", fill: \"species\"})\n  ]\n})\n\nPlot.plot({\n  height: 100,\n  marks: [\n    Plot.frame(),\n    Plot.text([\"This is community \" + filtered[0].community + \".\\n\" +\n               \"Its Shannon Index is \" + result[0].toFixed(2) + \".\\n\" +\n               \"The Effective Number of Species is \" + result[1].toFixed(2) + \".\\n\"],\n               {frameAnchor: \"middle\",\n                fontSize: 16})\n  ]\n})\n"},{"methodName":"interpret","cellName":"ojs-cell-4","inline":false,"source":"\nInputs.table(filtered)\n\nPlot.plot({\n  height: 100,\n  marks: [\n    Plot.frame(),\n    Plot.text([\"This is community \" + filtered[0].community + \".\\n\" +\n               \"Its Shannon Index is \" + result[0].toFixed(2) + \".\\n\" +\n               \"The Effective Number of Species is \" + result[1].toFixed(2) + \".\\n\"],\n               {frameAnchor: \"middle\",\n                fontSize: 16})\n  ]\n})\n"},{"methodName":"interpretQuiet","source":"shinyInput('community_id')"}]}
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdGEgPSBGaWxlQXR0YWNobWVudChcImFzc2V0cy9kYXRhLzAxX2NvbW11bml0aWVzLmNzdlwiKS5jc3YoeyB0eXBlZDogdHJ1ZSB9KVxuXG5maWx0ZXJlZCA9IGRhdGEuZmlsdGVyKGZ1bmN0aW9uKGNvbW11bml0eV9kYXRhKSB7XG4gIHJldHVybiBjb21tdW5pdHlfaWQgPT0gY29tbXVuaXR5X2RhdGEuY29tbXVuaXR5O1xufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxudmlld29mIGNvbW11bml0eV9pZCA9IElucHV0cy5yYW5nZShcbiAgWzEsIDZdLCBcbiAge3ZhbHVlOiAxLCBzdGVwOiAxLCBsYWJlbDogXCJDb21tdW5pdHkgSUQ6XCJ9XG4pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbnJlc3VsdCA9IHtcbiAgbGV0IHRvdGNvdW50ID0gMDtcbiAgbGV0IHBpID0gW107XG4gIGxldCBoaSA9IFtdO1xuXG4gIGZvciAobGV0IGkgPSAwOyBpIDwgNjsgKytpKSB7XG4gICAgdG90Y291bnQgKz0gZmlsdGVyZWRbaV0uY291bnQ7XG4gIH1cbiAgXG4gIGZvciAobGV0IGkgPSAwOyBpIDwgNjsgKytpKSB7XG4gICAgcGlbaV0gPSBmaWx0ZXJlZFtpXS5jb3VudCAvIHRvdGNvdW50O1xuICAgIGhpW2ldID0gcGlbaV0gKiBNYXRoLmxvZyhwaVtpXSk7XG4gIH1cbiAgXG4gIGxldCBoX2V4MiA9IC1oaS5yZWR1Y2UoKGEsIGIpID0+IGEgKyBiLCAwKTtcbiAgbGV0IGRfZXgyID0gTWF0aC5leHAoaF9leDIpO1xuICBcbiAgcmV0dXJuIFtoX2V4MiwgZF9leDJdO1xufVxuXG5QbG90LnBsb3Qoe1xuICBjb2xvcjoge2xlZ2VuZDogdHJ1ZSxcbiAgICAgICAgICBzY2hlbWU6IFwiVmlyaWRpc1wifSxcbiAgbWFyZ2luTGVmdDogMC4zICogd2lkdGgsXG4gIG1hcmdpblJpZ2h0OiAwLjMgKiB3aWR0aCxcbiAgbWFya3M6IFtcbiAgICBQbG90LmJhclkoZmlsdGVyZWQsIHt4OiBcImNvbW11bml0eVwiLCB5OiBcImNvdW50XCIsIGZpbGw6IFwic3BlY2llc1wifSlcbiAgXVxufSlcblxuUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAxMDAsXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5mcmFtZSgpLFxuICAgIFBsb3QudGV4dChbXCJUaGlzIGlzIGNvbW11bml0eSBcIiArIGZpbHRlcmVkWzBdLmNvbW11bml0eSArIFwiLlxcblwiICtcbiAgICAgICAgICAgICAgIFwiSXRzIFNoYW5ub24gSW5kZXggaXMgXCIgKyByZXN1bHRbMF0udG9GaXhlZCgyKSArIFwiLlxcblwiICtcbiAgICAgICAgICAgICAgIFwiVGhlIEVmZmVjdGl2ZSBOdW1iZXIgb2YgU3BlY2llcyBpcyBcIiArIHJlc3VsdFsxXS50b0ZpeGVkKDIpICsgXCIuXFxuXCJdLFxuICAgICAgICAgICAgICAge2ZyYW1lQW5jaG9yOiBcIm1pZGRsZVwiLFxuICAgICAgICAgICAgICAgIGZvbnRTaXplOiAxNn0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTQiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbklucHV0cy50YWJsZShmaWx0ZXJlZClcblxuUGxvdC5wbG90KHtcbiAgaGVpZ2h0OiAxMDAsXG4gIG1hcmtzOiBbXG4gICAgUGxvdC5mcmFtZSgpLFxuICAgIFBsb3QudGV4dChbXCJUaGlzIGlzIGNvbW11bml0eSBcIiArIGZpbHRlcmVkWzBdLmNvbW11bml0eSArIFwiLlxcblwiICtcbiAgICAgICAgICAgICAgIFwiSXRzIFNoYW5ub24gSW5kZXggaXMgXCIgKyByZXN1bHRbMF0udG9GaXhlZCgyKSArIFwiLlxcblwiICtcbiAgICAgICAgICAgICAgIFwiVGhlIEVmZmVjdGl2ZSBOdW1iZXIgb2YgU3BlY2llcyBpcyBcIiArIHJlc3VsdFsxXS50b0ZpeGVkKDIpICsgXCIuXFxuXCJdLFxuICAgICAgICAgICAgICAge2ZyYW1lQW5jaG9yOiBcIm1pZGRsZVwiLFxuICAgICAgICAgICAgICAgIGZvbnRTaXplOiAxNn0pXG4gIF1cbn0pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NvbW11bml0eV9pZCcpIn1dfQ==
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -1460,10 +1446,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1473,8 +1458,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1487,6 +1481,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1530,6 +1643,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1555,6 +1669,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1616,26 +1756,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./diversity_measures.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span>
+      <a href="./diversity_measures.html" class="pagination-link" aria-label="Diversity Measures">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Diversity Measures</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./workshop_01.html" class="pagination-link">
-        <span class="nav-page-text">Workshop 01</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.</div>   
+    <div class="nav-footer-left">
+<p>These BM211 workshops were written by Leighton Pritchard and Morgan Feeney.</p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
-    </div>
-    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a>.</div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/edit/main/shannon_index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/sipbs-compbiol/bm211-workshops/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
   </div>
 </footer>
+
 
 
 
