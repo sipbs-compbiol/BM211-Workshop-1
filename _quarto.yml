@@ -54,8 +54,8 @@ format:
     author-meta: "Leighton Pritchard and Morgan Feeney"
     callout-appearance: simple
     
-  pdf:
-    documentclass: scrreprt
+#  pdf:
+#    documentclass: scrreprt
 
 filters:
   - course_format
