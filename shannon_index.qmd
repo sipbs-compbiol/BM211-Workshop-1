@@ -1,18 +1,11 @@
 ---
+webr:
+  packages: ["ggplot2", "tidyverse", "flextable"]
 filters:
   - webr
 ---
 
 # Shannon Index {#sec-shannon-index}
-
-```{r}
-#| echo: false
-#| warning: false
-
-library(flextable)
-library(ggplot2)
-library(tidyverse)
-```
 
 ::: {.callout-note}
 This section introduces the **Shannon Index** as a simple measure of community diversity.
