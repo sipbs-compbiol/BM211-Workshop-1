@@ -27,7 +27,7 @@ This section introduces the **Shannon Index** as a simple measure of community d
 
 **To understand diversity, we need to consider both richness and evenness**, as described in @sec-diversity-measures. 
 
-We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is _high evenness_, and if the population is dominated by a single species there is _low evenness_. But **by itself this _idea_ of evenness does not give us a number that we can use to compare communities**.
+We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is _high evenness_, and if the population is dominated by a single species there is _low evenness_. But, by itself, **this _idea_ of evenness does not give us a number that we can use to compare communities**.
 
 **There are mathematical formulae that allow us to turn this concept of evenness into a number**, and we can calculate such values for a community using `R`.
 
@@ -42,7 +42,7 @@ The way that the maximum value of Shannon Index varies with species richness (co
 
 ```{r}
 #| label: fig-shannon_maxima
-#| fig-cap: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).
+#| fig-cap: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is not very diverse (generally this means the community is _highly uneven_). The line indicates the maximum value of Shannon Index that is possible for a community of given _richness_. For a community of a certain _richness_, the closer the value of Shannon Index is to this line, the closer that community is to being maximally diverse (i.e. having an even distribution of species).
 #| warning: false
 #| echo: false
 #| out-width: 80%
@@ -53,19 +53,21 @@ dfm <- data.frame(richness=1:100, index=log(1:100))
 p <- ggplot(dfm, aes(x=richness, y=index)) +
   geom_line() +
   xlab("Species Richness") +
-  ylab("Shannon Index")
+  ylab("Maximum Shannon Index")
 p
 ```
+
+
+### What does the equation for Shannon Index mean?
+
+The Shannon Index describes the _evenness_ of species in a community. Representing a single species from the community as the letter $i$, we can calculate the **relative abundance** of that species in the community as its **abundance (the count of individuals from species $i$) divided by the total abundance for all species**. We call this relative abundance $p_i$ (this is the percentage of all individuals in the community that belong to species $i$).
+
+@eq-shannon_entropy takes this value ($p_i$) and transforms it into the Shannon Index, represented as $H$. **The resulting value varies between zero (maximally uneven, "not diverse"), and some maximum value (maximally even, "very diverse"), as represented in @fig-shannon_maxima**. Knowing the _richness_ (total number of species) for a community and the _Shannon Index ($H$)_, we can quantify how diverse our community is.
 
 $$
 H = -\sum_{i=1}^{N} p_i \ln(p_i)
 $$ {#eq-shannon_entropy}
 
-### What does the equation for Shannon Index mean?
-
-The Shannon Index describes the _evenness_ of species in a community. Representing a single species from the community as the letter $i$, we can calculate the **relative abundance** of that species in the community as its **abundance (the count of individuals from species $i$) divided by the total abundance for all species**. We call this relative abundance $p_i$.
-
-@eq-shannon_entropy takes this value and transforms it into the Shannon Index, represented as $H$. **The resulting value varies between zero (maximally uneven, not diverse), and some maximum value (maximally even, very diverse), as represented in @fig-shannon_maxima**. Knowing the _richness_ (total number of species) for a community and the _Shannon Index ($H$)_, we can quantify how diverse our community is.
 
 ## Calculating Shannon Index for our Mars Community
 
@@ -115,10 +117,10 @@ flextable(community.df)
 
 How does what we've just done in `R` relate to @eq-shannon_entropy?
 
-For each of our species (denoted by $i$ in the equation), we have calculated the relative abundance $p_i$, which is used in the part of @eq-shannon_pi indicated in red, below.
+For each of our species (denoted by $i$ in the equation), we have calculated the relative abundance $p_i$, which is used in the parts of @eq-shannon_pi indicated in red, below.
 
 $$
-H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
+H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln( \color{red}p_i \color{black})}
 $$ {#eq-shannon_pi}
 :::
 
@@ -146,13 +148,13 @@ flextable(community.df)
 
 Here's how these two actions relate to @eq-shannon_entropy.
 
-Firstly, for each of our species, we calculated the natural log of the relative abundance:  $\ln(p_i)$, shown in red in @eq-shannon_lnpi.
+Firstly, for each of our species, we calculated the natural log of the relative abundance:  $\ln(p_i)$, shown in red in @eq-shannon_lnpi - this is column `ln_rel_abd` in the dataframe.
 
 $$
 H = -\sum_{i=1}^{N} p_i \color{red}{\ln(p_i)}
 $$ {#eq-shannon_lnpi}
 
-Next, we calculated the product of $p_i$ and $\ln(p_i)$, highlighted in orange in @eq-shannon_mult.
+Next, we calculated the product of $p_i$ and $\ln(p_i)$, highlighted in orange in @eq-shannon_mult - this is column `mult` in the dataframe.
 
 $$
 H = -\sum_{i=1}^{N} \color{orange}{{p_i} \ln(p_i)}
@@ -188,7 +190,7 @@ There is another way to think about this number, called the **effective number o
 
 ## The Effective Number of Species for a community
 
-We can use the Shannon Index to calculate a value known as the **effective number of species** for a community. This name reflects that, although a community might contain a certain number of species, **if some species are only present in very low abundance, they are not contributing significantly to the community, and they are _effectively_ not present**, and the effective number of species is less - maybe much less - than the _richness_ of the community.
+We can use the Shannon Index to calculate a value known as the **effective number of species** for a community. This name reflects that, although a community might contain a certain number of species, **if some species are only present in very low abundance, they are not contributing significantly to the community, and they are _effectively_ not present**, and the _effective number of species_ is less - maybe much less - than the _richness_ of the community.
 
 For example:
 
@@ -251,6 +253,8 @@ How diverse or even is the community? Justify your answer.
 
 # Calculate the Shannon Index and Effective Number of Species
 ```
+
+_(Click to expand answer)_
 
 ::: {.callout-answer}
 The Shannon Index for this community is $H = 0.97$, and the Effective Number of Species is $D = 2.64$.
@@ -391,6 +395,8 @@ Plot.plot({
 3. Compare communities 3 and 5. Are $H$ and $D$ similar for these communities? Do their populations have the same distribution?
 4. Is having a similar Shannon Index and/or Effective Number of Species sufficient to say that two communities are similar?
 :::
+
+_(Click to expand answer)_
 
 ::: {.callout-answer}
 1. Both communities 1 and 2 are completely even, with $H=1.79$ and $D=6$. The population size of community 2 is 10,000 times that of community 1. Relative proportion is more important than counts of individuals.
