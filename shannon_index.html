@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,8 +22,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,15 +69,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./references.html" rel="next">
 <link href="./diversity_measures.html" rel="prev">
 <link href="./icon_32.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6c023d2e0400fe6e8bd4ebc2096834a0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d375bb2e3cafa6b5e81820de0593a879.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -365,7 +368,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -383,7 +386,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -428,7 +431,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface to the 2024-25 presentation</span></a>
+ <span class="menu-text">Preface to the 2025-26 presentation</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -546,7 +549,7 @@ window.Quarto = {
 </div>
 </div>
 <p><strong>To understand diversity, we need to consider both richness and evenness</strong>, as described in <a href="diversity_measures.html" class="quarto-xref"><span>Chapter 2</span></a>.</p>
-<p>We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>. But <strong>by itself this <em>idea</em> of evenness does not give us a number that we can use to compare communities</strong>.</p>
+<p>We can obtain a simple count of species to calculate richness. But we also know that if each species is present in about the same abundance there is <em>high evenness</em>, and if the population is dominated by a single species there is <em>low evenness</em>. But, by itself, <strong>this <em>idea</em> of evenness does not give us a number that we can use to compare communities</strong>.</p>
 <p><strong>There are mathematical formulae that allow us to turn this concept of evenness into a number</strong>, and we can calculate such values for a community using <code>R</code>.</p>
 <section id="what-is-the-shannon-index" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="what-is-the-shannon-index"><span class="header-section-number">3.1</span> What is the Shannon index?</h2>
@@ -564,19 +567,19 @@ window.Quarto = {
 <img src="shannon_index_files/figure-html/fig-shannon_maxima-1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shannon_maxima-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is highly uneven and not very diverse. The closer the value of Shannon Index gets to the line, for a community of given richness, the closer that community is to being maximally diverse (defined as an even distribution of species).
+Figure&nbsp;3.1: Plot of maximum Shannon Index against community richness. A value close to zero for Shannon Index always indicates that the community is not very diverse (generally this means the community is <em>highly uneven</em>). The line indicates the maximum value of Shannon Index that is possible for a community of given <em>richness</em>. For a community of a certain <em>richness</em>, the closer the value of Shannon Index is to this line, the closer that community is to being maximally diverse (i.e.&nbsp;having an even distribution of species).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">3.1.1</span> What does the equation for Shannon Index mean?</h3>
+<p>The Shannon Index describes the <em>evenness</em> of species in a community. Representing a single species from the community as the letter <span class="math inline">\(i\)</span>, we can calculate the <strong>relative abundance</strong> of that species in the community as its <strong>abundance (the count of individuals from species <span class="math inline">\(i\)</span>) divided by the total abundance for all species</strong>. We call this relative abundance <span class="math inline">\(p_i\)</span> (this is the percentage of all individuals in the community that belong to species <span class="math inline">\(i\)</span>).</p>
+<p><a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> takes this value (<span class="math inline">\(p_i\)</span>) and transforms it into the Shannon Index, represented as <span class="math inline">\(H\)</span>. <strong>The resulting value varies between zero (maximally uneven, “not diverse”), and some maximum value (maximally even, “very diverse”), as represented in <a href="#fig-shannon_maxima" class="quarto-xref">Figure&nbsp;<span>3.1</span></a></strong>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
 <p><span id="eq-shannon_entropy"><span class="math display">\[
 H = -\sum_{i=1}^{N} p_i \ln(p_i)
 \tag{3.1}\]</span></span></p>
-<section id="what-does-the-equation-for-shannon-index-mean" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="what-does-the-equation-for-shannon-index-mean"><span class="header-section-number">3.1.1</span> What does the equation for Shannon Index mean?</h3>
-<p>The Shannon Index describes the <em>evenness</em> of species in a community. Representing a single species from the community as the letter <span class="math inline">\(i\)</span>, we can calculate the <strong>relative abundance</strong> of that species in the community as its <strong>abundance (the count of individuals from species <span class="math inline">\(i\)</span>) divided by the total abundance for all species</strong>. We call this relative abundance <span class="math inline">\(p_i\)</span>.</p>
-<p><a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a> takes this value and transforms it into the Shannon Index, represented as <span class="math inline">\(H\)</span>. <strong>The resulting value varies between zero (maximally uneven, not diverse), and some maximum value (maximally even, very diverse), as represented in <a href="#fig-shannon_maxima" class="quarto-xref">Figure&nbsp;<span>3.1</span></a></strong>. Knowing the <em>richness</em> (total number of species) for a community and the <em>Shannon Index (<span class="math inline">\(H\)</span>)</em>, we can quantify how diverse our community is.</p>
 </section>
 </section>
 <section id="calculating-shannon-index-for-our-mars-community" class="level2" data-number="3.2">
@@ -586,7 +589,7 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <p>Let’s start in <code>R</code> by defining our dataset for the Mars community.</p>
 <p><strong>In the code below we create two vectors: one of species names, and one of counts for those species</strong> in our sample (which we can get from <a href="diversity_measures.html#fig-one_packet_histogram" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>). We combine these vectors into a single dataframe, for convenience.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of species names</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a vector of species names</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Malteaser sp."</span>, <span class="st">"Snickers sp."</span>, <span class="st">"Twix sp."</span>, <span class="st">"Mars sp."</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Milky way"</span>, <span class="st">"Bounty sp."</span>, <span class="st">"Galaxy choc"</span>, <span class="st">"Galaxy caramel"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -594,11 +597,11 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>count <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Bring these together in a dataframe</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>community.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(species, count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>community.df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(species, count)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="tabwid"><style>.cl-542dba78{}.cl-5427d98c{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-542a59aa{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-542a59b4{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-542a744e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-542a7458{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-542a7459{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-542a7462{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-542a7463{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-542a746c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-542dba78"><thead><tr style="overflow-wrap:break-word;"><th class="cl-542a744e"><p class="cl-542a59aa"><span class="cl-5427d98c">species</span></p></th><th class="cl-542a7458"><p class="cl-542a59b4"><span class="cl-5427d98c">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Malteaser sp.</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Snickers sp.</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Twix sp.</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Mars sp.</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Milky way</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Bounty sp.</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7459"><p class="cl-542a59aa"><span class="cl-5427d98c">Galaxy choc</span></p></td><td class="cl-542a7462"><p class="cl-542a59b4"><span class="cl-5427d98c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-542a7463"><p class="cl-542a59aa"><span class="cl-5427d98c">Galaxy caramel</span></p></td><td class="cl-542a746c"><p class="cl-542a59b4"><span class="cl-5427d98c">3</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-0eefcd0a{}.cl-0ee7dc58{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0eeaf578{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0eeaf582{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0eeb287c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0eeb2886{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0eeb2887{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0eeb2890{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0eeb2891{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0eeb289a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-0eefcd0a"><thead><tr style="overflow-wrap:break-word;"><th class="cl-0eeb287c"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">species</span></p></th><th class="cl-0eeb2886"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">count</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Malteaser sp.</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Snickers sp.</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Twix sp.</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Mars sp.</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Milky way</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Bounty sp.</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2887"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Galaxy choc</span></p></td><td class="cl-0eeb2890"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0eeb2891"><p class="cl-0eeaf578"><span class="cl-0ee7dc58">Galaxy caramel</span></p></td><td class="cl-0eeb289a"><p class="cl-0eeaf582"><span class="cl-0ee7dc58">3</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 </section>
@@ -606,30 +609,30 @@ H = -\sum_{i=1}^{N} p_i \ln(p_i)
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="calculating-relative-abundance"><span class="header-section-number">3.2.2</span> Calculating relative abundance</h3>
 <p>The first step in calculating Shannon Index is to calculate the <strong>relative abundance</strong> <span class="math inline">\(p_i\)</span> of each species <span class="math inline">\(i\)</span>. To do this, we calculate the percentage of the entire community that is made up from each species, as below. We divide the count for each species by the sum of counts for all species (i.e.&nbsp;the total number of individuals, in this case).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>rel_abd <span class="ot">&lt;-</span> community.df<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(community.df<span class="sc">$</span>count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate relative abundances</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>rel_abd <span class="ot">&lt;-</span> community.df<span class="sc">$</span>count <span class="sc">/</span> <span class="fu">sum</span>(community.df<span class="sc">$</span>count)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="tabwid"><style>.cl-5443aa04{}.cl-543e354c{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-5440764a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5440765e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-54408f2c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54408f2d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54408f36{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54408f37{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54408f68{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54408f69{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-5443aa04"><thead><tr style="overflow-wrap:break-word;"><th class="cl-54408f2c"><p class="cl-5440764a"><span class="cl-543e354c">species</span></p></th><th class="cl-54408f2d"><p class="cl-5440765e"><span class="cl-543e354c">count</span></p></th><th class="cl-54408f2d"><p class="cl-5440765e"><span class="cl-543e354c">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Malteaser sp.</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">3</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Snickers sp.</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">6</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Twix sp.</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">6</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Mars sp.</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">7</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Milky way</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">7</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Bounty sp.</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">5</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f36"><p class="cl-5440764a"><span class="cl-543e354c">Galaxy choc</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">3</span></p></td><td class="cl-54408f37"><p class="cl-5440765e"><span class="cl-543e354c">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54408f68"><p class="cl-5440764a"><span class="cl-543e354c">Galaxy caramel</span></p></td><td class="cl-54408f69"><p class="cl-5440765e"><span class="cl-543e354c">3</span></p></td><td class="cl-54408f69"><p class="cl-5440765e"><span class="cl-543e354c">0.075</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-0f0bc41a{}.cl-0f04ee1a{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0f07d706{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0f07d71a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0f07ff10{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f07ff11{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f07ff1a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f07ff1b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f07ff24{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f07ff25{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-0f0bc41a"><thead><tr style="overflow-wrap:break-word;"><th class="cl-0f07ff10"><p class="cl-0f07d706"><span class="cl-0f04ee1a">species</span></p></th><th class="cl-0f07ff11"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">count</span></p></th><th class="cl-0f07ff11"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">rel_abd</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Malteaser sp.</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">3</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Snickers sp.</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">6</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Twix sp.</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">6</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.150</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Mars sp.</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">7</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Milky way</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">7</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.175</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Bounty sp.</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">5</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.125</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff1a"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Galaxy choc</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">3</span></p></td><td class="cl-0f07ff1b"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.075</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f07ff24"><p class="cl-0f07d706"><span class="cl-0f04ee1a">Galaxy caramel</span></p></td><td class="cl-0f07ff25"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">3</span></p></td><td class="cl-0f07ff25"><p class="cl-0f07d71a"><span class="cl-0f04ee1a">0.075</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Mathematical Content!
+<span class="screen-reader-only">Caution</span>Mathematical Content!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>How does what we’ve just done in <code>R</code> relate to <a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>?</p>
-<p>For each of our species (denoted by <span class="math inline">\(i\)</span> in the equation), we have calculated the relative abundance <span class="math inline">\(p_i\)</span>, which is used in the part of <a href="#eq-shannon_pi" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> indicated in red, below.</p>
+<p>For each of our species (denoted by <span class="math inline">\(i\)</span> in the equation), we have calculated the relative abundance <span class="math inline">\(p_i\)</span>, which is used in the parts of <a href="#eq-shannon_pi" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> indicated in red, below.</p>
 <p><span id="eq-shannon_pi"><span class="math display">\[
-H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
+H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln( \color{red}p_i \color{black})}
 \tag{3.2}\]</span></span></p>
 </div>
 </div>
@@ -639,35 +642,35 @@ H = -\sum_{i=1}^{N} \color{red}{p_i} \color{black}{\ln(p_i)}
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="calculating-shannon-index"><span class="header-section-number">3.2.3</span> Calculating Shannon Index</h3>
 <p>To turn this data into the Shannon Index, we need to carry out two more steps: calculate the <em>natural log</em> of the relative abundance of each species (<span class="math inline">\(\ln(p_i)\)</span>), then multiply this by the corresponding relative abundance (<span class="math inline">\(p_i\)</span>), as in the <code>R</code> code below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the natural log of relative abundance</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>ln_rel_abd <span class="ot">&lt;-</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply the relative abundance by its natural log</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>mult <span class="ot">&lt;-</span> community.df<span class="sc">$</span>rel_abd <span class="sc">*</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>community.df<span class="sc">$</span>mult <span class="ot">&lt;-</span> community.df<span class="sc">$</span>rel_abd <span class="sc">*</span> <span class="fu">log</span>(community.df<span class="sc">$</span>rel_abd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="tabwid"><style>.cl-54569b00{}.cl-54511a86{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-54535f1c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-54535f30{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-54537844{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5453784e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5453784f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54537858{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-54537859{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5453785a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-54569b00"><thead><tr style="overflow-wrap:break-word;"><th class="cl-54537844"><p class="cl-54535f1c"><span class="cl-54511a86">species</span></p></th><th class="cl-5453784e"><p class="cl-54535f30"><span class="cl-54511a86">count</span></p></th><th class="cl-5453784e"><p class="cl-54535f30"><span class="cl-54511a86">rel_abd</span></p></th><th class="cl-5453784e"><p class="cl-54535f30"><span class="cl-54511a86">ln_rel_abd</span></p></th><th class="cl-5453784e"><p class="cl-54535f30"><span class="cl-54511a86">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Malteaser sp.</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">3</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.075</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-2.590267</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Snickers sp.</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">6</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.150</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-1.897120</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Twix sp.</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">6</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.150</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-1.897120</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Mars sp.</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">7</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.175</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-1.742969</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Milky way</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">7</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.175</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-1.742969</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Bounty sp.</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">5</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.125</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-2.079442</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5453784f"><p class="cl-54535f1c"><span class="cl-54511a86">Galaxy choc</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">3</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">0.075</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-2.590267</span></p></td><td class="cl-54537858"><p class="cl-54535f30"><span class="cl-54511a86">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-54537859"><p class="cl-54535f1c"><span class="cl-54511a86">Galaxy caramel</span></p></td><td class="cl-5453785a"><p class="cl-54535f30"><span class="cl-54511a86">3</span></p></td><td class="cl-5453785a"><p class="cl-54535f30"><span class="cl-54511a86">0.075</span></p></td><td class="cl-5453785a"><p class="cl-54535f30"><span class="cl-54511a86">-2.590267</span></p></td><td class="cl-5453785a"><p class="cl-54535f30"><span class="cl-54511a86">-0.1942700</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-0f20bcb2{}.cl-0f1a00b6{font-family:'DejaVu Sans';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-0f1cda70{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0f1cda7a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-0f1cfd70{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f1cfd7a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f1cfd84{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f1cfd85{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f1cfd8e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-0f1cfd8f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-0f20bcb2"><thead><tr style="overflow-wrap:break-word;"><th class="cl-0f1cfd70"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">species</span></p></th><th class="cl-0f1cfd7a"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">count</span></p></th><th class="cl-0f1cfd7a"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">rel_abd</span></p></th><th class="cl-0f1cfd7a"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">ln_rel_abd</span></p></th><th class="cl-0f1cfd7a"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">mult</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Malteaser sp.</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">3</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.075</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-2.590267</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Snickers sp.</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">6</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.150</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-1.897120</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Twix sp.</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">6</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.150</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-1.897120</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.2845680</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Mars sp.</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">7</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.175</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-1.742969</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Milky way</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">7</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.175</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-1.742969</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.3050196</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Bounty sp.</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">5</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.125</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-2.079442</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.2599302</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd84"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Galaxy choc</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">3</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.075</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-2.590267</span></p></td><td class="cl-0f1cfd85"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.1942700</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-0f1cfd8e"><p class="cl-0f1cda70"><span class="cl-0f1a00b6">Galaxy caramel</span></p></td><td class="cl-0f1cfd8f"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">3</span></p></td><td class="cl-0f1cfd8f"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">0.075</span></p></td><td class="cl-0f1cfd8f"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-2.590267</span></p></td><td class="cl-0f1cfd8f"><p class="cl-0f1cda7a"><span class="cl-0f1a00b6">-0.1942700</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Mathematical Content!
+<span class="screen-reader-only">Caution</span>Mathematical Content!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Here’s how these two actions relate to <a href="#eq-shannon_entropy" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</p>
-<p>Firstly, for each of our species, we calculated the natural log of the relative abundance: <span class="math inline">\(\ln(p_i)\)</span>, shown in red in <a href="#eq-shannon_lnpi" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>.</p>
+<p>Firstly, for each of our species, we calculated the natural log of the relative abundance: <span class="math inline">\(\ln(p_i)\)</span>, shown in red in <a href="#eq-shannon_lnpi" class="quarto-xref">Equation&nbsp;<span>3.3</span></a> - this is column <code>ln_rel_abd</code> in the dataframe.</p>
 <p><span id="eq-shannon_lnpi"><span class="math display">\[
 H = -\sum_{i=1}^{N} p_i \color{red}{\ln(p_i)}
 \tag{3.3}\]</span></span></p>
-<p>Next, we calculated the product of <span class="math inline">\(p_i\)</span> and <span class="math inline">\(\ln(p_i)\)</span>, highlighted in orange in <a href="#eq-shannon_mult" class="quarto-xref">Equation&nbsp;<span>3.4</span></a>.</p>
+<p>Next, we calculated the product of <span class="math inline">\(p_i\)</span> and <span class="math inline">\(\ln(p_i)\)</span>, highlighted in orange in <a href="#eq-shannon_mult" class="quarto-xref">Equation&nbsp;<span>3.4</span></a> - this is column <code>mult</code> in the dataframe.</p>
 <p><span id="eq-shannon_mult"><span class="math display">\[
 H = -\sum_{i=1}^{N} \color{orange}{{p_i} \ln(p_i)}
 \tag{3.4}\]</span></span></p>
@@ -676,19 +679,19 @@ H = -\sum_{i=1}^{N} \color{orange}{{p_i} \ln(p_i)}
 </div>
 <p>The Shannon Index is then the sum of this final column of values (multiplied by <code>-1</code> to make it a positive value).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shannon_index <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(community.df<span class="sc">$</span>mult)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>shannon_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>shannon_index <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(community.df<span class="sc">$</span>mult)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>shannon_index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.021916</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Mathematical Content!
+<span class="screen-reader-only">Caution</span>Mathematical Content!
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -720,7 +723,7 @@ H = \color{red}{-\sum_{i=1}^{N}} \color{black}{p_i \ln(p_i)}
 </section>
 <section id="the-effective-number-of-species-for-a-community" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="the-effective-number-of-species-for-a-community"><span class="header-section-number">3.3</span> The Effective Number of Species for a community</h2>
-<p>We can use the Shannon Index to calculate a value known as the <strong>effective number of species</strong> for a community. This name reflects that, although a community might contain a certain number of species, <strong>if some species are only present in very low abundance, they are not contributing significantly to the community, and they are <em>effectively</em> not present</strong>, and the effective number of species is less - maybe much less - than the <em>richness</em> of the community.</p>
+<p>We can use the Shannon Index to calculate a value known as the <strong>effective number of species</strong> for a community. This name reflects that, although a community might contain a certain number of species, <strong>if some species are only present in very low abundance, they are not contributing significantly to the community, and they are <em>effectively</em> not present</strong>, and the <em>effective number of species</em> is less - maybe much less - than the <em>richness</em> of the community.</p>
 <p>For example:</p>
 <ul>
 <li>A community with three species in equal proportions, e.g.&nbsp;33% <span class="math inline">\(A\)</span>, 33% <span class="math inline">\(B\)</span>, and 33% <span class="math inline">\(C\)</span> clearly has three equally-contributing species. We might expect the effective number of species to be three.</li>
@@ -731,12 +734,12 @@ H = \color{red}{-\sum_{i=1}^{N}} \color{black}{p_i \ln(p_i)}
 D = \exp(H)
 \tag{3.6}\]</span></span></p>
 <div class="callout callout-style-simple callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Mathematical content
+<span class="screen-reader-only">Caution</span>Mathematical content
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -754,8 +757,8 @@ D = \exp(H) = \exp(\ln(N)) = N
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="the-effective-number-of-species-for-our-mars-sample"><span class="header-section-number">3.3.1</span> The Effective Number of Species for our Mars sample</h3>
 <p>The Shannon Index for our Mars sample was <span class="math inline">\(2.021916\)</span>, and we can use <code>R</code> to calculate a corresponding Diversity value <span class="math inline">\(D\)</span> by taking the exponential of this number:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">2.021916</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>diversity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">2.021916</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>diversity</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.552782</code></pre>
 </div>
@@ -771,7 +774,7 @@ D = \exp(H) = \exp(\ln(N)) = N
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 1
+<span class="screen-reader-only">Exercise</span>Exercise 1
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1082,13 +1085,14 @@ Exercise 1
     executeCode(editor.getValue());
   };
 </script>
+<p><em>(Click to expand answer)</em></p>
 <div class="callout callout-style-simple callout-answer callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Answer</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1104,19 +1108,19 @@ Answer
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Example solution code
+<span class="screen-reader-only">Tip</span>Example solution code
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe describing the community</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe describing the community</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species=</span><span class="fu">c</span>(<span class="st">"Abiotrophia"</span>, <span class="st">"Peptostreptococcus"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Corynebacterium"</span>, <span class="st">"Eubacterium"</span>, <span class="st">"Moraxella"</span>, </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"Neisseria"</span>, <span class="st">"Campylobacter"</span>, <span class="st">"Desulfovibrio"</span>),</span>
@@ -1129,7 +1133,7 @@ Example solution code
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>H <span class="ot">=</span> <span class="sc">-</span><span class="fu">sum</span>(dfm<span class="sc">$</span>h.i)</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>D <span class="ot">=</span> <span class="fu">exp</span>(H)</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(H, D)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(H, D)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1145,7 +1149,7 @@ Example solution code
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 2
+<span class="screen-reader-only">Exercise</span>Exercise 2
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1175,11 +1179,11 @@ Exercise 2
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb9" data-startfrom="300" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 299;"><span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"assets/data/01_communities.csv"</span>)<span class="op">.</span><span class="fu">csv</span>({ <span class="dt">typed</span><span class="op">:</span> <span class="kw">true</span> })</span>
-<span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-302"><a href="#cb9-302" aria-hidden="true" tabindex="-1"></a>filtered <span class="op">=</span> data<span class="op">.</span><span class="fu">filter</span>(<span class="kw">function</span>(community_data) {</span>
-<span id="cb9-303"><a href="#cb9-303" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> community_id <span class="op">==</span> community_data<span class="op">.</span><span class="at">community</span><span class="op">;</span></span>
-<span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="304" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 303;"><span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"assets/data/01_communities.csv"</span>)<span class="op">.</span><span class="fu">csv</span>({ <span class="dt">typed</span><span class="op">:</span> <span class="kw">true</span> })</span>
+<span id="cb9-305"><a href="#cb9-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-306"><a href="#cb9-306" aria-hidden="true" tabindex="-1"></a>filtered <span class="op">=</span> data<span class="op">.</span><span class="fu">filter</span>(<span class="kw">function</span>(community_data) {</span>
+<span id="cb9-307"><a href="#cb9-307" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> community_id <span class="op">==</span> community_data<span class="op">.</span><span class="at">community</span><span class="op">;</span></span>
+<span id="cb9-308"><a href="#cb9-308" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -1196,10 +1200,10 @@ Exercise 2
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb10" data-startfrom="308" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 307;"><span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>viewof community_id <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>(</span>
-<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">1</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span> </span>
-<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Community ID:"</span>}</span>
-<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="312" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 311;"><span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a>viewof community_id <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>(</span>
+<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a>  [<span class="dv">1</span><span class="op">,</span> <span class="dv">6</span>]<span class="op">,</span> </span>
+<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Community ID:"</span>}</span>
+<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="declaration">
 
@@ -1207,39 +1211,39 @@ Exercise 2
 </div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Data</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">Plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Data</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb11" data-startfrom="323" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 322;"><span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> {</span>
-<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totcount <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> pi <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> hi <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">6</span><span class="op">;</span> <span class="op">++</span>i) {</span>
-<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>    totcount <span class="op">+=</span> filtered[i]<span class="op">.</span><span class="at">count</span><span class="op">;</span></span>
-<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="327" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 326;"><span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> {</span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totcount <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> pi <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> hi <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">6</span><span class="op">;</span> <span class="op">++</span>i) {</span>
-<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>    pi[i] <span class="op">=</span> filtered[i]<span class="op">.</span><span class="at">count</span> <span class="op">/</span> totcount<span class="op">;</span></span>
-<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>    hi[i] <span class="op">=</span> pi[i] <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(pi[i])<span class="op">;</span></span>
-<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> h_ex2 <span class="op">=</span> <span class="op">-</span>hi<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> d_ex2 <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(h_ex2)<span class="op">;</span></span>
-<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [h_ex2<span class="op">,</span> d_ex2]<span class="op">;</span></span>
-<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a>          <span class="dt">scheme</span><span class="op">:</span> <span class="st">"Viridis"</span>}<span class="op">,</span></span>
-<span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="fl">0.3</span> <span class="op">*</span> width<span class="op">,</span></span>
-<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginRight</span><span class="op">:</span> <span class="fl">0.3</span> <span class="op">*</span> width<span class="op">,</span></span>
-<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(filtered<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"community"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span>})</span>
-<span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a>    totcount <span class="op">+=</span> filtered[i]<span class="op">.</span><span class="at">count</span><span class="op">;</span></span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">6</span><span class="op">;</span> <span class="op">++</span>i) {</span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>    pi[i] <span class="op">=</span> filtered[i]<span class="op">.</span><span class="at">count</span> <span class="op">/</span> totcount<span class="op">;</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>    hi[i] <span class="op">=</span> pi[i] <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">log</span>(pi[i])<span class="op">;</span></span>
+<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> h_ex2 <span class="op">=</span> <span class="op">-</span>hi<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> d_ex2 <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">exp</span>(h_ex2)<span class="op">;</span></span>
+<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [h_ex2<span class="op">,</span> d_ex2]<span class="op">;</span></span>
+<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a>  <span class="dt">color</span><span class="op">:</span> {<span class="dt">legend</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a>          <span class="dt">scheme</span><span class="op">:</span> <span class="st">"Viridis"</span>}<span class="op">,</span></span>
+<span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginLeft</span><span class="op">:</span> <span class="fl">0.3</span> <span class="op">*</span> width<span class="op">,</span></span>
+<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marginRight</span><span class="op">:</span> <span class="fl">0.3</span> <span class="op">*</span> width<span class="op">,</span></span>
+<span id="cb11-352"><a href="#cb11-352" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">barY</span>(filtered<span class="op">,</span> {<span class="dt">x</span><span class="op">:</span> <span class="st">"community"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span><span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span>})</span>
+<span id="cb11-354"><a href="#cb11-354" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb11-355"><a href="#cb11-355" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -1254,17 +1258,17 @@ Exercise 2
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code hidden" id="cb12" data-startfrom="353" data-source-offset="-574"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 352;"><span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">frame</span>()<span class="op">,</span></span>
-<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([<span class="st">"This is community "</span> <span class="op">+</span> filtered[<span class="dv">0</span>]<span class="op">.</span><span class="at">community</span> <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
-<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Its Shannon Index is "</span> <span class="op">+</span> result[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
-<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>               <span class="st">"The Effective Number of Species is "</span> <span class="op">+</span> result[<span class="dv">1</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>]<span class="op">,</span></span>
-<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a>               {<span class="dt">frameAnchor</span><span class="op">:</span> <span class="st">"middle"</span><span class="op">,</span></span>
-<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span>})</span>
-<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="357" data-source-offset="-574"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 356;"><span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">frame</span>()<span class="op">,</span></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([<span class="st">"This is community "</span> <span class="op">+</span> filtered[<span class="dv">0</span>]<span class="op">.</span><span class="at">community</span> <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Its Shannon Index is "</span> <span class="op">+</span> result[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>               <span class="st">"The Effective Number of Species is "</span> <span class="op">+</span> result[<span class="dv">1</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>]<span class="op">,</span></span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>               {<span class="dt">frameAnchor</span><span class="op">:</span> <span class="st">"middle"</span><span class="op">,</span></span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span>})</span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-3" data-nodetype="expression">
@@ -1276,7 +1280,7 @@ Exercise 2
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb13" data-startfrom="371" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 370;"><span id="cb13-371"><a href="#cb13-371" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(filtered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="375" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 374;"><span id="cb13-375"><a href="#cb13-375" aria-hidden="true" tabindex="-1"></a>Inputs<span class="op">.</span><span class="fu">table</span>(filtered)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-4-1" data-nodetype="expression">
@@ -1284,17 +1288,17 @@ Exercise 2
 </div>
 </div>
 </div>
-<div class="sourceCode cell-code hidden" id="cb14" data-startfrom="373" data-source-offset="-25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 372;"><span id="cb14-373"><a href="#cb14-373" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb14-374"><a href="#cb14-374" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb14-375"><a href="#cb14-375" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb14-376"><a href="#cb14-376" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">frame</span>()<span class="op">,</span></span>
-<span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([<span class="st">"This is community "</span> <span class="op">+</span> filtered[<span class="dv">0</span>]<span class="op">.</span><span class="at">community</span> <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
-<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Its Shannon Index is "</span> <span class="op">+</span> result[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
-<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>               <span class="st">"The Effective Number of Species is "</span> <span class="op">+</span> result[<span class="dv">1</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>]<span class="op">,</span></span>
-<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>               {<span class="dt">frameAnchor</span><span class="op">:</span> <span class="st">"middle"</span><span class="op">,</span></span>
-<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span>})</span>
-<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb14" data-startfrom="377" data-source-offset="-25"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 376;"><span id="cb14-377"><a href="#cb14-377" aria-hidden="true" tabindex="-1"></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb14-378"><a href="#cb14-378" aria-hidden="true" tabindex="-1"></a>  <span class="dt">height</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
+<span id="cb14-379"><a href="#cb14-379" aria-hidden="true" tabindex="-1"></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb14-380"><a href="#cb14-380" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">frame</span>()<span class="op">,</span></span>
+<span id="cb14-381"><a href="#cb14-381" aria-hidden="true" tabindex="-1"></a>    Plot<span class="op">.</span><span class="fu">text</span>([<span class="st">"This is community "</span> <span class="op">+</span> filtered[<span class="dv">0</span>]<span class="op">.</span><span class="at">community</span> <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
+<span id="cb14-382"><a href="#cb14-382" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Its Shannon Index is "</span> <span class="op">+</span> result[<span class="dv">0</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span> <span class="op">+</span></span>
+<span id="cb14-383"><a href="#cb14-383" aria-hidden="true" tabindex="-1"></a>               <span class="st">"The Effective Number of Species is "</span> <span class="op">+</span> result[<span class="dv">1</span>]<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>]<span class="op">,</span></span>
+<span id="cb14-384"><a href="#cb14-384" aria-hidden="true" tabindex="-1"></a>               {<span class="dt">frameAnchor</span><span class="op">:</span> <span class="st">"middle"</span><span class="op">,</span></span>
+<span id="cb14-385"><a href="#cb14-385" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fontSize</span><span class="op">:</span> <span class="dv">16</span>})</span>
+<span id="cb14-386"><a href="#cb14-386" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb14-387"><a href="#cb14-387" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-4-2" data-nodetype="expression">
@@ -1321,13 +1325,14 @@ Exercise 2
 </div>
 </div>
 </div>
+<p><em>(Click to expand answer)</em></p>
 <div class="callout callout-style-simple callout-answer callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Answer</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1368,236 +1373,243 @@ window._ojs.selfContained = false;
 window._ojs.runtime.interpretFromScriptTags();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1605,185 +1617,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./diversity_measures.html" class="pagination-link" aria-label="Diversity Measures">
