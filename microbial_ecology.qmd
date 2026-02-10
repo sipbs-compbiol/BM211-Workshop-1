@@ -68,7 +68,7 @@ This array of questions can be summarised more simply as [@Prosser2020-aw]:
 1. Who is there?
 2. What is meant by "there"?
 3. Who is doing what in there?
-4. What is the effect of doing … to "there"?
+4. What is the effect of doing [SOMETHING…] to "there"?
 
 ## Answering questions about microbial ecology using molecular techniques
 
@@ -79,13 +79,13 @@ Molecular techniques enabled by modern sequencing approaches, such as amplicon m
 
 The two words are quite similar, but it is important to distinguish between
 
-- **metabarcoding**: sequencing a single marker sequence from a population
+- **metabarcoding**: sequencing one or more marker sequences from a population
 - **metagenomics**: deep sequencing of the entire genomic DNA material in a sample, often attempting to assemble representative genomes from the data
 :::
 
 In addition to their speed and the scale of data they can produce, these molecular techniques have other advantages:
 
-- The (sequence) data collected can be preserved and shared, alongside metadata describing the experiment, in public databases. This enables reanalysis and integration into larger-scale studies.
+- The (sequence) data collected can be preserved and shared, alongside metadata describing the experiment, in public databases. This enables reanalysis and integration into larger-scale studies, adding value to the study.
 - Fastidious organisms, or those that might be outcompeted in a laboratory culture, can be sequenced and identified.
 - Organisms present in low numbers can be sequenced and identified.
 
@@ -95,7 +95,7 @@ These molecular techniques answer the question of _"Who is there?"_, in two ways
 1. They tell us **what kinds of organism are present** (often to _species_ or _genus_ level)
 2. They give us a relative count of **how much of each kind of organism is present**
 
-Taken together, these answers tell us the **diversity of the community**.
+Taken together, these answers can quantify the **diversity of the community**.
 :::
 
 ::: {.callout-note}
@@ -109,28 +109,28 @@ Both **metabarcoding** and **metagenomics** can tell us which microorganisms are
 
 #### Metabarcoding
 
-In **metabarcoding**, we use the polymerase chain reaction (PCR) and **primers targeted specifically to amplify a marker sequence**: a gene fragment or other stretch of DNA that we believe to be present in all organisms of interest. For bacteria, this is usually a fragment of the 16S rRNA gene. For fungi and other eukaryotic mocroorganisms it may be a fragment of the ITS1 (Internally Transcribed Spacer 1) region.
+In **metabarcoding**, we use the polymerase chain reaction (PCR) and **primers that specifically target one or more _marker_ sequences for amplification**. A _marker_ here is a gene fragment or other stretch of DNA that we believe to be present in all organisms of interest. For bacteria, this is usually a fragment of the 16S rRNA gene. For fungi and other eukaryotic mocroorganisms it may be a fragment of the ITS1 (Internally Transcribed Spacer 1) region.
 
-These regions of the genome acquire sequence changes as their organisms evolve over time, such that variants of the marker sequence can be associated with a particular group of microorganisms, usually at the species or genus level. By amplifying and then sequencing the marker sequence from all suitable organisms in the sample, we can **identify the marker sequence variants, and then compare these to databases of known sequences**, to identify which organisms are present.
+These regions of the genome acquire sequence changes that are specific to lineages as organisms evolve over time, such that variants of a marker sequence can often be associated with particular groups of microorganisms, usually at the species or genus level. By amplifying and then sequencing the many variants of the marker sequence there may be in the sample, we can **compare these to databases of known sequences, to identify which organisms may be present**.
 
 #### Metagenomics
 
-A similar principle applies with **metagenomics**: we sequence the sample and then compare the resulting sequences to a database containing sequences of known organisms, and use this to identify which of them are present in our sample. Differences between the methods arise mainly because **this approach is untargeted - we do not know in advance what sequences we will recover** - and generates very large amounts of data. Three of the main consequences of this are:
+A similar principle applies with **metagenomics**: we sequence the sample and then compare the resulting sequences to a database containing sequences of known organisms, and use this to identify which of them are present in our sample. This differs from metabarcoding mainly because **metagenomics is untargeted - we do not know in advance what sequences we will recover** - and generates very large amounts of data. Three of the main consequences of this are:
 
-1. We can compare individual sequencing reads to the database of known sequences, but due to the large amount of sequence data (in comparison to metabarcoding) we have to do this using special techniques like **$k$-mer alignment**, rather than direct sequence comparison [@Wood2014-ns].
-2. We can assemble near-complete and complete genomes from the data: **Metagenome-Assembled Genomes (MAGs).** [@Setubal2021-ka].
+1. We can compare individual sequencing reads from many points on a genome to the database of known sequences. But, due to the large amount of sequence data (in comparison to metabarcoding) we have to do this using special techniques like **$k$-mer alignment**, rather than direct sequence comparison [@Wood2014-ns].
+2. We can assemble near-complete and complete genome sequences from the data: **Metagenome-Assembled Genomes (MAGs).** [@Setubal2021-ka].
 3. We can obtain much more information than simple organism identity, such as the presence or absence of individual genes or gene functions, such as antimicrobial resistance genes [@De_Abreu2020-jt].
 
 ### How much of each organism is present?
 
-Whichever method we use to sequence a biological sample, we can obtain a list of the organisms that are present. This tells us something about the composition of the sample, but not everything. There is clearly a difference between one community that is 50% _Escherichia coli_ and 50% _Staphylococcus aureus_, and another community that is 99% _S. aureus_ and 1% _E. coli_. But how can we distinguish between the two?
+Whichever method we use to sequence a biological sample, we can obtain a list of organisms that for which there is evidence of presence. This tells us _something_ about the composition of the sample, but not everything. There is clearly a difference between one community that is 50% _Escherichia coli_ and 50% _Staphylococcus aureus_, and another community that is 99% _S. aureus_ and 1% _E. coli_. But how can we distinguish between the two (and does it matter)?
 
 In both metabarcoding and metagenomics we can count the number of sequences that correspond to each of the organism types we have identified. For metabarcoding, this might be the count of each amplicon sequence corresponding to a microbial genus. For metagenomics, this might be the number of reads assigned to a microbial species by a tool like [Kraken](https://ccb.jhu.edu/software/kraken/).
 
 ::: {.callout-warning collapse="true"}
 ## Molecular techniques only _estimate_ organism abundance
 
-All counts of organisms, by both methods, are strictly **estimates of the representation of each organism in the sample**. There are many factors that influence the way this estimate may very from the actual amount or proportion of any organism in the sample, including:
+All counts of organisms, by both methods, are strictly **_estimates_ of the representation of each organism in the sample**. There are many factors that influence the way this estimate may very from the actual amount or proportion of any organism in the sample, including:
 
 - DNA quality [@Manzari2020-br]
 - laboratory technique (sample spillover or other handling problems)

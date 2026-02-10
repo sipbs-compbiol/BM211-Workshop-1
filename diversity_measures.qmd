@@ -11,10 +11,10 @@ This section introduces the concept of a **diversity measure** in microbial ecol
 
 ## What is diversity?
 
-**Diversity measurements for a microbial community are quantitative estimates of how _heterogeneous_ or _homogeneous_ that community is**. _Qualitative_ estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other, the community is diverse to some extent.
+**Diversity measurements for a microbial community are quantitative estimates of how _heterogeneous_ or _homogeneous_ that community is**. _Qualitative_ estimates of diversity can be simple. If a community is composed of identical individuals, it is clearly not diverse. However, if the members of a community differ from each other at all, the community is diverse to some extent.
 
 ::: {.callout-important}
-Diversity (or the lack of it) is a **property of the community, not a property of individuals** in the community.
+Diversity (or the lack of it) is a **property of the community, _not a property of individuals_** in the community.
 :::
 
 If we want to record the level of diversity in a community, or compare it to other communities, we cannot easily rely on qualitative estimates. We need to be more precise than this, and to use _quantitative_ approaches. We need to know what groups are present in the community and, numerically, to what extent each group is represented.
@@ -34,10 +34,12 @@ This community contains a range of individuals of different type, distinguishabl
 
 By visual inspection of @fig-one_packet_contents, how diverse would you say the sample is?
 
+_(click to expand the answer)_
+
 ::: {.callout-answer}
 There are clearly several different kinds of individual present, so the sample is not homogenous and is _diverse_ in some sense. But in another sense the individuals are all individually-wrapped sweets, so the sample is entirely homogeneous.
 
-**We clearly need to be more precise about what exactly we mean, when talking about _diversity_**, so that others can understand exactly what we mean.
+**We clearly need to be more precise about what exactly we mean, when talking about _diversity_**, so that others can understand exactly what we mean. Diverse _in what measure_, as well as _to what extent_.
 :::
 :::
 
@@ -45,15 +47,15 @@ There are clearly several different kinds of individual present, so the sample i
 
 We usually define how _diverse_ a community is by using a **diversity index**. This is a number that reflects the distribution of different _types_ (such as microbial species) of individual that are found in a sample. There are two major concepts that contribute to diversity indices.
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip}
 ## Richness
 
 The **richness** of a sample is the **number of different types that are represented in the sample**.
 
-For example, _species richness_ is a count of the total number of species in the sample. **It does not take into acount species abundance, or relative abundance**.
+For example, _species richness_ is a count of the total number of species in the sample. **It does not take into account species abundance, or relative abundance**.
 :::
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip}
 ## Evenness
 
 The **evenness** of a sample reflects **how similar is the abundance of each type of thing** in the sample. The more similar the proportion of each type, the more _even_ the community.
@@ -62,6 +64,8 @@ For example, _species evenness_ reflects the relative abundances of distinct spe
 
 - a sample with 33% $A$, 33% $B$, and 33% $C$ has **high species evenness**
 - a sample with 5% $A$, 90% $B$, and 5% $C$ has **low species evenness**
+
+But both samples are equally _rich_.
 :::
 
 ## Richness and evenness in the Mars sample
@@ -72,13 +76,13 @@ We can organise the individuals in the Mars sample, as shown in @fig-one_packet_
 
 ### Species richness
 
-We can easily count the number of different species, as determined by morphology and membrane features, in @fig-one_packet_histogram. There are eight (8) species, and this is a quantitative measure of species richness.
+We can easily count the number of different species, as distinguished by morphology and membrane features, in @fig-one_packet_histogram. There are eight (8) species, and this is a quantitative measure of species richness.
 
 Taken in isolation though, this number doesn't tell us very much. We would need other information - maybe from other samples - to know whether eight is a large, small, or intermediate number of species. Nor does this number tell us whether all species are represented to the same extent (even if, from looking at @fig-one_packet_histogram we can tell they are not). We need to consider _evenness_ for that.
 
 ### Species evenness
 
-We can see visually from @fig-one_packet_histogram that there are not equal amounts of each species, so the community is not perfectly even in terms of species evenness. **But the question remains open: how do we combine richness and evenness together into an _index_ or number, to understand species diversity in our sample?**
+We can see visually from @fig-one_packet_histogram that there are not equal amounts of each species, so the community is not perfectly even in terms of species evenness. **But the question remains open: how do we combine richness and evenness together into a single number (called an _index_) to understand species diversity in our sample?**
 
 ::: {.callout-important}
 **We will discuss a simple measure of species diversity, _Shannon Index_, in [the next chapter](shannon_index.qmd).**
